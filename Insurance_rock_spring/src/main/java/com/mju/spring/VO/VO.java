@@ -1,5 +1,6 @@
 package com.mju.spring.VO;
 
-public class VO {
 
+public class VO {
+	
 }
