@@ -2,18 +2,15 @@ package com.mju.spring.DTO;
 
 
 public class InsuranceDTO {
-	public enum EInsurance {
-		general, house
-	};
 
-	private EInsurance insuranceType;
+	private String insuranceType;
 	private boolean longTerm;
 	
 
-	public EInsurance getInsuranceType() {
+	public String getInsuranceType() {
 		return insuranceType;
 	}
-	public void setInsuranceType(EInsurance insuranceType) {
+	public void setInsuranceType(String insuranceType) {
 		this.insuranceType = insuranceType;
 	}
 	

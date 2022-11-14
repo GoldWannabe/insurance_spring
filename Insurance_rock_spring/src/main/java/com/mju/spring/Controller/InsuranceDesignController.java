@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.DTO.InsuranceDTO;
-import com.mju.spring.DTO.InsuranceDTO.EInsurance;
 import com.mju.spring.Service.InsuranceDesignService;
 import com.mju.spring.VO.InsuranceVO;
 
@@ -17,27 +16,27 @@ public class InsuranceDesignController {
 	
 	@Autowired
 	InsuranceDesignService insuranceDesignService;
-	InsuranceVO insuranceVO;
+	
+	private InsuranceVO insuranceVO;
+	private InsuranceDTO insuranceDTO;
 	
 	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
 	public void insuranceType(HttpServletRequest request) {
 		//중간 작업 불러오기. 
-		InsuranceDTO insuranceDTO = new InsuranceDTO();
-		if(request.getParameter("term").equals("장기")) {
-			insuranceDTO.setLongTerm(true);
-		}else if(request.getParameter("term").equals("단기")) {//term이라는 체크박스 네임 태그에서 장기면 단기면.
-			insuranceDTO.setLongTerm(false);
-		}
+		//InsuranceDTO insuranceDTO = new InsuranceDTO();
+//		if(request.getParameter("longTerm").equals(true)) {
+//			insuranceDTO.setLongTerm(true);
+//		}else if(request.getParameter("longTerm").equals("단기")) {//term이라는 체크박스 네임 태그에서 장기면 단기면.
+//			insuranceDTO.setLongTerm(false);
+//		}
 //		getParameterValues String[]
 //		getParameter String
 		
-		
-		//enum set은 서비스에서 하는것. 서비스에서 판별후 DTO에 셋해주는것까지.
-//		insuranceDTO = insuranceDesignService.getTempInsurance(request.getParameter("type")); 
-		
+		this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request);
+	
+		this.insuranceVO = new InsuranceVO();
 		insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
-//		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
-//		1.TO STRING 받기.
+		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
 		
 
 	}
@@ -49,5 +48,42 @@ public class InsuranceDesignController {
 //		model.addAttribute("text", insuranceVO.isLongTerm()); 마지막에 보여주는 화면에 대한 내용 보내주기.
 	}
 	
-	
+	public void temp() {
+		//제일 시작부분
+		//임시 저장한 파일이 있는지 확인
+		this.insuranceDTO = insuranceDesignService.getTempInsurance();
+		
+		this.insuranceDTO = insuranceDesignService.checkName();
+		//DTO로 받는다 요율까지
+		//실패하면 다시
+		
+		//view 기본 요율 사용 여부 확인
+		//예 누르면 최종 등록
+		//아니오 누르면 직접 입력
+		this.insuranceDTO = insuranceDesignService.checkRate();
+		//실패하면 다시
+		//성공하면 최종 등록
+		
+		
+		
+		//예 누르면 등록
+		 boolean a1 = insuranceDesignService.register();
+
+		//아니요 누르면 임시저장
+		 boolean a2 = insuranceDesignService.saveTempInsurance();
+		
+		 //만약 false 그럼 담당자 연락하세요 띄우세요.
+	}
+	@RequestMapping(value = "menu", method = RequestMethod.GET)
+	public String menu() {
+		return "menu";
+	}
+	@RequestMapping(value = "design", method = RequestMethod.GET)
+	public String design() {
+		return "design";
+	}
+	@RequestMapping(value = "design2", method = RequestMethod.GET)
+	public String design2() {
+		return "design2";
+	}
 }

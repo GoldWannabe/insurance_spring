@@ -1,6 +1,6 @@
 package com.mju.spring.Entity;
 
-public class GeneralInsurance {
+public class GeneralInsurance  extends Insurance{
 
 	private int generalPremiumRate;
 	private double[] premiumRate = new double[] { 0.002, 0.004, 0.006 };

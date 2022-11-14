@@ -1,15 +1,21 @@
 package com.mju.spring.Service;
 
-import java.util.Enumeration;
+import javax.servlet.http.HttpServletRequest;
 
 import com.mju.spring.DTO.InsuranceDTO;
-import com.mju.spring.DTO.InsuranceDTO.EInsurance;
 
 public interface InsuranceDesignService {
 
-	InsuranceDTO getinsuranceType(EInsurance insuranceType);
+	public InsuranceDTO getinsuranceTypeAndTerm(HttpServletRequest request);
 
+	public InsuranceDTO checkName();
 
-	
+	public InsuranceDTO checkRate();
+
+	public boolean register();
+
+	public boolean saveTempInsurance();
+
+	public InsuranceDTO getTempInsurance();
 
 }

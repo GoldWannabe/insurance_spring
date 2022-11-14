@@ -35,16 +35,5 @@ public class HomeController {
 		
 		return "home";
 	}
-	@RequestMapping(value = "menu", method = RequestMethod.GET)
-	public String menu() {
-		return "menu";
-	}
-	@RequestMapping(value = "design", method = RequestMethod.GET)
-	public String design() {
-		return "design";
-	}
-	@RequestMapping(value = "design2", method = RequestMethod.GET)
-	public String design2() {
-		return "design2";
-	}
+	
 }
