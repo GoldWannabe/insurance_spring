@@ -9,9 +9,18 @@ public class InsuranceVO {
 	private String applyCondition;
 	private String compensateCondition;
 	private String explanation;
+	private int standardFee;
 
 	public String getInsuranceName() {
 		return insuranceName;
+	}
+
+	public int getStandardFee() {
+		return standardFee;
+	}
+
+	public void setStandardFee(int standardFee) {
+		this.standardFee = standardFee;
 	}
 
 	public void setInsuranceName(String insuranceName) {

@@ -171,4 +171,11 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 		// 파일 찾기
 		return null;
 	}
+
+	@Override
+	public InsuranceDTO getStandardFee(HttpServletRequest request) {
+		//기존 요율별로 기준보험료 측정된거  DTO에 set
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -21,7 +21,7 @@ public class InsuranceDesignController {
 	private InsuranceDTO insuranceDTO;
 	
 	@RequestMapping(value = "design2", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
-	public String insuranceType(HttpServletRequest request, Model model) {
+	public String insuranceDesign2(HttpServletRequest request, Model model) {
 		//중간 작업 불러오기. 
 		//InsuranceDTO insuranceDTO = new InsuranceDTO();
 //		if(request.getParameter("longTerm").equals(true)) {
@@ -45,7 +45,7 @@ public class InsuranceDesignController {
 
 	}
 	@RequestMapping(value = "design3", method = RequestMethod.GET)
-	public String insuranceDesign(HttpServletRequest request, Model model) { //design3에서 
+	public String insuranceDesign3(HttpServletRequest request, Model model) { //design3에서 
 //		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
 		this.insuranceDTO = insuranceDesignService.checkName(request); //중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘.
 	
@@ -66,10 +66,20 @@ public class InsuranceDesignController {
 			model.addAttribute("specialContract", this.insuranceVO.getSpecialContract());
 			model.addAttribute("applyCondition",this.insuranceDTO.getApplyCondition());
 			model.addAttribute("compensateCondition",this.insuranceDTO.getCompensateCondition());
-			model.addAttribute("explanation",this.insuranceDTO.getExplanation());			
+			model.addAttribute("explanation",this.insuranceDTO.getExplanation());	
+			
+			
 		}
 		
 		return "design3";
+	}
+	@RequestMapping(value = "Popup", method = RequestMethod.GET)
+	public String StandardFeePopupDesign(HttpServletRequest request, Model model) {
+		this.insuranceDTO = this.insuranceDesignService.getStandardFee(request);//기존 요율별로 기준보험료 측정된거  
+		
+		this.insuranceVO.setStandardFee(this.insuranceDTO.getStandardFee());
+		model.addAttribute("");
+		return "Popup";
 	}
 	
 	public void temp() {

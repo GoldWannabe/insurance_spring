@@ -11,7 +11,14 @@ public class InsuranceDTO {
 	private String applyCondition;
 	private String compensateCondition;
 	private String explanation;
+	private int standardFee;
 	
+	public int getStandardFee() {
+		return standardFee;
+	}
+	public void setStandardFee(int standardFee) {
+		this.standardFee = standardFee;
+	}
 	public double[] getPremiumRate() {
 		return premiumRate;
 	}
