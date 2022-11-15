@@ -21,7 +21,7 @@ public class InsuranceDesignController {
 	private InsuranceDTO insuranceDTO;
 	
 	@RequestMapping(value = "design2", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
-	public String insuranceType(HttpServletRequest request) {
+	public String insuranceType(HttpServletRequest request, Model model) {
 		//중간 작업 불러오기. 
 		//InsuranceDTO insuranceDTO = new InsuranceDTO();
 //		if(request.getParameter("longTerm").equals(true)) {
@@ -38,14 +38,17 @@ public class InsuranceDesignController {
 		insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
 		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
 		
+		model.addAttribute("LongTerm", insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
+		model.addAttribute("InsuranceType", insuranceVO.getInsuranceType());
+		
+		//여기서 다시 이름, 뭐시기 뭐시기 받음. 
+		
 		return "design2";
 
 	}
 	@RequestMapping(value = "design3", method = RequestMethod.GET)
 	public String insuranceDesign(HttpServletRequest request, Model model) { //design3에서 
 		
-		model.addAttribute("LongTerm", insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
-		model.addAttribute("InsuranceType", insuranceVO.getInsuranceType());
 		
 		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
 		return "design3";
