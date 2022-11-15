@@ -135,8 +135,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO checkName() {
-		//DTO로 받는다 기본요율까지
+	public InsuranceDTO checkName(HttpServletRequest request) {
+		//DTO로 받는다.  기본요율까지 +보험이름,특약,가입조건,보상조건,설명도 받아서 DTO에 Set해줘
 		//중복이 된 것이 있으면 다시
 //		if(this.insuranceDAO.retriveName(request.getParameter("name")) != null) {
 //			return null;
@@ -169,6 +169,13 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Override
 	public InsuranceDTO getTempInsurance() {
 		// 파일 찾기
+		return null;
+	}
+
+	@Override
+	public InsuranceDTO getStandardFee(HttpServletRequest request) {
+		//기존 요율별로 기준보험료 측정된거  DTO에 set
+		// TODO Auto-generated method stub
 		return null;
 	}
 }
