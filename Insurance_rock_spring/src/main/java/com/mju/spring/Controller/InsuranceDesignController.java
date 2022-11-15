@@ -20,8 +20,8 @@ public class InsuranceDesignController {
 	private InsuranceVO insuranceVO;
 	private InsuranceDTO insuranceDTO;
 	
-	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
-	public void insuranceType(HttpServletRequest request) {
+	@RequestMapping(value = "design2", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
+	public String insuranceType(HttpServletRequest request) {
 		//중간 작업 불러오기. 
 		//InsuranceDTO insuranceDTO = new InsuranceDTO();
 //		if(request.getParameter("longTerm").equals(true)) {
@@ -32,20 +32,23 @@ public class InsuranceDesignController {
 //		getParameterValues String[]
 //		getParameter String
 		
-		this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request);
+		this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request); 
 	
 		this.insuranceVO = new InsuranceVO();
 		insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
 		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
 		
+		return "design2";
 
 	}
-	@RequestMapping(value = "text", method = RequestMethod.GET)
-	public void insuranceDesign(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "design3", method = RequestMethod.GET)
+	public String insuranceDesign(HttpServletRequest request, Model model) { //design3에서 
+		
+		model.addAttribute("LongTerm", insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
+		model.addAttribute("InsuranceType", insuranceVO.getInsuranceType());
+		
 		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
-		
-		
-//		model.addAttribute("text", insuranceVO.isLongTerm()); 마지막에 보여주는 화면에 대한 내용 보내주기.
+		return "design3";
 	}
 	
 	public void temp() {
@@ -58,7 +61,7 @@ public class InsuranceDesignController {
 		//실패하면 다시
 		
 		//view 기본 요율 사용 여부 확인
-		//예 누르면 최종 등록
+		//예 누르면 기본 요율 계산후 최종 등록할건지 말건지.
 		//아니오 누르면 직접 입력
 		this.insuranceDTO = insuranceDesignService.checkRate();
 		//실패하면 다시
@@ -82,8 +85,8 @@ public class InsuranceDesignController {
 	public String design() {
 		return "design";
 	}
-	@RequestMapping(value = "design2", method = RequestMethod.GET)
-	public String design2() {
-		return "design2";
-	}
+//	@RequestMapping(value = "design2", method = RequestMethod.GET)
+//	public String design2() {
+//		return "design2";
+//	}
 }
