@@ -80,6 +80,13 @@ public class InsuranceDesignController {
 		return "popup";
 	}
 	
+	@RequestMapping(value = "popup2", method = RequestMethod.GET)
+	public String rateByGrade(HttpServletRequest request, Model model) {
+		//요율 배열로.
+		this.insuranceDTO = this.insuranceDesignService.checkRate(request);
+		
+		return "popup2";
+	}
 	public void temp(HttpServletRequest request) {
 		//제일 시작부분
 		//임시 저장한 파일이 있는지 확인
@@ -92,7 +99,7 @@ public class InsuranceDesignController {
 		//view 기본 요율 사용 여부 확인 
 		//예 누르면 기본 요율 계산후 최종 등록할건지 말건지. getStandardFee
 		//아니오 누르면 직접 입력
-		this.insuranceDTO = insuranceDesignService.checkRate();
+//		this.insuranceDTO = insuranceDesignService.checkRate();
 		//실패하면 다시
 		//성공하면 최종 등록
 		

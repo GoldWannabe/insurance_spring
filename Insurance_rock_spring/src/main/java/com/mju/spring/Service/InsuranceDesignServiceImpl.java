@@ -149,7 +149,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO checkRate() {
+	public InsuranceDTO checkRate(HttpServletRequest request) {
 		//요율 체크
 //		double rate[] = new double[] { 0, 0, 0 };
 //		boolean correctRate = false;

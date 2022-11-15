@@ -10,7 +10,7 @@ public interface InsuranceDesignService {
 
 	public InsuranceDTO checkName(HttpServletRequest request);
 
-	public InsuranceDTO checkRate();
+	public InsuranceDTO checkRate(HttpServletRequest request);
 
 	public boolean register();
 
