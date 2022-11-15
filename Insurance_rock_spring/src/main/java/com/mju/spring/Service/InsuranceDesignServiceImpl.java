@@ -149,8 +149,14 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO checkRate() {
+	public InsuranceDTO checkRate(HttpServletRequest request) {
 		//요율 체크
+//		double rate[] = new double[] { 0, 0, 0 };
+//		boolean correctRate = false;
+//			this.contractTeamTui.showEnterPremiumRate();
+//			correctRate = checkRate(rate);
+//
+
 		return null;
 	}
 
@@ -167,7 +173,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO getTempInsurance() {
+	public InsuranceDTO getTempInsurance(HttpServletRequest request) {
 		// 파일 찾기
 		return null;
 	}

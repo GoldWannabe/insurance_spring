@@ -4,12 +4,22 @@ public class InsuranceVO {
 
 	private String insuranceType;
 	private boolean longTerm;
+	private double[] premiumRate;
 	private String insuranceName;
 	private String specialContract;
 	private String applyCondition;
 	private String compensateCondition;
 	private String explanation;
 	private int standardFee;
+	
+	
+	public double[] getPremiumRate() {
+		return premiumRate;
+	}
+	
+	public void setPremiumRate(double[] premiumRate) {
+		this.premiumRate = premiumRate;
+	}
 
 	public String getInsuranceName() {
 		return insuranceName;
