@@ -15,9 +15,9 @@ import org.springframework.ui.Model;
 public class PopupController {
 	private static final Logger logger = LoggerFactory.getLogger(PopupController.class);
 	
-	@RequestMapping(value = "popup", method = RequestMethod.GET)
+	@RequestMapping(value = "realPopup", method = RequestMethod.GET)
 	public String design() {
-		return "popup";
+		return "realPopup";
 	}
 
 	@RequestMapping(value="popupList", method = RequestMethod.GET)
