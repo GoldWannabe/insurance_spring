@@ -49,20 +49,27 @@ public class InsuranceDesignController {
 //		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
 		this.insuranceDTO = insuranceDesignService.checkName(request); //중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘.
 	
+		if(this.insuranceDTO == null) {
+			model.addAttribute("overlapError", null);
+			return "design3";
+			
+		}else {
 //		보험이름,특약,가입조건,보상조건,설명
-		this.insuranceVO.setInsuranceName(this.insuranceDTO.getInsuranceName());
-		this.insuranceVO.setSpecialContract(this.insuranceDTO.getSpecialContract());
-		this.insuranceVO.setApplyCondition(this.insuranceDTO.getApplyCondition());
-		this.insuranceVO.setCompensateCondition(this.insuranceDTO.getCompensateCondition());
-		this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
+			this.insuranceVO.setInsuranceName(this.insuranceDTO.getInsuranceName());
+			this.insuranceVO.setSpecialContract(this.insuranceDTO.getSpecialContract());
+			this.insuranceVO.setApplyCondition(this.insuranceDTO.getApplyCondition());
+			this.insuranceVO.setCompensateCondition(this.insuranceDTO.getCompensateCondition());
+			this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
+			
+			model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); 
+			model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
+			model.addAttribute("insuranceName", this.insuranceVO.getInsuranceName());
+			model.addAttribute("specialContract", this.insuranceVO.getSpecialContract());
+			model.addAttribute("applyCondition",this.insuranceDTO.getApplyCondition());
+			model.addAttribute("compensateCondition",this.insuranceDTO.getCompensateCondition());
+			model.addAttribute("explanation",this.insuranceDTO.getExplanation());			
+		}
 		
-		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); 
-		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
-		model.addAttribute("insuranceName", this.insuranceVO.getInsuranceName());
-		model.addAttribute("specialContract", this.insuranceVO.getSpecialContract());
-		model.addAttribute("applyCondition",this.insuranceDTO.getApplyCondition());
-		model.addAttribute("compensateCondition",this.insuranceDTO.getCompensateCondition());
-		model.addAttribute("explanation",this.insuranceDTO.getExplanation());
 		return "design3";
 	}
 	
