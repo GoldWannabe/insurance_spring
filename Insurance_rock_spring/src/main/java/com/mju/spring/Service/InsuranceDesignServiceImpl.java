@@ -18,7 +18,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	private Insurance insurance;
 	private InsuranceDTO insuranceDTO;
 	
-	@Autowired 
+	@Autowired
 	InsuranceDAO insuranceDAO;
 	RegisterInsuranceDao registerInsuranceDao;
 	
@@ -144,7 +144,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 //			//이름과 기본 요율을 포함한 다양한 것들 추가
 //		}
 //		
-		return null;
+		
+		return this.insuranceDTO;
 	}
 
 	@Override
