@@ -14,6 +14,5 @@
 			type="radio" name="type" value="house" />주택보험 <br> <input
 			type="submit" value="Next"/>
 	</form>
-
 </body>
 </html>

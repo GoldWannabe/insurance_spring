@@ -5,8 +5,8 @@ public class InsuranceDTO {
 
 	private String insuranceType;
 	private boolean longTerm;
+	private double[] premiumRate;
 	
-
 	public String getInsuranceType() {
 		return insuranceType;
 	}

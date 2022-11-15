@@ -27,8 +27,8 @@ public abstract class Insurance {
 	public EInsurance getInsuranceType() {
 		return insuranceType;
 	}
-	public void setInsuranceType(EInsurance insuranceType) {
-		this.insuranceType = insuranceType;
+	public void setInsuranceType(String type) {
+		this.insuranceType = EInsurance.valueOf(type);
 	}
 	
 	public boolean isLongTerm() {

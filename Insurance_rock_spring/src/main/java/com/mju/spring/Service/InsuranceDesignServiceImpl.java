@@ -1,21 +1,27 @@
 package com.mju.spring.Service;
 
+import com.mju.spring.DAO.InsuranceDAO;
+import com.mju.spring.DAO.RegisterInsuranceDao;
 import com.mju.spring.DTO.InsuranceDTO;
 import com.mju.spring.Entity.GeneralInsurance;
 import com.mju.spring.Entity.HouseInsurance;
 import com.mju.spring.Entity.Insurance;
 
-import java.util.Arrays;
-import java.util.Scanner;
-
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 
 	private Insurance insurance;
+	private InsuranceDTO insuranceDTO;
+	
+	@Autowired 
+	InsuranceDAO insuranceDAO;
+	RegisterInsuranceDao registerInsuranceDao;
+	
 
 //	@Override
 //	public InsuranceDTO getinsuranceType(EInsurance insuranceType) {
@@ -102,36 +108,66 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	public InsuranceDTO getinsuranceTypeAndTerm(HttpServletRequest request) {
 		//보험 new DTO 정보 추가 
 		//리턴 DTO
-		return null;
+		
+//		if(Boolean.parseBoolean(request.getParameter("longTerm"))) {
+//			insuranceDTO.setLongTerm(true);
+//		}else if(Boolean.parseBoolean(request.getParameter("longTerm"))) {//term이라는 체크박스 네임 태그에서 장기면 단기면.
+//			insuranceDTO.setLongTerm(false);
+//		}
+		
+		if(request.getParameter("type").equals(Insurance.EInsurance.general.toString())) {
+			this.insurance = new GeneralInsurance();
+			
+		} else if(request.getParameter("type").equals(Insurance.EInsurance.house.toString())) {
+			this.insurance = new HouseInsurance();
+		} else {
+			return null;
+		}
+		
+		this.insurance.setInsuranceType(request.getParameter("type"));
+		this.insurance.setLongTerm(Boolean.parseBoolean(request.getParameter("longTerm")));
+		
+		this.insuranceDTO = new InsuranceDTO();
+		this.insuranceDTO.setLongTerm(this.insurance.isLongTerm());
+		this.insuranceDTO.setInsuranceType(this.insurance.getInsuranceType().toString());
+				
+		return this.insuranceDTO;
 	}
 
 	@Override
 	public InsuranceDTO checkName() {
-		// TODO Auto-generated method stub
+		//DTO로 받는다 기본요율까지
+		//중복이 된 것이 있으면 다시
+//		if(this.insuranceDAO.retriveName(request.getParameter("name")) != null) {
+//			return null;
+//		} else {
+//			//이름과 기본 요율을 포함한 다양한 것들 추가
+//		}
+//		
 		return null;
 	}
 
 	@Override
 	public InsuranceDTO checkRate() {
-		// TODO Auto-generated method stub
+		//요율 체크
 		return null;
 	}
 
 	@Override
 	public boolean register() {
-		// TODO Auto-generated method stub
+		// 등록하세요
 		return false;
 	}
 
 	@Override
 	public boolean saveTempInsurance() {
-		// TODO Auto-generated method stub
+		// 파일 저장
 		return false;
 	}
 
 	@Override
 	public InsuranceDTO getTempInsurance() {
-		// TODO Auto-generated method stub
+		// 파일 찾기
 		return null;
 	}
 }
