@@ -67,25 +67,23 @@ public class InsuranceDesignController {
 			model.addAttribute("applyCondition",this.insuranceDTO.getApplyCondition());
 			model.addAttribute("compensateCondition",this.insuranceDTO.getCompensateCondition());
 			model.addAttribute("explanation",this.insuranceDTO.getExplanation());	
-			
-			
 		}
 		
 		return "design3";
 	}
-	@RequestMapping(value = "Popup", method = RequestMethod.GET)
+	@RequestMapping(value = "popup", method = RequestMethod.GET)
 	public String StandardFeePopupDesign(HttpServletRequest request, Model model) {
 		this.insuranceDTO = this.insuranceDesignService.getStandardFee(request);//기존 요율별로 기준보험료 측정된거  
 		
 		this.insuranceVO.setStandardFee(this.insuranceDTO.getStandardFee());
-		model.addAttribute("");
-		return "Popup";
+		model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());
+		return "popup";
 	}
 	
-	public void temp() {
+	public void temp(HttpServletRequest request) {
 		//제일 시작부분
 		//임시 저장한 파일이 있는지 확인
-		this.insuranceDTO = insuranceDesignService.getTempInsurance();
+		this.insuranceDTO = insuranceDesignService.getTempInsurance(request);
 		
 //		this.insuranceDTO = insuranceDesignService.checkName();
 		//DTO로 받는다 요율까지

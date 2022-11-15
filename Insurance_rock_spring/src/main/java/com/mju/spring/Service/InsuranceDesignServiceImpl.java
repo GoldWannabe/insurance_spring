@@ -173,7 +173,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO getTempInsurance() {
+	public InsuranceDTO getTempInsurance(HttpServletRequest request) {
 		// 파일 찾기
 		return null;
 	}

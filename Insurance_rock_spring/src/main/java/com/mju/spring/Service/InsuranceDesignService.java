@@ -16,7 +16,7 @@ public interface InsuranceDesignService {
 
 	public boolean saveTempInsurance();
 
-	public InsuranceDTO getTempInsurance();
+	public InsuranceDTO getTempInsurance(HttpServletRequest request);
 
 	public InsuranceDTO getStandardFee(HttpServletRequest request);
 
