@@ -135,7 +135,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO checkName() {
+	public InsuranceDTO checkName(HttpServletRequest request) {
 		//DTO로 받는다 기본요율까지
 		//중복이 된 것이 있으면 다시
 //		if(this.insuranceDAO.retriveName(request.getParameter("name")) != null) {

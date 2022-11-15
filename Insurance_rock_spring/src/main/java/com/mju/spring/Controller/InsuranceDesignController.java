@@ -33,24 +33,36 @@ public class InsuranceDesignController {
 //		getParameter String
 		
 		this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request); 
-	
+		
 		this.insuranceVO = new InsuranceVO();
 		insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
 		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
 		
-		model.addAttribute("LongTerm", insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
-		model.addAttribute("InsuranceType", insuranceVO.getInsuranceType());
-		
-		//여기서 다시 이름, 뭐시기 뭐시기 받음. 
+		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
+		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
 		
 		return "design2";
 
 	}
 	@RequestMapping(value = "design3", method = RequestMethod.GET)
 	public String insuranceDesign(HttpServletRequest request, Model model) { //design3에서 
+//		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
+		this.insuranceDTO = insuranceDesignService.checkName(request); //중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘.
+	
+//		보험이름,특약,가입조건,보상조건,설명
+		this.insuranceVO.setInsuranceName(this.insuranceDTO.getInsuranceName());
+		this.insuranceVO.setSpecialContract(this.insuranceDTO.getSpecialContract());
+		this.insuranceVO.setApplyCondition(this.insuranceDTO.getApplyCondition());
+		this.insuranceVO.setCompensateCondition(this.insuranceDTO.getCompensateCondition());
+		this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
 		
-		
-		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
+		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); 
+		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
+		model.addAttribute("insuranceName", this.insuranceVO.getInsuranceName());
+		model.addAttribute("specialContract", this.insuranceVO.getSpecialContract());
+		model.addAttribute("applyCondition",this.insuranceDTO.getApplyCondition());
+		model.addAttribute("compensateCondition",this.insuranceDTO.getCompensateCondition());
+		model.addAttribute("explanation",this.insuranceDTO.getExplanation());
 		return "design3";
 	}
 	
@@ -59,12 +71,12 @@ public class InsuranceDesignController {
 		//임시 저장한 파일이 있는지 확인
 		this.insuranceDTO = insuranceDesignService.getTempInsurance();
 		
-		this.insuranceDTO = insuranceDesignService.checkName();
+//		this.insuranceDTO = insuranceDesignService.checkName();
 		//DTO로 받는다 요율까지
 		//실패하면 다시
 		
-		//view 기본 요율 사용 여부 확인
-		//예 누르면 기본 요율 계산후 최종 등록할건지 말건지.
+		//view 기본 요율 사용 여부 확인 
+		//예 누르면 기본 요율 계산후 최종 등록할건지 말건지. getStandardFee
 		//아니오 누르면 직접 입력
 		this.insuranceDTO = insuranceDesignService.checkRate();
 		//실패하면 다시

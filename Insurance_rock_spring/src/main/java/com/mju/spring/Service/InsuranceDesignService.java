@@ -8,7 +8,7 @@ public interface InsuranceDesignService {
 
 	public InsuranceDTO getinsuranceTypeAndTerm(HttpServletRequest request);
 
-	public InsuranceDTO checkName();
+	public InsuranceDTO checkName(HttpServletRequest request);
 
 	public InsuranceDTO checkRate();
 
