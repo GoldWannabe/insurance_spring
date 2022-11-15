@@ -151,6 +151,12 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Override
 	public InsuranceDTO checkRate() {
 		//요율 체크
+//		double rate[] = new double[] { 0, 0, 0 };
+//		boolean correctRate = false;
+//			this.contractTeamTui.showEnterPremiumRate();
+//			correctRate = checkRate(rate);
+//
+
 		return null;
 	}
 
