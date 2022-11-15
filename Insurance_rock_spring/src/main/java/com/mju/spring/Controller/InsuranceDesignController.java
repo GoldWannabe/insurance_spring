@@ -49,6 +49,7 @@ public class InsuranceDesignController {
 //		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
 		this.insuranceDTO = insuranceDesignService.checkName(request); //중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘.
 	
+		//중복확인
 		if(this.insuranceDTO == null) {
 			model.addAttribute("overlapError", null);
 			return "design3";
@@ -61,8 +62,6 @@ public class InsuranceDesignController {
 			this.insuranceVO.setCompensateCondition(this.insuranceDTO.getCompensateCondition());
 			this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
 			
-			model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); 
-			model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
 			model.addAttribute("insuranceName", this.insuranceVO.getInsuranceName());
 			model.addAttribute("specialContract", this.insuranceVO.getSpecialContract());
 			model.addAttribute("applyCondition",this.insuranceDTO.getApplyCondition());
