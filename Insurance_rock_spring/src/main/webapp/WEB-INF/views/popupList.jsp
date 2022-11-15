@@ -5,34 +5,23 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
-<script type="text/javascript">
-	$(document).ready(function() {
-		url = "popupList"
-		$.ajax({
-			type : "POST",
-			url : popupList,
-			data : $("#myForm").serialize(),
-			success : function(data) {
-			},
-			error : function(request, status, msg) {
-			}
-		});
-	});
-	
-	function isWindowOpen(){
+<script>
+function rtn(){
+	if(confirm("다시쓰기를 하시겠습니까?")){
+		f.reset();                 //페이지 초기화
+		f.player_name.select();    //이름 블록
 		
-		window.close()	
-	}
-	
+	} else return;
+}
 </script>
 </head>
 <body oncontextmenu="return false" onselectstart="return false"
 	ondragstart="return false">
 	
-	<form >
+	<form action="design" >
 		이름: <input type="text">	
-		<button onclick="isWindowOpen();">예</button>
-		<button onclick="isWindowOpen();">아니오</button>
+		<button onclick="rtn();">예</button>
+		<button onclick="rtn();">아니오</button>
 	</form>
 	
 	<p>여기가 팝업 창입니다.</p>

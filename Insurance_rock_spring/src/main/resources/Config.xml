@@ -15,6 +15,8 @@
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="mappers/UserMapper.xml" />
+		
+		<mapper resource="mappers/InsuranceMapper.xml" />
+		<mapper resource="mappers/RegisterInsuranceMapper.xml" />
 	</mappers>
 </configuration>

@@ -1,0 +1,11 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+	<mapper namespace="RegisterInsuranceMapper">
+		<!--  SELECT -->
+		<select id="selectAll" resultType="com.mju.spring.Entity.Insurance">
+			SELECT * from RegisterInsurance where insuranceName = #{insuranceName}
+		</select>
+		<insert id="create">
+			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandradFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType.toString()}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
+		</insert>
+	</mapper>

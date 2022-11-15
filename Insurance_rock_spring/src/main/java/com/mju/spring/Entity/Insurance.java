@@ -80,5 +80,8 @@ public abstract class Insurance {
 		this.releaseDate = releaseDate;
 	}
 	
+	public abstract void setPremiumRate(double[] rate);
+
+	public abstract double[] getPremiumRate();
 	
 }

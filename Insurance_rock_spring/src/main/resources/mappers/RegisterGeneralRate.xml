@@ -1,0 +1,8 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+	<mapper namespace="RegisterGeneralRateMapper">
+		<!--  SELECT -->
+		<insert id="create">
+				INSERT INTO RegisterGeneralRate(insuranceID, insuranceRank, housePremiumRate) VALUES (#{insuranceID}, 1, #{premiumRate[0]}), (#{insuranceID}, 2, #{premiumRate[1]}), (#{insuranceID}, 3, #{premiumRate[2]})
+		</insert>
+	</mapper>
