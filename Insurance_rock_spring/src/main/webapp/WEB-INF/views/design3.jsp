@@ -7,11 +7,18 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="design4">
-		요율1: <input type="text" name="rate1"><br>
-		요율2: <input type="text" name="rate2"><br>
-		요율3: <input type="text" name="rate3"><br>
-		<input type="submit" value="Next">
-	</form>
+	<p>-----보험 Info-----</p>
+	<p>보험 종류: ${InsuranceType}</p>
+	<p>장기 여부: ${LongTerm}</p>
+	<p>보험 이름: ${inusranceName}</p>
+	<p>특약: ${specialContract} </p>
+	<p>가입 조건: ${applyCondition}</p>
+	<p>보상 조건: ${compensateCondition}</p>
+	<p>설명: ${explanation}</p>
+
+확인을 누르시면 설계가 완료됩니다.
+<button type="button" onclick="location.href='menu'">확인</button>
+
+
 </body>
 </html>

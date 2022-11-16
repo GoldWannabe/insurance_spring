@@ -19,7 +19,7 @@
 
 </head>
 <body>
-	<form name="rateChoice" action="design3" onSubmit="rtn();">
+	<form name="rateChoice" action="popup" onSubmit="rtn();">
 		<p>보험 종류: ${InsuranceType}</p>
 		<p>장기 여부: ${LongTerm}</p>
 		<br> 이름: <input type="text" name="inusranceName"> <br>
