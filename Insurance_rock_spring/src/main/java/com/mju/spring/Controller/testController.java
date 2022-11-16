@@ -21,15 +21,17 @@ public class testController {
 	
 		
 		insuranceDesignService.getinsuranceTypeAndTerm(request);
-		
+		System.out.println("끝1");
 	
 		insuranceDesignService.checkName(request);
-		
+		System.out.println("끝2");
 
 		insuranceDesignService.checkRate(request);
+		System.out.println("끝3");
 		insuranceDesignService.getStandardFee();
+		System.out.println("끝4");
 		insuranceDesignService.register();
-		System.out.println("끝");
+		System.out.println("끝5");
 		return "test";
 	}
 	

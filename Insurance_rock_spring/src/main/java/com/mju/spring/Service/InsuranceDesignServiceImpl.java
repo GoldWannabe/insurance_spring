@@ -119,14 +119,13 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 
 	@Override
 	public boolean register() {
-
 		boolean registerFlag = true;
 		int result = 0;
 		result = this.registerInsuranceDao.create(this.insurance);
 		if (result != 1) {
 			registerFlag = false;
 		}
-
+		
 		result = 0;
 		if (this.insurance.getInsuranceType().toString().equals("general")) {
 			result = this.registerGeneralRateDao.create(this.insurance);
@@ -138,6 +137,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			registerFlag = false;
 		}
 
+		System.out.println("943827326839405-");
 		return registerFlag;
 
 	}
