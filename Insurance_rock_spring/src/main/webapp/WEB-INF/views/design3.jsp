@@ -10,11 +10,11 @@
 	<p>-----보험 Info-----</p>
 	<p>보험 종류: ${InsuranceType}</p>
 	<p>장기 여부: ${LongTerm}</p>
-	<p>보험 이름: ${inusranceName}</p>
-	<p>특약: ${specialContract} </p>
-	<p>가입 조건: ${applyCondition}</p>
-	<p>보상 조건: ${compensateCondition}</p>
-	<p>설명: ${explanation}</p>
+	<p>보험 이름: ${InsuranceName}</p>
+	<p>특약: ${SpecialContract} </p>
+	<p>가입 조건: ${ApplyCondition}</p>
+	<p>보상 조건: ${CompensateCondition}</p>
+	<p>설명: ${Explanation}</p>
 
 확인을 누르시면 설계가 완료됩니다.
 <button type="button" onclick="location.href='menu'">확인</button>

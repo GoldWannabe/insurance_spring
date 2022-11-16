@@ -68,7 +68,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 		} else {
 			// 이름과 기본 요율을 포함한 다양한 것들 추가
 			this.insurance.setInsuranceName(request.getParameter("inusranceName"));
-			this.insurance.setSpecialContract(request.getParameter("specialContract"));
+			this.insurance.setSpecialContract(request.getParameter("inusranceName"));
 			this.insurance.setApplyCondition(request.getParameter("inusranceName"));
 			this.insurance.setCompensateCondition(request.getParameter("inusranceName"));
 			this.insurance.setExplanation(request.getParameter("inusranceName"));
