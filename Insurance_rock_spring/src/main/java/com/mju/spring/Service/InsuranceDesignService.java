@@ -18,6 +18,6 @@ public interface InsuranceDesignService {
 
 	public InsuranceDTO getTempInsurance(HttpServletRequest request);
 
-	public InsuranceDTO getStandardFee(HttpServletRequest request);
+	public InsuranceDTO getStandardFee();
 
 }
