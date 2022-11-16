@@ -112,7 +112,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 		} else {
 			this.insurance.setPremiumRate(rate);
 			this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
-			return this.insuranceDTO;
+			return getStandardFee();
 		}
 
 	}
