@@ -13,36 +13,37 @@ import com.mju.spring.VO.InsuranceVO;
 
 @Controller
 public class InsuranceDesignController {
-	
-	@Autowired
-	InsuranceDesignService insuranceDesignService;
-	
-	private InsuranceVO insuranceVO;
-	private InsuranceDTO insuranceDTO;
-	
-	@RequestMapping(value = "design2", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
-	public String insuranceDesign2(HttpServletRequest request, Model model) {
-		
-		//InsuranceDTO insuranceDTO = new InsuranceDTO();
-//		if(request.getParameter("longTerm").equals(true)) {
-//			insuranceDTO.setLongTerm(true);
-//		}else if(request.getParameter("longTerm").equals("단기")) {//term이라는 체크박스 네임 태그에서 장기면 단기면.
-//			insuranceDTO.setLongTerm(false);
-//		}
-//		getParameterValues String[]
-//		getParameter String
-		
-		
-		this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request); 
-		
-		this.insuranceVO = new InsuranceVO();
-		insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
-		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
-		
-		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
-		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
-		
-		return "design2";
+   
+   @Autowired
+   InsuranceDesignService insuranceDesignService;
+   
+   private InsuranceVO insuranceVO;
+   private InsuranceDTO insuranceDTO;
+   
+   @RequestMapping(value = "design2", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
+   public String insuranceDesign2(HttpServletRequest request, Model model) {
+      
+      //InsuranceDTO insuranceDTO = new InsuranceDTO();
+//      if(request.getParameter("longTerm").equals(true)) {
+//         insuranceDTO.setLongTerm(true);
+//      }else if(request.getParameter("longTerm").equals("단기")) {//term이라는 체크박스 네임 태그에서 장기면 단기면.
+//         insuranceDTO.setLongTerm(false);
+//      }
+//      getParameterValues String[]
+//      getParameter String
+      
+      
+      this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request); 
+      
+      this.insuranceVO = new InsuranceVO();
+      insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
+      insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
+      
+      model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); //마지막에 보여주는 화면에 대한 내용 보내주기.
+      model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
+      
+      return "design2";
+
 
 	}
 	@RequestMapping(value = "design3", method = RequestMethod.GET)
@@ -143,7 +144,8 @@ public class InsuranceDesignController {
 		
 //		//예 누르면 등록
 //		 boolean a1 = insuranceDesignService.register();
-//
+
+
 //		//아니요 누르면 임시저장
 //		 boolean a2 = insuranceDesignService.saveTempInsurance();
 		
@@ -155,8 +157,9 @@ public class InsuranceDesignController {
 	}
 	@RequestMapping(value = "design", method = RequestMethod.GET)
 	public String design() {
-		
+		//임시저장확인
 		return "design";
 	}
+
 
 }
