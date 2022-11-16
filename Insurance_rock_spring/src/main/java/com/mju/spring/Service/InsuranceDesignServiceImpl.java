@@ -172,7 +172,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDTO getStandardFee(HttpServletRequest request) {
+	public InsuranceDTO getStandardFee() {
 		// 기존 요율별로 기준보험료 측정된거 DTO에 set
 
 		this.insurance.setStandardFee((int) (1000000000 * this.insurance.getPremiumRate()[0] / 100));
