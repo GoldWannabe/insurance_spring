@@ -76,17 +76,19 @@ public class InsuranceDesignController {
 	}
 	@RequestMapping(value = "popup", method = RequestMethod.GET)
 	public String StandardFeePopupDesign(HttpServletRequest request, Model model) {
-		this.insuranceDTO = this.insuranceDesignService.getStandardFee(request);//예를 true로 받아서 기존 보험료 주기. 아니요 일시 null
-		//취소 값 생각하기.
-		//premiumRate
-		if(this.insuranceDTO == null ) {
-			//직접 적은 등급별 요율로 계산한 기준보험료.
-			this.insuranceDTO = this.insuranceDesignService.checkRate(request);
-			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());			
+		if(request.getParameter("yes").equals(true)){//예를 true로 받아서
+			this.insuranceDTO = this.insuranceDesignService.getStandardFee(request);// 기존 보험료 주기. 아니요 일시 null 			
 		}else {
-			//기준보험료 계산에 실패
-			model.addAttribute("StandardFee", true);//
+			//취소 값 생각하기.
+			//아니요 일시 null 	 직접 적은 등급별 요율로 계산한 기준보험료.
+			this.insuranceDTO = this.insuranceDesignService.checkRate(request);
+			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());						
 		}
+//		if(this.insuranceDTO == null ) {
+//		}else {
+//			//기준보험료 계산에 실패
+//			model.addAttribute("StandardFee", true);//
+//		}
 		
 		return "popup";
 	}
@@ -153,6 +155,7 @@ public class InsuranceDesignController {
 	}
 	@RequestMapping(value = "design", method = RequestMethod.GET)
 	public String design() {
+		
 		return "design";
 	}
 
