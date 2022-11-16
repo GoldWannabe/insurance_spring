@@ -78,12 +78,12 @@ public class InsuranceDesignController {
 	@RequestMapping(value = "popup", method = RequestMethod.GET)
 	public String StandardFeePopupDesign(HttpServletRequest request, Model model) {
 		if(request.getParameter("yes").equals(true)){//예를 true로 받아서
-			this.insuranceDTO = this.insuranceDesignService.getStandardFee(request);// 기존 보험료 주기. 아니요 일시 null 			
+			this.insuranceDTO = this.insuranceDesignService.getStandardFee();// 기존 보험료 주기. 아니요 일시 null 			
+			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());						
 		}else {
 			//취소 값 생각하기.
-			//아니요 일시 null 	 직접 적은 등급별 요율로 계산한 기준보험료.
-			this.insuranceDTO = this.insuranceDesignService.checkRate(request);
-			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());						
+			//아니요 일시 null
+			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());	
 		}
 //		if(this.insuranceDTO == null ) {
 //		}else {
@@ -98,7 +98,8 @@ public class InsuranceDesignController {
 	public String rateByGrade(HttpServletRequest request, Model model) {
 		//요율 배열로.
 		//기존 요율로 계산한 기준보험료.
-		this.insuranceDTO = this.insuranceDesignService.getStandardFee(request);//직접 적은 요율을 통해 기준보험료 계산.
+		this.insuranceDTO = this.insuranceDesignService.checkRate(request);//직접 적은 요율을 통해 기준보험료 계산.
+	
 		this.insuranceVO.setStandardFee(this.insuranceDTO.getStandardFee());
 		model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());		
 		
@@ -115,6 +116,7 @@ public class InsuranceDesignController {
 			model.addAttribute("Result", false);//"등록에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다"
 			
 		}
+		
 		//취소 or 아니요 누르면 임시저장
 		boolean temp = insuranceDesignService.saveTempInsurance();
 		if(temp) { //임시저장에 성공하면 true
@@ -124,33 +126,6 @@ public class InsuranceDesignController {
 		}
 	}
 	
-//	public void temp(HttpServletRequest request) {
-		//제일 시작부분
-		//임시 저장한 파일이 있는지 확인
-//		this.insuranceDTO = insuranceDesignService.getTempInsurance(request);
-		
-//		this.insuranceDTO = insuranceDesignService.checkName();
-		//DTO로 받는다 요율까지
-		//실패하면 다시
-		
-		//view 기본 요율 사용 여부 확인 
-		//예 누르면 기본 요율 계산후 최종 등록할건지 말건지. getStandardFee
-		//아니오 누르면 직접 입력
-//		this.insuranceDTO = this.insuranceDesignService.checkRate(request);
-		//실패하면 다시
-		//성공하면 최종 등록
-		
-		
-		
-//		//예 누르면 등록
-//		 boolean a1 = insuranceDesignService.register();
-
-
-//		//아니요 누르면 임시저장
-//		 boolean a2 = insuranceDesignService.saveTempInsurance();
-		
-		 //만약 false 그럼 담당자 연락하세요 띄우세요.
-//	}
 	@RequestMapping(value = "menu", method = RequestMethod.GET)
 	public String menu() {
 		return "menu";
@@ -158,6 +133,8 @@ public class InsuranceDesignController {
 	@RequestMapping(value = "design", method = RequestMethod.GET)
 	public String design() {
 		//임시저장확인
+		//설계버튼에 대한 value를 boolean으로 받기
+		
 		return "design";
 	}
 

@@ -27,7 +27,7 @@ public class testController {
 		
 
 		insuranceDesignService.checkRate(request);
-		insuranceDesignService.getStandardFee(request);
+		insuranceDesignService.getStandardFee();
 		insuranceDesignService.register();
 		System.out.println("끝");
 		return "test";
