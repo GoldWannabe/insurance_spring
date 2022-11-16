@@ -27,4 +27,14 @@ public class PopupController {
 		
 		return "popupList";
 	}
+	
+	@RequestMapping(value = "design4", method = RequestMethod.GET)
+	public String design4() {
+		return "design4";
+	}
+	
+	@RequestMapping(value = "testPopup", method = RequestMethod.GET)
+	public String testPopup() {
+		return "testPopup";
+	}
 }

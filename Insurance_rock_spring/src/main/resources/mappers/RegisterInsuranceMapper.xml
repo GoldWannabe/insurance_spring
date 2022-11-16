@@ -2,10 +2,10 @@
 
 	<mapper namespace="RegisterInsuranceMapper">
 		<!--  SELECT -->
-		<select id="selectAll" resultType="com.mju.spring.Entity.Insurance">
+		<select id="selectName" resultType="com.mju.spring.Entity.Insurance">
 			SELECT * from RegisterInsurance where insuranceName = #{insuranceName}
 		</select>
 		<insert id="create">
-			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandradFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType.toString()}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
+			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandradFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
 		</insert>
 	</mapper>
