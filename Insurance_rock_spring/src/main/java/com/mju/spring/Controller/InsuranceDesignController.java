@@ -63,6 +63,9 @@ public class InsuranceDesignController {
 			this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
 			this.insuranceVO.setPremiumRate(this.insuranceDTO.getPremiumRate());// 배열로 넣어서 안되면 따로따로 넣어야 하니까 말해줘.to은서
 
+			
+			model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+			model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
 			model.addAttribute("InsuranceName", this.insuranceVO.getInsuranceName());
 			model.addAttribute("SpecialContract", this.insuranceVO.getSpecialContract());
 			model.addAttribute("ApplyCondition", this.insuranceVO.getApplyCondition());
