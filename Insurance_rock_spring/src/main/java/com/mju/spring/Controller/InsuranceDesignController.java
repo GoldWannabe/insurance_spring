@@ -77,7 +77,7 @@ public class InsuranceDesignController {
 	}
 	@RequestMapping(value = "popup", method = RequestMethod.GET)
 	public String StandardFeePopupDesign(HttpServletRequest request, Model model) {
-		if(request.getParameter("yes").equals(true)){//예를 true로 받아서
+		if(request.getParameter("addRate").equals(true)){//예를 true로 받아서 
 			this.insuranceDTO = this.insuranceDesignService.getStandardFee();// 기존 보험료 주기. 아니요 일시 null 			
 			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());						
 		}else {
