@@ -8,6 +8,6 @@
 	<h1>Hello world!</h1>
 
 	<P>The time on the server is ${serverTime}.</P>
-	<button type="button" onclick="location.href='menu'">popup</button>
+	<button type="button" onclick="location.href='menu'">Menu</button>
 </body>
 </html>
