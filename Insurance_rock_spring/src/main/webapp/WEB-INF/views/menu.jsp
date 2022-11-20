@@ -4,14 +4,17 @@
 <html>
 <head>
 <title>menu</title>
+
 </head>
 <body>
-<form action = "menu">
-	<button type="submit" name="team" value="contractTeam">계약팀</button>
-	<button type="submit"  name="team" value="financialDirector">금융감독원</button>
-	<button type="submit" name="team" value="salesTeam">마켓팅/영업팀</button>
-	<button type="submit"  name="team" value="compensateTeam">보상팀</button>
-	<button type="submit" name="team" value="policyholder">고객</button>
-</form>
+
+	<form action="menu">
+	<button type="submit" name= team value =contractTeam >계약팀</button>
+	<button type="submit" name= team value =financialDirector >금융감독원</button>
+	<button type="submit" name= team value =salesTeam>마켓팅/영업팀</button>
+	<button type="submit" name= team value =policyholder>보상팀</button>
+	<button type="submit" name= team value =compensateTeam>고객</button>
+	</form>
+
 </body>
 </html>
