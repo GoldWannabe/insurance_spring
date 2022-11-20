@@ -1,20 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page session="false"%>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Menu</title>
-
+<title>menu</title>
 </head>
 <body>
-
-	<div>
-	<form action="design" >
-		<button type="submit">����</button>
-		<button type="button">�μ��ɻ�</button>
-		<button type="button">������</button></form>
-	</div>
+	<button type="button" onclick="location.href='contract'">계약팀</button>
+	<button type="button" onclick="location.href='financialDrector'">금융감독원</button>
+	<button type="button" onclick="location.href='sales'">마켓팅/영업팀</button>
+	<button type="button" onclick="location.href='compensate'">보상팀</button>
+	<button type="button" onclick="location.href='policyholder'">고객</button>
 	
 </body>
 </html>

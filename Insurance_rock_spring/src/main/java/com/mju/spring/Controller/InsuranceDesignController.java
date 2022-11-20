@@ -21,7 +21,7 @@ public class InsuranceDesignController {
 	private InsuranceVO insuranceVO;
 	private InsuranceDTO insuranceDTO;
 
-	@RequestMapping(value = "design2", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
+	@RequestMapping(value = "longTerm_InsurnaceType", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
 	public String insuranceDesign2(HttpServletRequest request, Model model) {
 
 		// InsuranceDTO insuranceDTO = new InsuranceDTO();
@@ -42,11 +42,11 @@ public class InsuranceDesignController {
 		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
 		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
 
-		return "design2";
+		return "longTerm_InsurnaceType";
 
 	}
 
-	@RequestMapping(value = "design3", method = RequestMethod.GET)
+	@RequestMapping(value = "insuranceInfor", method = RequestMethod.GET)
 	public String insuranceDesign3(HttpServletRequest request, Model model) { // design3에서
 //		String[] text =  request.getParameterValues("text");//순서대로 배열에 들어간다네? 안되면 각각 하나씩.
 		this.insuranceDTO = insuranceDesignService.checkName(request); // 중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘. 요율도 다 보내줌
@@ -74,7 +74,7 @@ public class InsuranceDesignController {
 			model.addAttribute("PremiumRate", this.insuranceVO.getPremiumRate());
 		}
 
-		return "design3";
+		return "insuranceInfor";
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -132,17 +132,20 @@ public class InsuranceDesignController {
 		}
 	}
 
-	@RequestMapping(value = "menu", method = RequestMethod.GET)
-	public String menu() {
-		return "menu";
+	@RequestMapping(value = "contract", method = RequestMethod.GET)
+	public String showContract() {
+		return "contract";
 	}
 
 	@RequestMapping(value = "design", method = RequestMethod.GET)
-	public String design() {
+	public String showDesign() {
 		// 임시저장확인
 		// 설계버튼에 대한 value를 boolean으로 받기
-
 		return "design";
+	}
+	@RequestMapping(value = "menu", method = RequestMethod.GET)
+	public String showMenu() {
+		return "menu";
 	}
 
 }
