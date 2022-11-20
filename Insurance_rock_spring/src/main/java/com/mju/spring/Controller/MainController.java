@@ -11,13 +11,12 @@ public class MainController {
 
 	@RequestMapping(value = "menu", method = RequestMethod.GET)
 	public String teamControl(HttpServletRequest request) {
-		System.out.println(request.getParameter("team"));
 		if (request.getParameter("team").equals("contractTeam")) {
 			return "contractTeam";
 		} else if (request.getParameter("team").equals("financialDirector")) {
 			return "financialDirector";
 		} else if (request.getParameter("team").equals("salesTeam")) {
-			return "salesTeam";
+			return "salesTeam/salesTeam";
 		} else if (request.getParameter("team").equals("policyholder")) {
 			return "policyholder";
 		} else if (request.getParameter("team").equals("compensateTeam")) {

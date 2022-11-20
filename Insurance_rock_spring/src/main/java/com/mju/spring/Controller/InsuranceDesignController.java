@@ -120,7 +120,6 @@ public class InsuranceDesignController {
 			model.addAttribute("Result", true);// "보험 등록이 완료되었습니다"
 		} else {// 실패하면 false
 			model.addAttribute("Result", false);// "등록에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다"
-
 		}
 
 		// 취소 or 아니요 누르면 임시저장

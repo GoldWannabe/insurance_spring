@@ -42,4 +42,20 @@ public class testController {
 		
 		return "test";
 	}
+	@RequestMapping(value = "insuranceMarketing", method = RequestMethod.GET)
+	public String ShowInsuranceMarketing(HttpServletRequest request, Model model) {
+		
+		if (request.getParameter("insuranceMarketing").equals("insuranceSales")) {
+			return "salesTeam/slectInsuranceType";
+		} else if (request.getParameter("insuranceMarketing").equals("customerManagement")) {
+			return "salesTeam/";
+		} else if (request.getParameter("insuranceMarketing").equals("channelManagement")) {
+			return "salesTeam/";
+		} else {
+			return "error";
+		}
+		
+	}
+
+	
 }

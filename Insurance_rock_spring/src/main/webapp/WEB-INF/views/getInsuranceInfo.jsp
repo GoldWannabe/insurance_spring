@@ -17,8 +17,8 @@
 	<p>설명: ${Explanation}</p>
 
 확인을 누르시면 설계가 완료됩니다.
-<button type="button" onclick="location.href='menu'">확인</button>
 
+<button type="button" onclick="location.href='menu'">확인</button>
 
 </body>
 </html>
