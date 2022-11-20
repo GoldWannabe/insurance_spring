@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<table style="border: 1px;">
+	<table border="1">
 		<thead>
 			<tr >
 				<th>º¸Çè¸í</th>
