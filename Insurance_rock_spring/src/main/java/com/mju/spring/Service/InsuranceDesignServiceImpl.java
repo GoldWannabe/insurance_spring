@@ -137,7 +137,6 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			registerFlag = false;
 		}
 
-		System.out.println("943827326839405-");
 		return registerFlag;
 
 	}
