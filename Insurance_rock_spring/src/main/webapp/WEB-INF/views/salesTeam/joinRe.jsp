@@ -18,7 +18,7 @@
 		</button>
 	</form>
 
-	<table style="border: 1px;">
+	<table border="1">
 		<thead>
 			<tr >
 				<th>가입자 이름</th>
