@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "menu", method = RequestMethod.GET)
 	public String teamControl(HttpServletRequest request) {
+		System.out.println(request.getParameter("team"));
 		if (request.getParameter("team").equals("contractTeam")) {
 			return "contractTeam";
 		} else if (request.getParameter("team").equals("financialDirector")) {
@@ -24,11 +25,11 @@ public class MainController {
 		} else {
 			return "error";
 		}
-
 	}
 
 	@RequestMapping(value = "contractTeam", method = RequestMethod.GET)
 	public String contractTeamControl(HttpServletRequest request) {
+		
 		if (request.getParameter("menu").equals("design")) {
 			return "design";
 		} else if (request.getParameter("menu").equals("")) {

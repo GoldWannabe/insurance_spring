@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>insuranceInfor</title>
+<title>insuranceInfo</title>
 </head>
 <body>
 	<p>-----보험 Info-----</p>

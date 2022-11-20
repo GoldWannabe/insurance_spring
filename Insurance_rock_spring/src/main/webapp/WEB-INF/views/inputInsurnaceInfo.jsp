@@ -19,7 +19,7 @@
 
 </head>
 <body>
-	<form name="rateChoice" action="insuranceInfor" onSubmit="rtn();">
+	<form name="rateChoice" action="insuranceInfo" onSubmit="rtn();">
 		<p>보험 종류: ${InsuranceType}</p>
 		<p>장기 여부: ${LongTerm}</p>
 		<br> 이름: <input type="text" name="inusranceName"> <br>
