@@ -10,11 +10,11 @@
 <body>
 	<p>원하시는 메뉴에 해당하는 버튼을 눌러주세요.</p>  <br>
 	<div>
-		<form action = "insuranceMarketing">
-			<button type="button" name = "insuranceMarketing" value="insuranceSales">보험판매</button>
-			<button type="button" name = "insuranceMarketing" value="customerManagement">고객 정보 관리</button>
-			<button type="button" name = "insuranceMarketing" value="channelManagement">판매채널 관리</button>
-			<button type="button" onclick="location.href='menu'">취소</button>
+		<form action = "salesTeam">
+			<button type="submit" name = "menu" value="insuranceSales">보험판매</button>
+			<button type="submit" name = "menu" value="customerManagement">고객 정보 관리</button>
+			<button type="submit" name = "menu" value="channelManagement">판매채널 관리</button>
+			<button type="submit" name = "menu" value="cancellation">취소</button>
 		</form>
 	</div>
 	

@@ -42,20 +42,68 @@ public class testController {
 		
 		return "test";
 	}
-	@RequestMapping(value = "insuranceMarketing", method = RequestMethod.GET)
-	public String ShowInsuranceMarketing(HttpServletRequest request, Model model) {
-		
-		if (request.getParameter("insuranceMarketing").equals("insuranceSales")) {
-			return "salesTeam/slectInsuranceType";
-		} else if (request.getParameter("insuranceMarketing").equals("customerManagement")) {
-			return "salesTeam/";
-		} else if (request.getParameter("insuranceMarketing").equals("channelManagement")) {
-			return "salesTeam/";
+	
+	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
+	public String insuranceType(HttpServletRequest request, Model model) {
+		if (request.getParameter("next").equals("next")) {
+			return "salesTeam//inputInsuranceName";
 		} else {
 			return "error";
 		}
 		
 	}
+	@RequestMapping(value = "customerInfo", method = RequestMethod.GET)
+	public String customerInfo(HttpServletRequest request, Model model) {
+		if (request.getParameter("search").equals("search")) {
+			return "salesTeam//insuranceJoin";
+		}  else {
+			return "error";
+		}
+		
+	}
+	@RequestMapping(value = "joinInsurance", method = RequestMethod.GET)
+	public String joinInsurance(HttpServletRequest request, Model model) {
+		if (request.getParameter("join").equals("insuranceJoin")) {
+			return "salesTeam//joinNewCustomer";
+		} else if(request.getParameter("join").equals("insuranceReJoin")){
+			return "salesTeam//joinRe";
+		} else if(request.getParameter("join").equals("cancellation")){
+			return "menu";
+		} else {
+			return "error";
+		}
+		
+	}
+	@RequestMapping(value = "continuously", method = RequestMethod.GET)
+	public String continuously(HttpServletRequest request, Model model) {
+		if (request.getParameter("join").equals("joinRequest")) {
+			return "salesTeam//joinContinuously";
+		} else if(request.getParameter("join").equals("cancellation")){
+			return "menu";
+		} else {
+			return "error";
+		}
+		
+	}
+	@RequestMapping(value = "insuranceJoinFinish", method = RequestMethod.GET)
+	public String insuranceJoinFinish(HttpServletRequest request, Model model) {
+		if (request.getParameter("join").equals("joinRequest")) {
+			return "menu";
+		}else {
+			return "error";
+		}
+		
+	}
+	@RequestMapping(value = "rejoin", method = RequestMethod.GET)
+	public String rejoin(HttpServletRequest request, Model model) {
+		if (request.getParameter("search").equals("search")) {
+			return "salesTeam//joinRe";//재가입신청 보류...
+		}else {
+			return "error";
+		}
+		
+	}
+
 
 	
 }
