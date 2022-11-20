@@ -11,5 +11,6 @@
 	<button type="button" onclick="location.href='sales'">마켓팅/영업팀</button>
 	<button type="button" onclick="location.href='compensate'">보상팀</button>
 	<button type="button" onclick="location.href='policyholder'">고객</button>
+	
 </body>
 </html>

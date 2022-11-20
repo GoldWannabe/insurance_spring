@@ -3,6 +3,6 @@
 	<mapper namespace="RegisterGeneralRateMapper">
 		<!--  SELECT -->
 		<insert id="create">
-				INSERT INTO RegisterGeneralRate(insuranceID, insuranceRank, housePremiumRate) VALUES (#{insuranceID}, 1, #{premiumRate[0]}), (#{insuranceID}, 2, #{premiumRate[1]}), (#{insuranceID}, 3, #{premiumRate[2]})
+				INSERT INTO RegisterGeneralRate(insuranceID, insuranceRank, generalPremiumRate) VALUES (#{insuranceID}, 1, #{premiumRate[0]}), (#{insuranceID}, 2, #{premiumRate[1]}), (#{insuranceID}, 3, #{premiumRate[2]})
 		</insert>
 	</mapper>
