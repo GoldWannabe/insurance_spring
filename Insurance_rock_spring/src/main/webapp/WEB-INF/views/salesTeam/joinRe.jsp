@@ -13,7 +13,7 @@
 
 		고객 이름: <input type="text" name="customerName"> <br>
 		전화번호: <input type="text" name="phoneNum"><br>
-		<button type="submit" name="search" value="search" />
+		<button type="submit" name="search" value="search" >
 		검색
 		</button>
 	</form>
