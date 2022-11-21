@@ -13,27 +13,27 @@ public class MainController {
 	@RequestMapping(value = "menu", method = RequestMethod.GET)
 	public String teamControl(HttpServletRequest request) {
 
-	String team = request.getParameter("team");
-		
+		String team = request.getParameter("team");
+
 		if (team.equals("contractTeamMenu")) {
 			return "contractTeam//contractTeamMenu";
 		} else if (team.equals("financialDirector")) {
 			return "financialDirector";
 		} else if (team.equals("salesTeam")) {
 			return "salesTeam//salesTeamMenu";
-		} else if (team.equals("policyholder")) {
-			return "policyholder";
 		} else if (team.equals("compensateTeam")) {
 			return "compensateTeam";
+		} else if (team.equals("policyholder")) {
+			return "policyholder";
 		} else {
 			return "error";
 		}
-		
+
 	}
 
 	@RequestMapping(value = "contractTeamMenu", method = RequestMethod.GET)
 	public String contractTeamControl(HttpServletRequest request) {
-		
+
 		if (request.getParameter("menu").equals("design")) {
 			return "contractTeam//insuranceDesign//design";
 		} else if (request.getParameter("menu").equals("")) {
@@ -45,10 +45,10 @@ public class MainController {
 		}
 
 	}
-	
+
 	@RequestMapping(value = "salesTeamMenu", method = RequestMethod.GET)
 	public String salesTeamControl(HttpServletRequest request) {
-		
+
 		if (request.getParameter("menu").equals("insuranceSales")) {
 			return "salesTeam//insuranceSales//selectInsuranceType";
 		} else if (request.getParameter("menu").equals("customerManagement")) {

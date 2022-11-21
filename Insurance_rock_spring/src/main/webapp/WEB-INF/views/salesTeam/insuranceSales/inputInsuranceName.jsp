@@ -18,18 +18,18 @@
 		</thead>
 
 		<tbody>
-			<tr th:each = " list: ${tableList}">
-				<td><span th:text = "${list.name}"></span></td>
-				<td><span th:text = "${list.type}"></span></td>
+			<tr th:each = " list: ${InsuranceList}"  >
+				<td><span th:text = "${list.insuranceName}"></span></td>
+				<td><span th:text = "${list.insuranceType}"></span></td>
 			</tr>
 		</tbody>
 	</table>
 	
-	<form action="customerInfo">
+	<form action="inputInsuranceName">
 		<p>검색하고자 하는 보험 이름을 입력해주십시오.</p>
 
 		보험 이름: <input type="text" name="inusranceName">
-		<button type="submit" name="search" value="search" />
+		<button type="submit" name="search" value="search">
 		검색
 		</button>
 	</form>

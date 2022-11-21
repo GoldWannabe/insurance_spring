@@ -9,7 +9,7 @@
 </head>
 <body>
 <p>조회된 보험입니다.</p>
-	<form action="joinInsurance">
+	<form action="joinSelection">
 		보험명 : ${InsuranceName} <br>
 		보험 종류: ${InsuranceType} <br>
 		기준보험료 : ${StandardFee}<br>
@@ -20,9 +20,9 @@
 		설명: ${Explanation}<br>
 		요율 : [1등급, 2등급, 3등급] [${PremiumRate}]<br>
 		${InsuranceName} 보험에 가입하시겠습니까?
-		<button type="submit" name = "join" value="insuranceJoin">가입</button>
-		<button type="submit" name = "join" value="insuranceReJoin">재가입 신청</button>
-		<button type="submit" name = "join" value="cancellation">취소</button>
+		<button type="submit" name = "join" value="join">가입</button>
+		<button type="submit" name = "join" value="reJoin">재가입 신청</button>
+		<button type="submit" name = "join" value="cancel">취소</button>
 	</form>
 	
 </body>	

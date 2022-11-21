@@ -43,68 +43,68 @@ public class testController {
 		return "test";
 	}
 	
-	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
-	public String insuranceType(HttpServletRequest request, Model model) {
-		if (request.getParameter("next").equals("next")) {
-			return "salesTeam//insuranceSales//inputInsuranceName";
-		} else if(request.getParameter("next").equals("cancellation")){
-			return "menu";
-		} else {
-			return "error";
-		}
-	
-		
-	}
-	@RequestMapping(value = "customerInfo", method = RequestMethod.GET)
-	public String customerInfo(HttpServletRequest request, Model model) {
-		if (request.getParameter("search").equals("search")) {
-			return "salesTeam//insuranceSales//insuranceJoin";
-		}else {
-			return "error";
-		}
-	}
-	@RequestMapping(value = "joinInsurance", method = RequestMethod.GET)
-	public String joinInsurance(HttpServletRequest request, Model model) {
-		if (request.getParameter("join").equals("insuranceJoin")) {
-			return "salesTeam//insuranceSales//joinNewCustomer";
-		} else if(request.getParameter("join").equals("insuranceReJoin")){
-			return "salesTeam//insuranceSales//joinRe";
-		} else if(request.getParameter("join").equals("cancellation")){
-			return "menu";
-		} else {
-			return "error";
-		}
-		
-	}
-	@RequestMapping(value = "continuously", method = RequestMethod.GET)
-	public String continuously(HttpServletRequest request, Model model) {
-		if (request.getParameter("join").equals("joinRequest")) {
-			return "salesTeam//insuranceSales//joinContinuously";
-		} else if(request.getParameter("join").equals("cancellation")){
-			return "menu";
-		} else {
-			return "error";
-		}
-		
-	}
-	@RequestMapping(value = "insuranceJoinFinish", method = RequestMethod.GET)
-	public String insuranceJoinFinish(HttpServletRequest request, Model model) {
-		if (request.getParameter("join").equals("joinRequest")) {
-			return "menu";
-		}else {
-			return "error";
-		}
-		
-	}
-	@RequestMapping(value = "rejoin", method = RequestMethod.GET)
-	public String rejoin(HttpServletRequest request, Model model) {
-		if (request.getParameter("search").equals("search")) {
-			return "salesTeam//insuranceSales//joinRe";//재가입신청 보류...
-		}else {
-			return "error";
-		}
-		
-	}
+//	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
+//	public String insuranceType(HttpServletRequest request, Model model) {
+//		if (request.getParameter("next").equals("next")) {
+//			return "salesTeam//insuranceSales//inputInsuranceName";
+//		} else if(request.getParameter("next").equals("cancellation")){
+//			return "menu";
+//		} else {
+//			return "error";
+//		}
+//	
+//		
+//	}
+//	@RequestMapping(value = "customerInfo", method = RequestMethod.GET)
+//	public String customerInfo(HttpServletRequest request, Model model) {
+//		if (request.getParameter("search").equals("search")) {
+//			return "salesTeam//insuranceSales//insuranceJoin";
+//		}else {
+//			return "error";
+//		}
+//	}
+//	@RequestMapping(value = "joinInsurance", method = RequestMethod.GET)
+//	public String joinInsurance(HttpServletRequest request, Model model) {
+//		if (request.getParameter("join").equals("insuranceJoin")) {
+//			return "salesTeam//insuranceSales//joinNewCustomer";
+//		} else if(request.getParameter("join").equals("insuranceReJoin")){
+//			return "salesTeam//insuranceSales//joinRe";
+//		} else if(request.getParameter("join").equals("cancellation")){
+//			return "menu";
+//		} else {
+//			return "error";
+//		}
+//		
+//	}
+//	@RequestMapping(value = "continuously", method = RequestMethod.GET)
+//	public String continuously(HttpServletRequest request, Model model) {
+//		if (request.getParameter("join").equals("joinRequest")) {
+//			return "salesTeam//insuranceSales//joinContinuously";
+//		} else if(request.getParameter("join").equals("cancellation")){
+//			return "menu";
+//		} else {
+//			return "error";
+//		}
+//		
+//	}
+//	@RequestMapping(value = "insuranceJoinFinish", method = RequestMethod.GET)
+//	public String insuranceJoinFinish(HttpServletRequest request, Model model) {
+//		if (request.getParameter("join").equals("joinRequest")) {
+//			return "menu";
+//		}else {
+//			return "error";
+//		}
+//		
+//	}
+//	@RequestMapping(value = "rejoin", method = RequestMethod.GET)
+//	public String rejoin(HttpServletRequest request, Model model) {
+//		if (request.getParameter("search").equals("search")) {
+//			return "salesTeam//insuranceSales//joinRe";//재가입신청 보류...
+//		}else {
+//			return "error";
+//		}
+//		
+//	}
 
 
 	

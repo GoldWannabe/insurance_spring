@@ -4,17 +4,38 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>insuranceInfoOfCustomer</title>
+<title>JoinCustomer</title>
 
 	<script>
-	function CompletionPopup() {
-		alert("보험 가입신청이 완료 되었습니다.")
+	function CompletionPopup(boolean finishSales) {
+		if (finishSales)
+				confirm("회원가입이 완료되었습니다.")) {
+			//location.replace("design")
+			return true;
+		} else {return false;
+		}
+		}
+		
+		
 	</script>
 
 </head>
 <body>
-<p>이어서 회원님의 보험 정보를 기입하여주세요.</p>
-	<form action="insuranceJoinFinish"> <br>
+<p>신규고객으로 회원가입을 진행합니다.</p>
+<form action ="finishSales" onload="CompletionPopup(${Finish})">
+</form>
+	<form action="join" >
+		고객 이름: <input type="text" name="customerName"> <br>
+		주민/사업자 번호: <input type="text" name="registrationNum"><br>
+		전화번호: <input type="text" name="phoneNum"><br>
+		주소: <input type="text" name="address"><br>
+		성별: [male, female,none]<br>
+		<input type="radio" name="gender" value="male" />male
+		<input type="radio" name="gender" value="female" />female
+		<input type="radio" name="gender" value="none" />none <br><br>
+		은행 이름: <input type="text" name="bankName"><br>
+		계좌번호: <input type="text" name="accountNum"><br>
+		
 		담보액: <input type="text" name="securityFee"><br>
 		보험료: <input type="text" name="insuranceFee"><br>
 		납부방식(paymentCycle): <input type="text" name="paymentCycle"><br>
@@ -39,7 +60,9 @@
 		<input type="radio" name="goal" value="5" />5.office 
 		<input type="radio" name="goal" value="6" />6.corPark
 		<input type="radio" name="goal" value="7" />7.warehouse<br> <br> 
-		<button type="submit" name = "join" value="joinRequest" onClick="CompletionPopup();">가입 신청하기</button>
+		
+		<button type="submit" name = "join" value="join">가입 신청하기</button>
+		<button type="submit" name = "join" value="cancel">취소</button>
 	</form>
 	
 </body>	

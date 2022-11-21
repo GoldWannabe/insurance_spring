@@ -15,22 +15,23 @@ import com.mju.spring.DTO.InsuranceDTO;
 @Controller
 public class InsuranceSalesController {
 	
-//	@Autowired Service service;
-//
-//	@RequestMapping(value = "selectSalesType", method = RequestMethod.GET)
+	@Autowired InsuranceSalesController insuranceSalesController;
+
+//	@RequestMapping(value = "selectInsuranceType", method = RequestMethod.GET)
 //	public String selectInsuranceType(HttpServletRequest request, Model model) {
 //		//보험 타입 정해서 해당 보험에 해당하는 리스트 리턴
-//		this.service.selectInsuranceType(request);
-//		List<InsuranceDTO> insuranceList = this.service.getInsuranceList();
+//		//getInsuranceList의 request에는 타입만 정의되어있다
+//		List<InsuranceDTO> insuranceList = this.insuranceSalesController.getInsuranceList(request); 
 //		model.addAttribute("InsuranceList", insuranceList);
-//
-//		return "selectInsurance";
+//		
+//		return "salesTeam//insuranceSales//inputInsuranceName";
 //	}
 //	
-//	@RequestMapping(value = "selectInsurance", method = RequestMethod.GET)
+//	@RequestMapping(value = "inputInsuranceName", method = RequestMethod.GET)
 //	public String selectInsurance(HttpServletRequest request, Model model) {
 //		//선택한 보험 상세정보 리턴
-//		InsuranceDTO insuranceDTO = this.service.getInsurance(request);
+//		//getInsurance의 request에는 이름과 타입이 정의되어있다
+//		InsuranceDTO insuranceDTO = this.insuranceSalesController.getInsurance(request);
 //		model.addAttribute("LongTerm", insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
 //		model.addAttribute("InsuranceType", insuranceDTO.getInsuranceType());
 //		model.addAttribute("InsuranceName", insuranceDTO.getInsuranceName());
@@ -41,25 +42,28 @@ public class InsuranceSalesController {
 //		model.addAttribute("PremiumRate", insuranceDTO.getPremiumRate());
 //
 //
-//		return "";
+//		return "salesTeam//insuranceSales//joinSelection";
 //	}
-//	@RequestMapping(value = "selectContract", method = RequestMethod.GET)
-//	public String selectContract(HttpServletRequest request, Model model) {
+//	@RequestMapping(value = "joinSelection", method = RequestMethod.GET)
+//	public String joinSelection(HttpServletRequest request, Model model) {
 //		//보험 가입, 재가입 여부 선택
-//		if(request.getParameter("").equals("가입")) {
-//			return "가입";
-//		} else if(request.getParameter("").equals("재가입")) {
-//			return "재가입";
+//		if(request.getParameter("join").equals("join")) {
+//			return "salesTeam//insuranceSales//join";
+//		} else if(request.getParameter("join").equals("reJoin")) {
+//			return "salesTeam//insuranceSales//insuranceReJoin";
+//		} else if(request.getParameter("join").equals("cancel")) {
+//			return "menu";
 //		} else {
 //			return "error";
 //		}
 //
 //	}
-//	@RequestMapping(value = "createContractAndCustomer", method = RequestMethod.GET)
-//	public String createContractAndCustomer(HttpServletRequest request, Model model) {
+//	@RequestMapping(value = "join", method = RequestMethod.GET)
+//	public String join(HttpServletRequest request, Model model) {
+//
 //		//일단은 여기서 계약과 고객 생성
-//		if(this.service.createContract && this.service.createCustomer) {
-//			return register();
+//		if(this.insuranceSalesController.createContract(request) && this.insuranceSalesController.createCustomer(request)) {
+//			return register(model);
 //		} else {
 //			return "error";
 //		}
@@ -67,13 +71,18 @@ public class InsuranceSalesController {
 //
 //		
 //	}
-//	public String register(HttpServletRequest request, Model model) {
+//	public String register(Model model) {
 //		if(this.service.register()) {
-//			return "가입 완료 창";
+//			model.addAttribute("Finish", true);
+//			return "salesTeam//insuranceSales//join";
 //		} else {
 //			return "error";
 //		}
 //
 //	}
 
+	@RequestMapping(value = "finishSales", method = RequestMethod.GET)
+	public String finishSales(HttpServletRequest request, Model model) {
+		return "menu";
+	}
 }

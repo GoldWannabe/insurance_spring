@@ -1,4 +1,4 @@
-package com.mju.spring.Mybatis;
+package com.mju.spring.DAO;
 
 import java.io.IOException;
 import java.io.Reader;

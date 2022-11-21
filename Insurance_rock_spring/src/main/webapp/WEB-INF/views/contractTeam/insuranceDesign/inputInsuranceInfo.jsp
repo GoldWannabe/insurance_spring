@@ -16,7 +16,7 @@
 			return false;
 	}
 </script>
-
+3
 </head>
 <body>
 	<form name="rateChoice" action="insuranceInfo" onSubmit="rtn();">
