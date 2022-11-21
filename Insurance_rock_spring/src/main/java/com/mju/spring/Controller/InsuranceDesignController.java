@@ -42,7 +42,7 @@ public class InsuranceDesignController {
 		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
 		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
 
-		return "inputInsuranceInfo";
+		return "contractTeam//insuranceDesign//inputInsuranceInfo";
 
 	}
 
@@ -74,7 +74,7 @@ public class InsuranceDesignController {
 			model.addAttribute("PremiumRate", this.insuranceVO.getPremiumRate());
 		}
 
-		return "getInsuranceInfo";
+		return "contractTeam//insuranceDesign//getInsuranceInfo";
 	}
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
@@ -112,23 +112,33 @@ public class InsuranceDesignController {
 		return "popup";
 	}
 
-	@RequestMapping(value = "result", method = RequestMethod.GET)
-	public void register(HttpServletRequest request, Model model) {
+	@RequestMapping(value = "register", method = RequestMethod.GET)
+	public String register(HttpServletRequest request, Model model) {
 //		예 누르면 등록
+		
+		//service insert 오류 / 일단 누르면 menu로 전달하도록 함
+		if(request.getParameter("menu").equals("menu")) {
+			return "menu";
+		}
+		
 		boolean result = insuranceDesignService.register();
+		
 		if (result) {// 성공하면 true
 			model.addAttribute("Result", true);// "보험 등록이 완료되었습니다"
+			
 		} else {// 실패하면 false
 			model.addAttribute("Result", false);// "등록에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다"
 		}
+		return null;
 
 		// 취소 or 아니요 누르면 임시저장
-		boolean temp = insuranceDesignService.saveTempInsurance();
-		if (temp) { // 임시저장에 성공하면 true
-			model.addAttribute("Temp", true); // "임시저장하였습니다."
-		} else {// 임시저장에 실패하면 false
-			model.addAttribute("Temp", false); // 나중에 다시 들어왔을때 Temp로 임시저장있는지 판단. 있다면 바로 등록페이지로 이동.
-		}
+//		boolean temp = insuranceDesignService.saveTempInsurance();
+//		if (temp) { // 임시저장에 성공하면 true
+//			model.addAttribute("Temp", true); // "임시저장하였습니다."
+//		} else {// 임시저장에 실패하면 false
+//			model.addAttribute("Temp", false); // 나중에 다시 들어왔을때 Temp로 임시저장있는지 판단. 있다면 바로 등록페이지로 이동.
+//		}
+//		return null;
 	}
 
 //	@RequestMapping(value = "contract", method = RequestMethod.GET)
