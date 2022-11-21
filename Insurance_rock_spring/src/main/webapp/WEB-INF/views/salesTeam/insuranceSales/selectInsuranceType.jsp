@@ -15,7 +15,8 @@
 		<input type="radio" name="insuranceType" value="house" />주택보험 <br> 
 		
 		<button type="submit" name ="next" value="next"/>다음</button>
-		<button type="submit" name="menu" value= "cancellation">취소 </button>
+		<button type="submit" name="menu" value="cancellation">취소 </button>
+	</form>
 	
 </body>	
 </html>
