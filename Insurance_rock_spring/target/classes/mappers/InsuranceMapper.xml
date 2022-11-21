@@ -5,4 +5,13 @@
 		<select id="selectName" resultType="com.mju.spring.Entity.Insurance">
 			SELECT * from Insurance where insuranceName = #{insuranceName}
 		</select>
+		
+		<select id="selectGeneralType" resultType="com.mju.spring.Entity.GeneralInsurance">
+			SELECT insuranceName, insuranceType from Insurance where insuranceType = #{insuranceType}
+		</select>
+		
+		<select id="selectHouseType" resultType="com.mju.spring.Entity.HouseInsurance">
+			SELECT insuranceName, insuranceType from Insurance where insuranceType = #{insuranceType}
+		</select>
+		
 	</mapper>

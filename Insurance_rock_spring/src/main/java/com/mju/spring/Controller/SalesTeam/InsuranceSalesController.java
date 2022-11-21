@@ -11,27 +11,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.DTO.InsuranceDTO;
+import com.mju.spring.Service.InsuranceSalesService;
 
 @Controller
 public class InsuranceSalesController {
 	
-	@Autowired InsuranceSalesController insuranceSalesController;
+	@Autowired InsuranceSalesService insuranceSalesService;
 
-//	@RequestMapping(value = "selectInsuranceType", method = RequestMethod.GET)
-//	public String selectInsuranceType(HttpServletRequest request, Model model) {
-//		//보험 타입 정해서 해당 보험에 해당하는 리스트 리턴
-//		//getInsuranceList의 request에는 타입만 정의되어있다
-//		List<InsuranceDTO> insuranceList = this.insuranceSalesController.getInsuranceList(request); 
-//		model.addAttribute("InsuranceList", insuranceList);
-//		
-//		return "salesTeam//insuranceSales//inputInsuranceName";
-//	}
-//	
+	@RequestMapping(value = "selectInsuranceType", method = RequestMethod.GET)
+	public String selectInsuranceType(HttpServletRequest request, Model model) {
+		//보험 타입 정해서 해당 보험에 해당하는 리스트 리턴
+		//getInsuranceList의 request에는 타입만 정의되어있다
+		List<InsuranceDTO> insuranceList = this.insuranceSalesService.getInsuranceList(request); 
+		model.addAttribute("InsuranceList", insuranceList);
+		
+		return "salesTeam//insuranceSales//inputInsuranceName";
+	}
+
 //	@RequestMapping(value = "inputInsuranceName", method = RequestMethod.GET)
 //	public String selectInsurance(HttpServletRequest request, Model model) {
 //		//선택한 보험 상세정보 리턴
 //		//getInsurance의 request에는 이름과 타입이 정의되어있다
-//		InsuranceDTO insuranceDTO = this.insuranceSalesController.getInsurance(request);
+//		InsuranceDTO insuranceDTO = this.insuranceSalesService.getInsurance(request);
 //		model.addAttribute("LongTerm", insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
 //		model.addAttribute("InsuranceType", insuranceDTO.getInsuranceType());
 //		model.addAttribute("InsuranceName", insuranceDTO.getInsuranceName());
