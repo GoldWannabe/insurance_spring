@@ -1,0 +1,46 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+	pageEncoding="EUC-KR"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>insuranceInfoOfCustomer</title>
+
+	<script>
+	function CompletionPopup() {
+		alert("보험 가입신청이 완료 되었습니다.")
+	</script>
+
+</head>
+<body>
+<p>이어서 회원님의 보험 정보를 기입하여주세요.</p>
+	<form action="insuranceJoinFinish"> <br>
+		담보액: <input type="text" name="securityFee"><br>
+		보험료: <input type="text" name="insuranceFee"><br>
+		납부방식(paymentCycle): <input type="text" name="paymentCycle"><br>
+		가입기간: <input type="text" name="period"><br>
+		소화시설(Float) : <input type="text" name="fireFedilities"><br>
+		스케일(Int): <input type="text" name="scale"><br>
+		주변시설(Float): <input type="text" name="surroundingFedilities"><br>
+		높이가 15층 이상입니까? <br>
+		<input type="radio" name="height" value="true" />예
+		<input type="radio" name="height" value="false" />아니오 <br> <br> 
+		건물 재질(rock, wood etc.)<br>
+		<input type="radio" name="meterial" value="1" />1.wood
+		<input type="radio" name="meterial" value="2"/>2.rock 
+		<input type="radio" name="meterial" value="3" />3.concrete
+		<input type="radio" name="meterial" value="4" />4.iron
+		<input type="radio" name="meterial" value="5" />5.brick <br> <br> 
+		건물 목적(living, factory etc.)<br> 
+		<input type="radio" name="goal" value="1" />1.living
+		<input type="radio" name="goal" value="2"/>2.factory 
+		<input type="radio" name="goal" value="3" />3.culturalAsset
+		<input type="radio" name="goal" value="4" />4.store
+		<input type="radio" name="goal" value="5" />5.office 
+		<input type="radio" name="goal" value="6" />6.corPark
+		<input type="radio" name="goal" value="7" />7.warehouse<br> <br> 
+		<button type="submit" name = "join" value="joinRequest" onClick="CompletionPopup();">가입 신청하기</button>
+	</form>
+	
+</body>	
+</html>
