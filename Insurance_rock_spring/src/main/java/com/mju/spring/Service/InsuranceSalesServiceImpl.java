@@ -16,7 +16,7 @@ import com.mju.spring.Entity.Insurance;
 
 @Service
 public class InsuranceSalesServiceImpl implements InsuranceSalesService {
-
+  
 	private Insurance insurance;
 	private InsuranceDTO insuranceDTO;
 
