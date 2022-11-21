@@ -46,7 +46,7 @@ public class testController {
 	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
 	public String insuranceType(HttpServletRequest request, Model model) {
 		if (request.getParameter("next").equals("next")) {
-			return "salesTeam//inputInsuranceName";
+			return "insuranceSales//salesTeam//inputInsuranceName";
 		} else {
 			return "error";
 		}
@@ -55,18 +55,19 @@ public class testController {
 	@RequestMapping(value = "customerInfo", method = RequestMethod.GET)
 	public String customerInfo(HttpServletRequest request, Model model) {
 		if (request.getParameter("search").equals("search")) {
-			return "salesTeam//insuranceJoin";
-		}  else {
+			return "insuranceSales//salesTeam//insuranceJoin";
+		} else if(request.getParameter("menu").equals("cancellation")){
+			return "menu";
+		} else {
 			return "error";
 		}
-		
 	}
 	@RequestMapping(value = "joinInsurance", method = RequestMethod.GET)
 	public String joinInsurance(HttpServletRequest request, Model model) {
 		if (request.getParameter("join").equals("insuranceJoin")) {
-			return "salesTeam//joinNewCustomer";
+			return "insuranceSales//salesTeam//joinNewCustomer";
 		} else if(request.getParameter("join").equals("insuranceReJoin")){
-			return "salesTeam//joinRe";
+			return "insuranceSales//salesTeam//joinRe";
 		} else if(request.getParameter("join").equals("cancellation")){
 			return "menu";
 		} else {
@@ -77,7 +78,7 @@ public class testController {
 	@RequestMapping(value = "continuously", method = RequestMethod.GET)
 	public String continuously(HttpServletRequest request, Model model) {
 		if (request.getParameter("join").equals("joinRequest")) {
-			return "salesTeam//joinContinuously";
+			return "insuranceSales//salesTeam//joinContinuously";
 		} else if(request.getParameter("join").equals("cancellation")){
 			return "menu";
 		} else {
@@ -97,7 +98,7 @@ public class testController {
 	@RequestMapping(value = "rejoin", method = RequestMethod.GET)
 	public String rejoin(HttpServletRequest request, Model model) {
 		if (request.getParameter("search").equals("search")) {
-			return "salesTeam//joinRe";//재가입신청 보류...
+			return "insuranceSales//salesTeam//joinRe";//재가입신청 보류...
 		}else {
 			return "error";
 		}

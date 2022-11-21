@@ -30,7 +30,6 @@
 		은행 이름: <input type="text" name="bankName"><br>
 		계좌번호: <input type="text" name="accountNum"><br>
 		
-		
 		<button  id="myBtn" type="submit" name = "join" value="joinRequest">회원가입하기</button>
 		<button type="submit" name = "join" value="cancellation">취소</button>
 	</form>
