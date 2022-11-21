@@ -45,14 +45,14 @@ public class testController {
 	
 	@RequestMapping(value = "insuranceType", method = RequestMethod.GET)
 	public String insuranceType(HttpServletRequest request, Model model) {
-		System.out.println(request.getParameter("next").equals("next"));
 		if (request.getParameter("next").equals("next")) {
 			return "salesTeam//insuranceSales//inputInsuranceName";
-		} else if(request.getParameter("menu").equals("cancellation")){
+		} else if(request.getParameter("next").equals("cancellation")){
 			return "menu";
 		} else {
 			return "error";
 		}
+	
 		
 	}
 	@RequestMapping(value = "customerInfo", method = RequestMethod.GET)
