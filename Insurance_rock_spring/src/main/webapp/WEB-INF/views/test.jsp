@@ -17,6 +17,11 @@
 			<input type="radio" name="inusranceName" value="245" />일반보험 <input
 			type="radio" name="inusranceName" value="125" />주택보험 <br> 
 			
+			<button name=specialContract value ="1"> </button>
+			<button name=applyCondition value ="1"> </button>
+			<button name=compensateCondition value ="1"> </button>
+			<button name=explanation value ="1"> </button>
+			
 			<input type="radio" name="rate1" value="0.2" />일반보험 <input
 			type="radio" name="rate1" value="0.2" />주택보험 <br> 
 			
