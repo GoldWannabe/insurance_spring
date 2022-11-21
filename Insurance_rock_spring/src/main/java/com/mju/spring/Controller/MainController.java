@@ -15,8 +15,8 @@ public class MainController {
 
 	String team = request.getParameter("team");
 		
-		if (team.equals("contractTeam")) {
-			return "contractTeam";
+		if (team.equals("contractTeamMenu")) {
+			return "contractTeam//contractTeamMenu";
 		} else if (team.equals("financialDirector")) {
 			return "financialDirector";
 		} else if (team.equals("salesTeam")) {
@@ -31,11 +31,11 @@ public class MainController {
 		
 	}
 
-	@RequestMapping(value = "contractTeam", method = RequestMethod.GET)
+	@RequestMapping(value = "contractTeamMenu", method = RequestMethod.GET)
 	public String contractTeamControl(HttpServletRequest request) {
 		
 		if (request.getParameter("menu").equals("design")) {
-			return "design";
+			return "contractTeam//insuranceDesign//design";
 		} else if (request.getParameter("menu").equals("")) {
 			return "";
 		} else if (request.getParameter("menu").equals("")) {
