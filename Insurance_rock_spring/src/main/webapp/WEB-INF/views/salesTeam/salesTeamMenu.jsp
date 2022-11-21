@@ -10,7 +10,7 @@
 <body>
 	<p>원하시는 메뉴에 해당하는 버튼을 눌러주세요.</p>  <br>
 	<div>
-		<form action = "salesTeam">
+		<form action = "salesTeamMenu">
 			<button type="submit" name = "menu" value="insuranceSales">보험판매</button>
 			<button type="submit" name = "menu" value="customerManagement">고객 정보 관리</button>
 			<button type="submit" name = "menu" value="channelManagement">판매채널 관리</button>

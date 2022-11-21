@@ -20,7 +20,7 @@ public class MainController {
 		} else if (team.equals("financialDirector")) {
 			return "financialDirector";
 		} else if (team.equals("salesTeam")) {
-			return "insuranceSales//salesTeam//salesTeam";
+			return "salesTeam//salesTeamMenu";
 		} else if (team.equals("policyholder")) {
 			return "policyholder";
 		} else if (team.equals("compensateTeam")) {
@@ -46,11 +46,11 @@ public class MainController {
 
 	}
 	
-	@RequestMapping(value = "salesTeam", method = RequestMethod.GET)
+	@RequestMapping(value = "salesTeamMenu", method = RequestMethod.GET)
 	public String salesTeamControl(HttpServletRequest request) {
 		
 		if (request.getParameter("menu").equals("insuranceSales")) {
-			return "insuranceSales//salesTeam//selectInsuranceType";
+			return "salesTeam//insuranceSales//selectInsuranceType";
 		} else if (request.getParameter("menu").equals("customerManagement")) {
 			return "";
 		} else if (request.getParameter("menu").equals("channelManagement")) {
