@@ -27,6 +27,7 @@ public class InsuranceSalesController {
 		
 		return "salesTeam//insuranceSales//inputInsuranceName";
 	}
+	
 
 //	@RequestMapping(value = "inputInsuranceName", method = RequestMethod.GET)
 //	public String selectInsurance(HttpServletRequest request, Model model) {
