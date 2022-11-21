@@ -16,6 +16,7 @@
 		
 		<button type="submit" name ="next" value="next"/>다음</button>
 		<button type="submit" name="menu" value="cancellation">취소 </button>
+	</form>
 	
 </body>	
 </html>
