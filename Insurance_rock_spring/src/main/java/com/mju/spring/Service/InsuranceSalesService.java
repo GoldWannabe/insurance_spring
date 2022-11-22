@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.mju.spring.DTO.InsuranceDTO;
 
 public interface InsuranceSalesService {
-	
+	  
 	public List<InsuranceDTO> getInsuranceList(HttpServletRequest request);
 
 	public InsuranceDTO getInsurance(HttpServletRequest request);
