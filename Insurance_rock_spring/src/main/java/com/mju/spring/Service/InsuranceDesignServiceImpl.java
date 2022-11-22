@@ -62,12 +62,12 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 		// DTO로 받는다. 기본요율까지 +보험이름,특약,가입조건,보상조건,설명도 받아서 DTO에 Set해줘
 		// 중복이 된 것이 있으면 다시this.
 
-		if ((this.insuranceDAO.retriveName(request.getParameter("inusranceName")) != null)
-				|| (registerInsuranceDao.retriveName(request.getParameter("inusranceName")) != null)) {
+		if ((this.insuranceDAO.retriveName(request.getParameter("insuranceName")) != null)
+				|| (registerInsuranceDao.retriveName(request.getParameter("insuranceName")) != null)) {
 			return null;
 		} else {
 			// 이름과 기본 요율을 포함한 다양한 것들 추가
-			this.insurance.setInsuranceName(request.getParameter("inusranceName"));
+			this.insurance.setInsuranceName(request.getParameter("insuranceName"));
 			this.insurance.setSpecialContract(request.getParameter("specialContract"));
 			this.insurance.setApplyCondition(request.getParameter("applyCondition"));
 			this.insurance.setCompensateCondition(request.getParameter("compensateCondition"));
@@ -88,7 +88,6 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Override
 	public InsuranceDTO getStandardFee() {
 		// 기존 요율별로 기준보험료 측정된거 DTO에 set
-
 		this.insurance.setStandardFee((int) (1000000000 * this.insurance.getPremiumRate()[0] / 100));
 		this.insuranceDTO.setStandardFee(this.insurance.getStandardFee());
 		return this.insuranceDTO;

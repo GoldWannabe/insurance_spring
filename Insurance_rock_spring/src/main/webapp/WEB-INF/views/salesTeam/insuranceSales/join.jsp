@@ -6,23 +6,21 @@
 <meta charset="EUC-KR">
 <title>JoinCustomer</title>
 
-	<script>
+<script>
 	function CompletionPopup(boolean finishSales) {
-		if (finishSales)
-				confirm("회원가입이 완료되었습니다.")) {
+		if (finishSales) {
+				confirm("회원가입이 완료되었습니다.") 
 			//location.replace("design")
 			return true;
-		} else {return false;
 		}
-		}
-		
+	}
 		
 	</script>
 
 </head>
 <body>
 <p>신규고객으로 회원가입을 진행합니다.</p>
-<form action ="finishSales" onload="CompletionPopup(${Finish})">
+<form action ="finishSales" onload="CompletionPopup(${Finish})" onsumbit = "return  confirm("회원가입이 완료되었습니다.");">
 </form>
 	<form action="join" >
 		고객 이름: <input type="text" name="customerName"> <br>

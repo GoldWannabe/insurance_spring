@@ -1,4 +1,4 @@
-<%@page import="com.mju.spring.DTO.InsuranceDTO"%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
@@ -32,7 +32,7 @@
 	</table>
 
 	<form action="inputInsuranceName">
-		<p>검색하고자 하는 보험 이름을 입력해주십시오.</p>
+		<p>가입하고자 하는 보험 이름을 입력해주십시오.</p>
 
 		보험 이름: <input type="text" name="inusranceName">
 		<button type="submit" name="search" value="search">검색</button>
