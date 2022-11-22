@@ -5,13 +5,14 @@
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+
 </head>
 <body>
-	<form action="design3">
+	<form action="inputRate">
 		요율1: <input type="text" name="rate1"><br>
 		요율2: <input type="text" name="rate2"><br>
 		요율3: <input type="text" name="rate3"><br>
-		<input type="submit" name="addRate" value="true">
+		<button type="submit" name = "join" value="join">가입 신청하기</button>
 	</form>
 </body>
 </html>

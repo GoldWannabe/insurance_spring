@@ -18,7 +18,7 @@
 		가입조건: ${ApplyCondition}<br>
 		보상조건 : ${CompensateCondition}<br>
 		설명: ${Explanation}<br>
-		요율 : [1등급, 2등급, 3등급] [${PremiumRate}]<br>
+		요율 : [1등급, 2등급, 3등급] [ ${PremiumRate[0]}, ${PremiumRate[1]}, ${PremiumRate[2]} ]<br>
 		${InsuranceName} 보험에 가입하시겠습니까?
 		<button type="submit" name = "join" value="join">가입</button>
 		<button type="submit" name = "join" value="reJoin">재가입 신청</button>
