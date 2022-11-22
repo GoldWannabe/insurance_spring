@@ -6,4 +6,6 @@ public interface RegisterGeneralRateDao {
 
 	public int create(Insurance insurance);
 
+	public void commit();
+
 }

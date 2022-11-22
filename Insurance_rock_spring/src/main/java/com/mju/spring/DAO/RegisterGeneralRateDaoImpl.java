@@ -19,4 +19,9 @@ public class RegisterGeneralRateDaoImpl implements RegisterGeneralRateDao {
 		return sqlSession.insert(Create, insurance);
 	}
 
+	@Override
+	public void commit() {
+		sqlSession.commit();
+	}
+
 }

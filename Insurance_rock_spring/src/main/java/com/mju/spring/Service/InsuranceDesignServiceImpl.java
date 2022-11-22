@@ -4,7 +4,6 @@ import com.mju.spring.DAO.InsuranceDAO;
 import com.mju.spring.DAO.RegisterGeneralRateDao;
 import com.mju.spring.DAO.RegisterHouseRateDao;
 import com.mju.spring.DAO.RegisterInsuranceDao;
-import com.mju.spring.DAO.TransactionDao;
 import com.mju.spring.DTO.InsuranceDTO;
 import com.mju.spring.Entity.GeneralInsurance;
 import com.mju.spring.Entity.HouseInsurance;
@@ -27,12 +26,14 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	private Insurance insurance;
 	private InsuranceDTO insuranceDTO;
 
-	@Autowired InsuranceDAO insuranceDAO;
-	@Autowired RegisterInsuranceDao registerInsuranceDao;
-	@Autowired RegisterGeneralRateDao registerGeneralRateDao;
-	@Autowired RegisterHouseRateDao registerHouseRateDao;
-	@Autowired TransactionDao transactionDao;
-
+	@Autowired
+	InsuranceDAO insuranceDAO;
+	@Autowired
+	RegisterInsuranceDao registerInsuranceDao;
+	@Autowired
+	RegisterGeneralRateDao registerGeneralRateDao;
+	@Autowired
+	RegisterHouseRateDao registerHouseRateDao;
 
 	@Override
 	public InsuranceDTO getinsuranceTypeAndTerm(HttpServletRequest request) {
@@ -120,30 +121,38 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 
 	@Override
 	public boolean register() {
-		boolean registerFlag = true;
-		int result = 0;
-		result = this.registerInsuranceDao.create(this.insurance);
-		int a= this.transactionDao.getTrx_ID();
-		
-		System.out.println();
-
-		if (result != 1) {
-			registerFlag = false;
+		if (this.registerInsuranceDao.create(this.insurance) == 1) {
+			this.registerInsuranceDao.commit();
+		} else {
+			return false;
 		}
-		
-		result = 0;
+
 		if (this.insurance.getInsuranceType().toString().equals("general")) {
-			result = this.registerGeneralRateDao.create(this.insurance);
+			return registerGeneral();
 		} else if (this.insurance.getInsuranceType().toString().equals("house")) {
-			result = this.registerHouseRateDao.create(this.insurance);
+			return registerHouse();
+		} else {
+			return false;
 		}
 
-		if (result != 3) {
-			registerFlag = false;
+	}
+
+	private boolean registerGeneral() {
+		if (this.registerGeneralRateDao.create(this.insurance) == 3) {
+			this.registerGeneralRateDao.commit();
+			return true;
+		} else {
+			return false;
 		}
+	}
 
-		return registerFlag;
-
+	private boolean registerHouse() {
+		if (this.registerHouseRateDao.create(this.insurance) == 3) {
+			this.registerHouseRateDao.commit();
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -152,10 +161,12 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			File file = new File(".//File//tempInsurance.txt");
 			FileWriter fileWriter = new FileWriter(file);
 			double[] tempRate = this.insurance.getPremiumRate();
-			fileWriter.write("1" + "\n" + this.insurance.getInsuranceID() + "\n" + this.insurance.getInsuranceName() + "\n" + this.insurance.getInsuranceType().toString()
-					+ "\n" + this.insurance.getStandardFee() + "\n" + this.insurance.getSpecialContract() + "\n" + this.insurance.isLongTerm() + "\n"
-					+ this.insurance.getApplyCondition() + "\n" + this.insurance.getCompensateCondition() + "\n" + this.insurance.getExplanation() + "\n"
-					+ tempRate[0] + "\n" + tempRate[1] + "\n" + tempRate[2] + "\n");
+			fileWriter.write("1" + "\n" + this.insurance.getInsuranceID() + "\n" + this.insurance.getInsuranceName()
+					+ "\n" + this.insurance.getInsuranceType().toString() + "\n" + this.insurance.getStandardFee()
+					+ "\n" + this.insurance.getSpecialContract() + "\n" + this.insurance.isLongTerm() + "\n"
+					+ this.insurance.getApplyCondition() + "\n" + this.insurance.getCompensateCondition() + "\n"
+					+ this.insurance.getExplanation() + "\n" + tempRate[0] + "\n" + tempRate[1] + "\n" + tempRate[2]
+					+ "\n");
 			fileWriter.flush();
 			fileWriter.close();
 			return true;
@@ -202,7 +213,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 				FileWriter fileWriter = new FileWriter(file);
 				fileWriter.write("0");
 				fileWriter.flush();
-				
+
 				this.insuranceDTO.setInsuranceType(this.insurance.getInsuranceType().toString());
 				this.insuranceDTO.setInsuranceName(this.insurance.getInsuranceName());
 				this.insuranceDTO.setSpecialContract(this.insurance.getSpecialContract());
@@ -212,7 +223,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 				this.insuranceDTO.setCompensateCondition(this.insurance.getCompensateCondition());
 				this.insuranceDTO.setExplanation(this.insurance.getExplanation());
 				this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
-				
+
 				return this.insuranceDTO;
 			} else {
 				return null;

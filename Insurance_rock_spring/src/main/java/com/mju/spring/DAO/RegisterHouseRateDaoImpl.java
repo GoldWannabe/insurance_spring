@@ -19,4 +19,9 @@ public class RegisterHouseRateDaoImpl implements RegisterHouseRateDao {
 		return sqlSession.insert(Create, insurance);
 	}
 
+	@Override
+	public void commit() {
+		sqlSession.commit();
+	}
+
 }

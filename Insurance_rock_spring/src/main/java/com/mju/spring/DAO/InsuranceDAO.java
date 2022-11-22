@@ -7,7 +7,7 @@ import com.mju.spring.Entity.Insurance;
 
 public interface InsuranceDAO {
 
-	Insurance retriveName(String insuranceName);
+	public String retriveName(String insuranceName);
 
 	//List<Insurance> retriveInsuranceList(String insuranceType);
 

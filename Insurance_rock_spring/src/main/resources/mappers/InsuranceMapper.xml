@@ -2,7 +2,7 @@
 
 	<mapper namespace="InsuranceMapper">
 		<!--  SELECT -->
-		<select id="selectName" resultType="com.mju.spring.Entity.Insurance">
+		<select id="selectName" resultType="string">
 			SELECT * from Insurance where insuranceName = #{insuranceName}
 		</select>
 		

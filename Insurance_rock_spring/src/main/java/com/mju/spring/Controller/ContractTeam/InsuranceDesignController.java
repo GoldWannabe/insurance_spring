@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.DTO.InsuranceDTO;
 import com.mju.spring.Service.InsuranceDesignService;
-import com.mju.spring.VO.InsuranceVO;
 
 @Controller
 public class InsuranceDesignController {

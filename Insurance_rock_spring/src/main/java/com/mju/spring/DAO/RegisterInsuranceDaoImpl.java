@@ -2,8 +2,6 @@ package com.mju.spring.DAO;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mju.spring.Entity.Insurance;
 
 @Repository
@@ -15,13 +13,19 @@ public class RegisterInsuranceDaoImpl implements RegisterInsuranceDao {
 	private static final String Create = "RegisterInsuranceMapper.create";
 
 	@Override
-	public Insurance retriveName(String insuranceName) {
+	public String retriveName(String insuranceName) {
 		return sqlSession.selectOne(SelectName, insuranceName);
 	}
 
 	@Override
 	public int create(Insurance insurance) {
+
 		return sqlSession.insert(Create, insurance);
 	}
+
+	@Override
+	public void commit() {
+		sqlSession.commit();
+	} 
 
 }

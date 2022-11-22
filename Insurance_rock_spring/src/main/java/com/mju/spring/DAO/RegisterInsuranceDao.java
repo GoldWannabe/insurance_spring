@@ -7,8 +7,10 @@ import com.mju.spring.Entity.Insurance;
 @Repository
 public interface RegisterInsuranceDao {
 
-	public Insurance retriveName(String insuranceName);
+	public String retriveName(String insuranceName);
 
 	public int create(Insurance insurance);
+
+	public void commit();
 
 }

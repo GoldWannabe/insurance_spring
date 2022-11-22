@@ -19,7 +19,7 @@ public class InsuranceDAOImpl implements InsuranceDAO {
 	private static final String SelectHouseType = "InsuranceMapper.selectHouseType";
 
 	@Override
-	public Insurance retriveName(String insuranceName) {
+	public String retriveName(String insuranceName) {
 		return sqlSession.selectOne(SelectName, insuranceName);
 	}
 	
