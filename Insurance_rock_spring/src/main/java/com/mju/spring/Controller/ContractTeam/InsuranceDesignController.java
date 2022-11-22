@@ -18,7 +18,6 @@ public class InsuranceDesignController {
 	@Autowired
 	InsuranceDesignService insuranceDesignService;
 
-	private InsuranceVO insuranceVO;
 	private InsuranceDTO insuranceDTO;
 
 	@RequestMapping(value = "inputTypeAndTerm", method = RequestMethod.GET) // design2에서 장기여부, 보험종류 정보 제출.
@@ -35,12 +34,8 @@ public class InsuranceDesignController {
 
 		this.insuranceDTO = insuranceDesignService.getinsuranceTypeAndTerm(request);
 
-		this.insuranceVO = new InsuranceVO();
-		insuranceVO.setLongTerm(insuranceDTO.isLongTerm());
-		insuranceVO.setInsuranceType(insuranceDTO.getInsuranceType());
-
-		model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
-		model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
+		model.addAttribute("LongTerm", this.insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+		model.addAttribute("InsuranceType", this.insuranceDTO.getInsuranceType());
 
 		return "contractTeam//insuranceDesign//inputInsuranceInfo";
 
@@ -58,24 +53,16 @@ public class InsuranceDesignController {
 
 			} else {
 //			보험이름,특약,가입조건,보상조건,설명
-				this.insuranceVO.setStandardFee(this.insuranceDTO.getStandardFee());
-				this.insuranceVO.setInsuranceName(this.insuranceDTO.getInsuranceName());
-				this.insuranceVO.setSpecialContract(this.insuranceDTO.getSpecialContract());
-				this.insuranceVO.setApplyCondition(this.insuranceDTO.getApplyCondition());
-				this.insuranceVO.setCompensateCondition(this.insuranceDTO.getCompensateCondition());
-				this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
-				this.insuranceVO.setPremiumRate(this.insuranceDTO.getPremiumRate());// 배열로 넣어서 안되면 따로따로 넣어야 하니까 말해줘.to은서
-
 				
-				model.addAttribute("InsuranceName", this.insuranceVO.getInsuranceName());
-				model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
-				model.addAttribute("StandardFee", this.insuranceVO.getStandardFee());
-				model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
-				model.addAttribute("SpecialContract", this.insuranceVO.getSpecialContract());
-				model.addAttribute("ApplyCondition", this.insuranceVO.getApplyCondition());
-				model.addAttribute("CompensateCondition", this.insuranceVO.getCompensateCondition());
-				model.addAttribute("Explanation", this.insuranceVO.getExplanation());
-				model.addAttribute("PremiumRate", this.insuranceVO.getPremiumRate());
+				model.addAttribute("InsuranceName", this.insuranceDTO.getInsuranceName());
+				model.addAttribute("InsuranceType", this.insuranceDTO.getInsuranceType());
+				model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());
+				model.addAttribute("LongTerm", this.insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+				model.addAttribute("SpecialContract", this.insuranceDTO.getSpecialContract());
+				model.addAttribute("ApplyCondition", this.insuranceDTO.getApplyCondition());
+				model.addAttribute("CompensateCondition", this.insuranceDTO.getCompensateCondition());
+				model.addAttribute("Explanation", this.insuranceDTO.getExplanation());
+				model.addAttribute("PremiumRate", this.insuranceDTO.getPremiumRate());
 			}
 			
 			return "contractTeam//insuranceDesign//register";	
@@ -86,11 +73,6 @@ public class InsuranceDesignController {
 	public String showRateScrean(HttpServletRequest request, Model model) {
 		this.insuranceDTO = insuranceDesignService.checkName(request); // 중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘. 요율도 다 보내줌
 
-		this.insuranceVO.setInsuranceName(this.insuranceDTO.getInsuranceName());
-		this.insuranceVO.setSpecialContract(this.insuranceDTO.getSpecialContract());
-		this.insuranceVO.setApplyCondition(this.insuranceDTO.getApplyCondition());
-		this.insuranceVO.setCompensateCondition(this.insuranceDTO.getCompensateCondition());
-		this.insuranceVO.setExplanation(this.insuranceDTO.getExplanation());
 		return "contractTeam//insuranceDesign//inputRate";
 	}
 
@@ -101,19 +83,16 @@ public class InsuranceDesignController {
 		this.insuranceDTO = this.insuranceDesignService.checkRate(request);// 직접 적은 요율을 통해 기준보험료 계산.
 		// null이면 중복
 //		보험이름,특약,가입조건,보상조건,설명
-			this.insuranceVO.setStandardFee(this.insuranceDTO.getStandardFee());
-			this.insuranceVO.setPremiumRate(this.insuranceDTO.getPremiumRate());// 배열로 넣어서 안되면 따로따로 넣어야 하니까 말해줘.to은서
-
 			
-			model.addAttribute("InsuranceName", this.insuranceVO.getInsuranceName());
-			model.addAttribute("InsuranceType", this.insuranceVO.getInsuranceType());
-			model.addAttribute("StandardFee", this.insuranceVO.getStandardFee());
-			model.addAttribute("LongTerm", this.insuranceVO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
-			model.addAttribute("SpecialContract", this.insuranceVO.getSpecialContract());
-			model.addAttribute("ApplyCondition", this.insuranceVO.getApplyCondition());
-			model.addAttribute("CompensateCondition", this.insuranceVO.getCompensateCondition());
-			model.addAttribute("Explanation", this.insuranceVO.getExplanation());
-			model.addAttribute("PremiumRate", this.insuranceVO.getPremiumRate());
+			model.addAttribute("InsuranceName", this.insuranceDTO.getInsuranceName());
+			model.addAttribute("InsuranceType", this.insuranceDTO.getInsuranceType());
+			model.addAttribute("StandardFee", this.insuranceDTO.getStandardFee());
+			model.addAttribute("LongTerm", this.insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+			model.addAttribute("SpecialContract", this.insuranceDTO.getSpecialContract());
+			model.addAttribute("ApplyCondition", this.insuranceDTO.getApplyCondition());
+			model.addAttribute("CompensateCondition", this.insuranceDTO.getCompensateCondition());
+			model.addAttribute("Explanation", this.insuranceDTO.getExplanation());
+			model.addAttribute("PremiumRate", this.insuranceDTO.getPremiumRate());
 
 		return "contractTeam//insuranceDesign//register";
 	}
