@@ -8,4 +8,8 @@
 		<insert id="create">
 			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandradFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
 		</insert>
+		
+		<select id="trans" resultType="int">
+			select trx_id from INFORMATION_SCHEMA.INNODB_TRX	
+		</select>
 	</mapper>

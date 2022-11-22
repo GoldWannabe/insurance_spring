@@ -24,7 +24,7 @@ public class MainController {
 		} else if (team.equals("compensateTeam")) {
 			return "compensateTeam";
 		} else if (team.equals("policyholder")) {
-			return "policyholder";
+			return "test";
 		} else {
 			return "error";
 		}

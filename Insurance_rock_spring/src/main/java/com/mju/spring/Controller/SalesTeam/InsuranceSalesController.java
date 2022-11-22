@@ -30,11 +30,12 @@ public class InsuranceSalesController {
 
 //	@RequestMapping(value = "inputInsuranceName", method = RequestMethod.GET)
 //	public String selectInsurance(HttpServletRequest request, Model model) {
-//		//선택한 보험 상세정보 리턴
+		//선택한 보험 상세정보 리턴
 //		//getInsurance의 request에는 이름과 타입이 정의되어있다
 //		InsuranceDTO insuranceDTO = this.insuranceSalesService.getInsurance(request);
 //		model.addAttribute("LongTerm", insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
 //		model.addAttribute("InsuranceType", insuranceDTO.getInsuranceType());
+//		model.addAttribute("StandardFee", insuranceDTO.getStandardFee());
 //		model.addAttribute("InsuranceName", insuranceDTO.getInsuranceName());
 //		model.addAttribute("SpecialContract", insuranceDTO.getSpecialContract());
 //		model.addAttribute("ApplyCondition", insuranceDTO.getApplyCondition());

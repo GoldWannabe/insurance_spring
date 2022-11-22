@@ -4,6 +4,7 @@ import com.mju.spring.DAO.InsuranceDAO;
 import com.mju.spring.DAO.RegisterGeneralRateDao;
 import com.mju.spring.DAO.RegisterHouseRateDao;
 import com.mju.spring.DAO.RegisterInsuranceDao;
+import com.mju.spring.DAO.TransactionDao;
 import com.mju.spring.DTO.InsuranceDTO;
 import com.mju.spring.Entity.GeneralInsurance;
 import com.mju.spring.Entity.HouseInsurance;
@@ -30,6 +31,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Autowired RegisterInsuranceDao registerInsuranceDao;
 	@Autowired RegisterGeneralRateDao registerGeneralRateDao;
 	@Autowired RegisterHouseRateDao registerHouseRateDao;
+	@Autowired TransactionDao transactionDao;
 
 
 	@Override
@@ -122,6 +124,10 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 		boolean registerFlag = true;
 		int result = 0;
 		result = this.registerInsuranceDao.create(this.insurance);
+		int a= this.transactionDao.getTrx_ID();
+		
+		System.out.println();
+
 		if (result != 1) {
 			registerFlag = false;
 		}
