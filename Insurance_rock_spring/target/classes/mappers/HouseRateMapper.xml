@@ -2,7 +2,7 @@
 
 	<mapper namespace="HouseRateMapper">
 		<!--  SELECT -->
-		<select id="selectAll" resultType="com.mju.spring.Entity.HouseInsurance">
-			SELECT * FROM user
+		<select id="selectHouseRate" resultType="double">
+			SELECT housePremiumRate from HouseRate where insuranceID = #{insuranceID} and insuranceRank = 2;
 		</select>
 	</mapper>

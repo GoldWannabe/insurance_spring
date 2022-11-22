@@ -74,6 +74,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		
 		} else if (this.insurance.getInsuranceType().equals(EInsurance.house)) {
 			this.insurance = this.insuranceDAO.retriveHouseName(request.getParameter("insuranceName"));
+			 this.houseRateDAO.retriveHouseName(this.insurance.getInsuranceID());
 		}
 		
 		this.insuranceDTO.setInsuranceName(this.insurance.getInsuranceName());

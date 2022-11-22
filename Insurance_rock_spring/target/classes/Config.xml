@@ -19,5 +19,6 @@
 		<mapper resource="mappers/RegisterInsuranceMapper.xml" />
 		<mapper resource="mappers/RegisterHouseRateMapper.xml" />
 		<mapper resource="mappers/RegisterGeneralRateMapper.xml" />
+		<mapper resource="mappers/HouseRateMapper.xml" />
 	</mappers>
 </configuration>
