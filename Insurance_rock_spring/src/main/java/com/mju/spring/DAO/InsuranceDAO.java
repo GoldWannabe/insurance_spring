@@ -11,8 +11,13 @@ public interface InsuranceDAO {
 
 	//List<Insurance> retriveInsuranceList(String insuranceType);
 
+	Insurance retriveGeneralName(String insuranceName);
+	Insurance retriveHouseName(String insuranceName);
+	
 	List<Insurance> retriveGeneralInsuranceList(String insuranceType);
 	
 	List<Insurance> retriveHouseInsuranceList(String insuranceType);
+
+
 
 }

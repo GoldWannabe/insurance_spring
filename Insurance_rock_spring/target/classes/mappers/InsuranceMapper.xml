@@ -6,6 +6,14 @@
 			SELECT * from Insurance where insuranceName = #{insuranceName}
 		</select>
 		
+		<select id="selectGeneralName" resultType="com.mju.spring.Entity.GeneralInsurance">
+			SELECT * from Insurance where insuranceName = #{insuranceName}
+		</select>
+		
+		<select id="selectHouseName" resultType="com.mju.spring.Entity.HouseInsurance">
+			SELECT * from Insurance where insuranceName = #{insuranceName}
+		</select>
+		
 		<select id="selectGeneralType" resultType="com.mju.spring.Entity.GeneralInsurance">
 			SELECT insuranceName, insuranceType from Insurance where insuranceType = #{insuranceType}
 		</select>

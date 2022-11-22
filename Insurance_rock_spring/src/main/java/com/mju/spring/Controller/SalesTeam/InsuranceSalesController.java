@@ -29,59 +29,64 @@ public class InsuranceSalesController {
 	}
 	
 
-//	@RequestMapping(value = "inputInsuranceName", method = RequestMethod.GET)
-//	public String selectInsurance(HttpServletRequest request, Model model) {
-//		//선택한 보험 상세정보 리턴
-//		//getInsurance의 request에는 이름과 타입이 정의되어있다
-//		InsuranceDTO insuranceDTO = this.insuranceSalesService.getInsurance(request);
-//		model.addAttribute("LongTerm", insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
-//		model.addAttribute("InsuranceType", insuranceDTO.getInsuranceType());
-//		model.addAttribute("InsuranceName", insuranceDTO.getInsuranceName());
-//		model.addAttribute("SpecialContract", insuranceDTO.getSpecialContract());
-//		model.addAttribute("ApplyCondition", insuranceDTO.getApplyCondition());
-//		model.addAttribute("CompensateCondition", insuranceDTO.getCompensateCondition());
-//		model.addAttribute("Explanation", insuranceDTO.getExplanation());
-//		model.addAttribute("PremiumRate", insuranceDTO.getPremiumRate());
-//
-//
-//		return "salesTeam//insuranceSales//joinSelection";
-//	}
-//	@RequestMapping(value = "joinSelection", method = RequestMethod.GET)
-//	public String joinSelection(HttpServletRequest request, Model model) {
-//		//보험 가입, 재가입 여부 선택
-//		if(request.getParameter("join").equals("join")) {
-//			return "salesTeam//insuranceSales//join";
-//		} else if(request.getParameter("join").equals("reJoin")) {
-//			return "salesTeam//insuranceSales//insuranceReJoin";
-//		} else if(request.getParameter("join").equals("cancel")) {
-//			return "menu";
-//		} else {
-//			return "error";
-//		}
-//
-//	}
-//	@RequestMapping(value = "join", method = RequestMethod.GET)
-//	public String join(HttpServletRequest request, Model model) {
-//
-//		//일단은 여기서 계약과 고객 생성
-//		if(this.insuranceSalesController.createContract(request) && this.insuranceSalesController.createCustomer(request)) {
-//			return register(model);
-//		} else {
-//			return "error";
-//		}
-// 
-//
-//		
-//	}
-//	public String register(Model model) {
-//		if(this.service.register()) {
-//			model.addAttribute("Finish", true);
-//			return "salesTeam//insuranceSales//join";
-//		} else {
-//			return "error";
-//		}
-//
-//	}
+	@RequestMapping(value = "inputInsuranceName", method = RequestMethod.GET)
+	public String selectInsurance(HttpServletRequest request, Model model) {
+		//선택한 보험 상세정보 리턴
+		//getInsurance의 request에는 이름과 타입이 정의되어있다
+		
+		InsuranceDTO insuranceDTO = this.insuranceSalesService.getInsurance(request);
+		model.addAttribute("LongTerm", insuranceDTO.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+		model.addAttribute("InsuranceType", insuranceDTO.getInsuranceType());
+		model.addAttribute("InsuranceName", insuranceDTO.getInsuranceName());
+		model.addAttribute("SpecialContract", insuranceDTO.getSpecialContract());
+		model.addAttribute("ApplyCondition", insuranceDTO.getApplyCondition());
+		model.addAttribute("CompensateCondition", insuranceDTO.getCompensateCondition());
+		model.addAttribute("Explanation", insuranceDTO.getExplanation());
+		model.addAttribute("PremiumRate", insuranceDTO.getPremiumRate());
+		model.addAttribute("StandardFee", insuranceDTO.getStandardFee());
+
+
+		return "salesTeam//insuranceSales//joinSelection";
+	}
+	
+	@RequestMapping(value = "joinSelection", method = RequestMethod.GET)
+	public String joinSelection(HttpServletRequest request, Model model) {
+		//보험 가입, 재가입 여부 선택
+		if(request.getParameter("join").equals("join")) {
+			return "salesTeam//insuranceSales//join";
+		} else if(request.getParameter("join").equals("reJoin")) {
+			return "salesTeam//insuranceSales//insuranceReJoin";
+		} else if(request.getParameter("join").equals("cancel")) {
+			return "menu";
+		} else {
+			return "error";
+		}
+
+	}
+	
+	@RequestMapping(value = "join", method = RequestMethod.GET)
+	public String join(HttpServletRequest request, Model model) {
+
+		//일단은 여기서 계약과 고객 생성
+		if(this.insuranceSalesService.createContract(request) && this.insuranceSalesService.createCustomer(request)) {
+			return joinContractAndCustomer(model);
+		} else {
+			return "error";
+		}
+ 
+
+		
+	}
+	
+	public String joinContractAndCustomer(Model model) {
+		if(this.insuranceSalesService.joinContractAndCustomer()) {
+			model.addAttribute("Finish", true);
+			return "salesTeam//insuranceSales//join";
+		} else {
+			return "error";
+		}
+
+	}
 
 	@RequestMapping(value = "finishSales", method = RequestMethod.GET)
 	public String finishSales(HttpServletRequest request, Model model) {

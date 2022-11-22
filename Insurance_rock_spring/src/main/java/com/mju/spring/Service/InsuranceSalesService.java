@@ -10,4 +10,14 @@ public interface InsuranceSalesService {
 	
 	public List<InsuranceDTO> getInsuranceList(HttpServletRequest request);
 
+	public InsuranceDTO getInsurance(HttpServletRequest request);
+
+	public boolean createContract(HttpServletRequest request);
+
+	public boolean createCustomer(HttpServletRequest request);
+	
+	public boolean joinContractAndCustomer();
+
+	
+
 }

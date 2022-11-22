@@ -1,7 +1,6 @@
-
+<%@page import="com.mju.spring.DTO.InsuranceDTO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
@@ -16,8 +15,8 @@
 	<table border="1">
 		<thead>
 			<tr>
-				<th>º¸Çè¸í</th>
-				<th>º¸Çè Á¾·ù</th>
+				<th>ë³´í—˜ëª…</th>
+				<th>ë³´í—˜ ì¢…ë¥˜</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,10 +31,10 @@
 	</table>
 
 	<form action="inputInsuranceName">
-		<p>°¡ÀÔÇÏ°íÀÚ ÇÏ´Â º¸Çè ÀÌ¸§À» ÀÔ·ÂÇØÁÖ½Ê½Ã¿À.</p>
+		<p>ê²€ìƒ‰í•˜ê³ ìž í•˜ëŠ” ë³´í—˜ ì´ë¦„ì„ ìž…ë ¥í•´ì£¼ì‹­ì‹œì˜¤.</p>
 
-		º¸Çè ÀÌ¸§: <input type="text" name="inusranceName">
-		<button type="submit" name="search" value="search">°Ë»ö</button>
+		ë³´í—˜ ì´ë¦„: <input type="text" name="insuranceName">
+		<button type="submit" name="search" value="search">ê²€ìƒ‰</button>
 	</form>
 </body>
 </html>

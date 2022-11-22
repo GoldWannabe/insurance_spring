@@ -2,7 +2,7 @@
 
 	<mapper namespace="GeneralRateMapper">
 		<!--  SELECT -->
-		<select id="selectAll" resultType="com.mju.spring.Entity.GeneralInsurance">
-			SELECT * FROM user
+		<select id="selectGeneralRate" resultType="string">
+			SELECT generalPremiumRate from GeneralRate where insuranceID = #{insuranceID}
 		</select>
 	</mapper>
