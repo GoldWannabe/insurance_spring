@@ -1,5 +1,7 @@
 package com.mju.spring.DAO;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +13,8 @@ private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().
 	
 
 	@Override
-	public void retriveHouseName(String insuranceID) {
-		System.out.println(insuranceID);
-		System.out.println(sqlSession.selectList(SelectHouseRate, "is2"));
+	public List<Double> retriveHouseName(String insuranceID) {
+		return sqlSession.selectList(SelectHouseRate, insuranceID);
 	}
 
 }

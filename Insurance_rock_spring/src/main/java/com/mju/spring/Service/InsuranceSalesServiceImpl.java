@@ -19,19 +19,18 @@ import com.mju.spring.Entity.Insurance.EInsurance;
 
 @Service
 public class InsuranceSalesServiceImpl implements InsuranceSalesService {
-  
+
 	private Insurance insurance;
 	private InsuranceDTO insuranceDTO;
 
 	@Autowired
 	InsuranceDAO insuranceDAO;
-	
+
 	@Autowired
 	HouseRateDao houseRateDAO;
-	
+
 	@Autowired
 	GeneralRateDao generalRateDAO;
-	
 
 	@Override
 	public List<InsuranceDTO> getInsuranceList(HttpServletRequest request) {
@@ -49,7 +48,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 		this.insuranceDTO = new InsuranceDTO();
 		this.insuranceDTO.setInsuranceType(this.insurance.getInsuranceType().toString());
-		
+
 		List<InsuranceDTO> insuranceDTOList = new ArrayList<InsuranceDTO>();
 
 		for (Insurance insurance : insuranceList) {
@@ -66,17 +65,20 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	public InsuranceDTO getInsurance(HttpServletRequest request) {
 		if (this.insurance.getInsuranceType().equals(EInsurance.general)) {
 			this.insurance = this.insuranceDAO.retriveGeneralName(request.getParameter("insuranceName"));
-			
-			List<String> rateList = null;
-			rateList = this.generalRateDAO.retriveGeneralRate(this.insurance.getInsuranceID());
-//			double[] generalRate = new double[] {rateList.get(0), rateList.get(1), rateList.get(2)};
-//			this.insurance.setPremiumRate(generalRate);
-		
+
+			List<Double> rateList = this.generalRateDAO.retriveGeneralRate(this.insurance.getInsuranceID());
+			double[] generalRate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
+			this.insurance.setPremiumRate(generalRate);
+
 		} else if (this.insurance.getInsuranceType().equals(EInsurance.house)) {
 			this.insurance = this.insuranceDAO.retriveHouseName(request.getParameter("insuranceName"));
-			 this.houseRateDAO.retriveHouseName(this.insurance.getInsuranceID());
+
+			List<Double> rateList = this.houseRateDAO.retriveHouseName(this.insurance.getInsuranceID());
+			double[] generalRate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
+			this.insurance.setPremiumRate(generalRate);
+
 		}
-		
+
 		this.insuranceDTO.setInsuranceName(this.insurance.getInsuranceName());
 		this.insuranceDTO.setLongTerm(this.insurance.isLongTerm());
 		this.insuranceDTO.setApplyCondition(this.insurance.getApplyCondition());
@@ -91,8 +93,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 	@Override
 	public boolean createContract(HttpServletRequest request) {
-		
-		
+
 		return false;
 	}
 

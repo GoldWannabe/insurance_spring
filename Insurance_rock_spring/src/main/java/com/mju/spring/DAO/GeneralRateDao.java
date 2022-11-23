@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface GeneralRateDao {
 
-	public List<String> retriveGeneralRate(String insuranceID);
+	public List<Double> retriveGeneralRate(String insuranceID);
 
 }

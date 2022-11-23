@@ -2,7 +2,7 @@
 
 	<mapper namespace="GeneralRateMapper">
 		<!--  SELECT -->
-		<select id="selectGeneralRate" resultType="string">
+		<select id="selectGeneralRate" resultType="double">
 			SELECT generalPremiumRate from GeneralRate where insuranceID = #{insuranceID}
 		</select>
 	</mapper>

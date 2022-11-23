@@ -3,6 +3,6 @@
 	<mapper namespace="HouseRateMapper">
 		<!--  SELECT -->
 		<select id="selectHouseRate" resultType="double">
-			SELECT housePremiumRate from HouseRate where insuranceID = #{insuranceID} and insuranceRank = 2;
+			SELECT housePremiumRate from HouseRate where insuranceID = #{insuranceID};
 		</select>
 	</mapper>

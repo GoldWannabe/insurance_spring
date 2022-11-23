@@ -12,7 +12,7 @@ public class GeneralRateDaoImpl implements GeneralRateDao {
 	private static final String SelectGeneralRate = "GeneralRateMapper.selectGeneralRate";
 	
 	@Override
-	public List<String> retriveGeneralRate(String insuranceID) {
+	public List<Double> retriveGeneralRate(String insuranceID) {
 		return sqlSession.selectList(SelectGeneralRate, insuranceID); 
 	}
 

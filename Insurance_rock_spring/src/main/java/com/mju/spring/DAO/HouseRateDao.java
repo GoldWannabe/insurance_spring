@@ -1,7 +1,9 @@
 package com.mju.spring.DAO;
 
+import java.util.List;
+
 public interface HouseRateDao {
 
-	public void retriveHouseName(String parameter);
+	public List<Double> retriveHouseName(String insuranceID);
 
 }
