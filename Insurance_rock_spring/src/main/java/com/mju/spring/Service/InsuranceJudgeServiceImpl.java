@@ -3,6 +3,6 @@ package com.mju.spring.Service;
 import org.springframework.stereotype.Service;
 
 @Service
-public class InsuranceJudgeServiceImpl {
+public class InsuranceJudgeServiceImpl implements InsuranceJudgeService{
 
 }

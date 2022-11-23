@@ -18,13 +18,13 @@ public class InsuranceJudgeController {
 	@RequestMapping(value = "startJudge", method = RequestMethod.GET)
 	public String startJudge(HttpServletRequest request, Model model) {
 		//모든 보험 가져와서 리턴
-		return "selectJudgeInsurance";
+		return "financialDirector//insuranceJudge//selectJudgeInsurance";
 	}
 	
 	@RequestMapping(value = "selectJudgeInsurance", method = RequestMethod.GET)
 	public String selectJudgeInsurance(HttpServletRequest request, Model model) {
 		//선택한 보험 가져와서 리턴
-		return "inancialDirector//insuranceJudge//selectPermitInsurance";
+		return "financialDirector//insuranceJudge//selectPermitInsurance";
 	}
 	
 	

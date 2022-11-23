@@ -17,7 +17,7 @@ public class MainController {
 		if (team.equals("contractTeamMenu")) {
 			return "contractTeam//contractTeamMenu";
 		} else if (team.equals("financialDirector")) {
-			return "financialDirector";
+			return "financialDirector//financialDirectorMenu";
 		} else if (team.equals("salesTeam")) {
 			return "salesTeam//salesTeamMenu";
 		} else if (team.equals("compensateTeam")) {
