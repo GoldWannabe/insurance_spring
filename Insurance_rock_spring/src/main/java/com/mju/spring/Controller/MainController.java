@@ -3,7 +3,6 @@ package com.mju.spring.Controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,7 +31,7 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "contractTeamMenu", method = RequestMethod.GET)
-	public String contractTeamControl(HttpServletRequest request) {
+	public String financialDirectormControl(HttpServletRequest request) {
 
 		if (request.getParameter("menu").equals("design")) {
 			return "contractTeam//insuranceDesign//design";
@@ -46,6 +45,17 @@ public class MainController {
 
 	}
 
+	@RequestMapping(value = "financialDirectorMenu", method = RequestMethod.GET)
+	public String contractTeamControl(HttpServletRequest request) {
+
+		if (request.getParameter("menu").equals("judge")) {
+			return "financialDirector//insuranceJudge//startJudge";
+		}  else {
+			return "error";
+		}
+
+	}
+	
 	@RequestMapping(value = "salesTeamMenu", method = RequestMethod.GET)
 	public String salesTeamControl(HttpServletRequest request) {
 
