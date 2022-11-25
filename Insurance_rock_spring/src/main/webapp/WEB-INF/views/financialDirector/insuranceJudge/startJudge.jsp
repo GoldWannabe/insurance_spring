@@ -8,7 +8,7 @@
 
 </head>
 <body>
-	<p>원하시는 메뉴에 해당하는 버튼을 눌러주세요.</p>  <br>
+	<p>버튼을 눌러주세요.</p>  <br>
 	<div>
 		<form action = "startJudge">
 			<button type="submit" name = "menu" value="start">심사시작</button>

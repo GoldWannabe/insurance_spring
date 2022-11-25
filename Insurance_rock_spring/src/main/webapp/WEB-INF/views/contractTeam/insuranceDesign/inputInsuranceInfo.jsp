@@ -10,7 +10,7 @@
 
 	function UseStandardRate(form) {
 		  if (confirm('기존 요율을 사용하시겠습니까?')==1) {
-			form.action = "insuranceInfo";
+			form.action = "inputInsuranceInfo";
 			form.submit();
 		  } else {
 			form.action = "rateScrean";
