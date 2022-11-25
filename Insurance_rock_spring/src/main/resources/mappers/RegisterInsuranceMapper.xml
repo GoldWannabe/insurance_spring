@@ -2,10 +2,19 @@
 
 	<mapper namespace="RegisterInsuranceMapper">
 		<!--  SELECT -->
-		<select id="selectName" resultType="com.mju.spring.Entity.Insurance">
-			SELECT * from RegisterInsurance where insuranceName = #{insuranceName}
+		<select id="selectName" resultType="string">
+			SELECT insuranceName from RegisterInsurance where insuranceName = #{insuranceName}
+		</select>
+		<select id="selectAll" resultType="com.mju.spring.dto.financialDirector.insuranceJudge.RegisterInsuranceDto">
+			SELECT insuranceName, insuranceType, StandardFee from RegisterInsurance
+		</select>
+		<select id="selectGeneral" resultType="com.mju.spring.entity.GeneralInsurance">
+			SELECT * from RegisterInsurance where insuranceName = #{insuranceName} and insuranceType = "general"
+		</select>
+		<select id="selectHouse" resultType="com.mju.spring.entity.HouseInsurance">
+			SELECT * from RegisterInsurance where insuranceName = #{insuranceName} and insuranceType = "house"
 		</select>
 		<insert id="create">
-			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandradFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
+			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandardFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
 		</insert>
 	</mapper>
