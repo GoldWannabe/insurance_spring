@@ -1,6 +1,9 @@
 package com.mju.spring.controller.compensateTeam;
 
-public class DamageAssessment {
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class DamageAssessmentController {
 
 	//추가
 	//inputNameAndPhoneNum
