@@ -1,0 +1,19 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ContractMapper">
+	<select id="selectNameAndPhoneNum" resultType="com.mju.spring.entity.Contract">
+		SELECT * FROM
+		Contract WHERE customerName = #{nameAndPhoneNum[0]} and
+		customerPhoneNum = #{nameAndPhoneNum[1]}
+	</select>
+
+	<select id="selectContractProvision" resultType="com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto">
+		SELECT contractID, insuranceID, insuranceName, securityFee, provisionFee, startDate, endDate from
+		Contract where contractID = #{contractID}
+	</select>
+
+	<select id="updateContractProvisionFee" resultType = "com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto">
+		UPDATE contract SET provisionFee = #{liablityCost} + #{provisionFee} 
+		WHERE contractID = #{contractID}
+	</select>
+</mapper>

@@ -1,0 +1,10 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ProvisionMapper">
+	<select id="insertProvision">
+		INSERT INTO Provision VALUES(#{provisionID},
+		#{customerID}, #{customerName}, #{customerPhoneNum}, #{accountNum},
+		#{bankName}, #{compensation}, #{compensationDate}, #{insuranceName},
+		#{longTerm}, #{insuranceType}, #{contractID})
+	</select>
+</mapper>

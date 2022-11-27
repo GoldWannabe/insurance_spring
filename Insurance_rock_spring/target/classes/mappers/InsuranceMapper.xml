@@ -21,5 +21,6 @@
 		<select id="selectHouseType" resultType="com.mju.spring.entity.HouseInsurance">
 			SELECT insuranceName, insuranceType from Insurance where insuranceType = #{insuranceType}
 		</select>
+
 		
 	</mapper>

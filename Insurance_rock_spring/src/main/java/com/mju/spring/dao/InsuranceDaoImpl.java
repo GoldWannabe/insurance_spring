@@ -17,6 +17,7 @@ public class InsuranceDaoImpl implements InsuranceDao {
 	private static final String SelectHouseName = "InsuranceMapper.selectHouseName";
 	private static final String SelectGeneralType = "InsuranceMapper.selectGeneralType";
 	private static final String SelectHouseType = "InsuranceMapper.selectHouseType";
+	private static final String SelectInsuranceType = "InsuranceMapper.selectInsuranceType";
 
 	@Override
 	public String retriveName(String insuranceName) {
@@ -43,6 +44,7 @@ public class InsuranceDaoImpl implements InsuranceDao {
 	public List<Insurance> retriveHouseInsuranceList(String insuranceType) {
 		return sqlSession.selectList(SelectHouseType, insuranceType);
 	}
+
 
 
 

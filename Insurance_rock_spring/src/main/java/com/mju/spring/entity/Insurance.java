@@ -18,6 +18,7 @@ public abstract class Insurance {
 	private String explanation;
 	private int standardFee;
 	private LocalDate releaseDate;
+	
 	public String getInsuranceID() {
 		return insuranceID;
 	}

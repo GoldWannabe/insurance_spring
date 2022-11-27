@@ -8,13 +8,11 @@
 
 <script>
 
-	function UseStandardRate(form) {
+	function UseStandardRate(check) {
 		  if (confirm('기존 요율을 사용하시겠습니까?')==1) {
-			form.action = "inputInsuranceInfo";
-			form.submit();
+			check.value = "confirm";
 		  } else {
-			form.action = "rateScrean";
-			form.submit();
+			check.value = "cancel";
 		  }
 		  
 	}
@@ -22,7 +20,7 @@
 
 </head>
 <body>
-	<form>
+	<form action = inputInsuranceInfo>
 		<p>보험 종류: ${InsuranceType}</p>
 		<p>장기 여부: ${LongTerm}</p>
 		<br> 이름: <input type="text" name="insuranceName"> <br>
@@ -30,9 +28,7 @@
 		가입조건: <input type="text" name="applyCondition"> <br>
 		보상 조건: <input type="text" name="compensateCondition"/> <br>
 		설명: <input type="text" name="explanation"> <br>
-		<input  type="button" value="다음" onclick="UseStandardRate(this.form);"/>
+		<input name = "check" type="submit" value="다음" onclick="UseStandardRate(this);"/>
 	</form>
-		
-
 </body>
 </html>
