@@ -9,7 +9,7 @@
 <body>
 	<form action="inputAccidentInfo">
 		사고날짜: <input type="date" name="accidentDate" required><br>
-		사고내용: <input type="text" name="content" required><br>
+		사고내용: <input type="text" name="content" required><br> 
 		총비용: <input type="number" name="totalCost" min="0" required><br>
 		손해율: <input type="number" name="damagePer" min="0" max="100" required><br>
 		보상종류: <input type="text" name="kindOfCost" min="0" required><br>
