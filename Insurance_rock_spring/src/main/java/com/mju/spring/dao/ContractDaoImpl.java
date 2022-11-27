@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
+import com.mju.spring.dto.damageAssessment.compansate.SelectContractDto;
 import com.mju.spring.dto.damageAssessment.compansate.UpdateContractDto;
 import com.mju.spring.entity.Contract;
 
@@ -19,8 +20,8 @@ public class ContractDaoImpl implements ContractDao{
 	private static final String UpdateContractProvisionFee = "ContractMapper.updateContractProvisionFee";
 
 	@Override
-	public List<Contract> retriveNameAndPhoneNum(String[] nameAndPhoneNum){
-		return sqlSession.selectList(SelectNameAndPhoneNum, nameAndPhoneNum);
+	public List<Contract> retriveNameAndPhoneNum(SelectContractDto selectContractDto) {
+		return sqlSession.selectList(SelectNameAndPhoneNum, selectContractDto);
 	}
 
 	@Override
@@ -32,4 +33,5 @@ public class ContractDaoImpl implements ContractDao{
 	public void updateContractProvisionFee(UpdateContractDto updateContractDto) {
 		sqlSession.selectOne(UpdateContractProvisionFee, updateContractDto);
 	}
+
 }

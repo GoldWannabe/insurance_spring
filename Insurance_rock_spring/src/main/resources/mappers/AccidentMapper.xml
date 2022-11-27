@@ -9,8 +9,8 @@
 	</select>
 	<select id="selectAccident" resultType="com.mju.spring.entity.Accident">
 		SELECT * FROM
-		Contract WHERE customerName = #{nameAndDate[0]} and
-		accidentDate  = #{nameAndDate[1]}
+		Accident WHERE customerName = #{customerName} and
+		accidentDate  = #{accidentDate}
 	</select>
 	<select id="updatePayComplation" resultType="com.mju.spring.entity.Accident">
 		UPDATE accident SET payCompleted = #{payCompleted}

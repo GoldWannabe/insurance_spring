@@ -3,8 +3,8 @@
 <mapper namespace="ContractMapper">
 	<select id="selectNameAndPhoneNum" resultType="com.mju.spring.entity.Contract">
 		SELECT * FROM
-		Contract WHERE customerName = #{nameAndPhoneNum[0]} and
-		customerPhoneNum = #{nameAndPhoneNum[1]}
+		Contract WHERE customerName = #{customerName} and
+		customerPhoneNum = #{customerPhoneNum}
 	</select>
 
 	<select id="selectContractProvision" resultType="com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto">
@@ -13,7 +13,7 @@
 	</select>
 
 	<select id="updateContractProvisionFee" resultType = "com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto">
-		UPDATE contract SET provisionFee = #{liablityCost} + #{provisionFee} 
+		UPDATE Contract SET provisionFee = #{liablityCost} + #{provisionFee} 
 		WHERE contractID = #{contractID}
 	</select>
 </mapper>

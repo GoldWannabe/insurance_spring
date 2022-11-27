@@ -22,6 +22,8 @@ import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.ProvisionDao;
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
 import com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto;
+import com.mju.spring.dto.damageAssessment.compansate.SelectAccidentDto;
+import com.mju.spring.dto.damageAssessment.compansate.SelectContractDto;
 import com.mju.spring.dto.damageAssessment.compansate.UpdateContractDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
@@ -31,7 +33,7 @@ import com.mju.spring.entity.Provision;
 public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 	private Accident accident;
-	private List<Accident> accidentList;
+	private List<Accident> selectAccidentList;
 //	private Contract contract;
 //	private Customer customer;
 	private Provision provision;
@@ -55,18 +57,20 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	ProvisionDao provisionDao;
 
 	public List<Contract> addcheck(HttpServletRequest request) {
-
+		SelectContractDto selectContractDto = new SelectContractDto();
+		
 		this.accident = new Accident();
-		String[] nameAndPhoneNum = new String[1];
-		nameAndPhoneNum[0] = request.getParameter("customerName");
-		nameAndPhoneNum[1] = request.getParameter("customerPhoneNum");
-
+		
+		selectContractDto.setCustomerName(request.getParameter("customerName"));
+		selectContractDto.setCustomerPhoneNum(request.getParameter("customerPhoneNum"));
+		
+		
 		// 계약 DB에서 가져옴.
-		List<Contract> contractList = this.contractDao.retriveNameAndPhoneNum(nameAndPhoneNum);
-
-		this.accident.setCustomerName(nameAndPhoneNum[0]);
-		this.accident.setPhoneNum(nameAndPhoneNum[1]);
-		return contractList;
+		List<Contract> selectContractList = this.contractDao.retriveNameAndPhoneNum(selectContractDto);
+		
+		this.accident.setCustomerName(selectContractDto.getCustomerName());
+		this.accident.setPhoneNum(selectContractDto.getCustomerPhoneNum());
+		return selectContractList;
 	}
 
 	public Accident addAccident(HttpServletRequest request) {
@@ -95,18 +99,19 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 	public List<Accident> searchAccident(HttpServletRequest request) {
 		// 가입자명, 연락처, 사고날짜, 사고내용, 총비용, 손해정도, 비용종류, 지급여뷰, 책임비율, 책임비용
-		String[] nameAndDate = new String[1];
-		nameAndDate[0] = request.getParameter("customerName");
-		nameAndDate[1] = request.getParameter("accidentDate");
+		
+		SelectAccidentDto selectAccidentDto = new SelectAccidentDto();
+		selectAccidentDto.setCustomerName(request.getParameter("customerName"));
+		selectAccidentDto.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
 
 		// 사고DB
-		this.accidentList = this.accidentDao.retriveNameAndDate(nameAndDate);
+		this.selectAccidentList = this.accidentDao.retriveNameAndDate(selectAccidentDto);
 
-		return accidentList;
+		return selectAccidentList;
 	}
 
 	public Accident selectAccident(HttpServletRequest request) {
-		for (Accident accident : accidentList) {
+		for (Accident accident : selectAccidentList) {
 			if (accident.getID() == request.getParameter("accientID")) {
 				this.accident = accident;
 				return accident;

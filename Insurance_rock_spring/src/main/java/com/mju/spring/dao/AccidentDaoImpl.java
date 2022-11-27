@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.mju.spring.dto.damageAssessment.compansate.SelectAccidentDto;
 import com.mju.spring.entity.Accident;
 
 @Repository
@@ -21,13 +22,15 @@ public class AccidentDaoImpl implements AccidentDao{
 	}
 
 	@Override
-	public List<Accident> retriveNameAndDate(String[] nameAndDate) {
-		return sqlSession.selectList(selectAccident, nameAndDate);
+	public List<Accident> retriveNameAndDate(SelectAccidentDto selectAccidentDto) {
+		return sqlSession.selectList(selectAccident, selectAccidentDto);
+		
 	}
 
 	@Override
 	public void updatePaycompleted(Accident accident) {
 		sqlSession.selectList(updatePayComplation, accident);
 	}
+
 
 }
