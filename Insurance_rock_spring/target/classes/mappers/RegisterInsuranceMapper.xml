@@ -17,4 +17,7 @@
 		<insert id="create">
 			INSERT INTO RegisterInsurance(insuranceID, insuranceName, insuranceType, StandardFee, specialContract, longTerm, applyCondition, compensateCondition, explanation) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation})
 		</insert>
+		<delete id="delete">
+			DELETE FROM RegisterInsurance where insuranceID = #{insuranceID}
+		</delete>
 	</mapper>

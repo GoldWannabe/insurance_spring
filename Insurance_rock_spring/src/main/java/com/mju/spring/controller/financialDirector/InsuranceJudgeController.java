@@ -16,37 +16,81 @@ import com.mju.spring.service.financialDirector.InsuranceJudgeService;
 
 @Controller
 public class InsuranceJudgeController {
-	
-	@Autowired InsuranceJudgeService insuranceJudgeService;
-	
+
+	@Autowired
+	InsuranceJudgeService insuranceJudgeService;
+
 	@RequestMapping(value = "startJudge", method = RequestMethod.GET)
 	public String startJudge(HttpServletRequest request, Model model) {
-		//모든 보험 가져와서 리턴
-		if(request.getParameter("menu").equals("start")) {
-		List<RegisterInsuranceDto> registerInsuranceDaoList = this.insuranceJudgeService.getRegisterInsurance();
-		model.addAttribute("registerInsuranceList", registerInsuranceDaoList);
-		return "financialDirector//insuranceJudge//selectJudgeInsurance";
-		} else if(request.getParameter("menu").equals("cancel")){
+		// 모든 보험 가져와서 리턴
+		if (request.getParameter("menu").equals("start")) {
+			List<RegisterInsuranceDto> registerInsuranceDaoList = this.insuranceJudgeService.getRegisterInsurance();
+			
+			if(registerInsuranceDaoList.size() > 0) {
+			model.addAttribute("RegisterInsuranceList", registerInsuranceDaoList);
+			return "financialDirector//insuranceJudge//selectJudgeInsurance";
+			} else {
+				model.addAttribute("JudgeResult", "심사할 보험이 업습니다.");
+				return "financialDirector//insuranceJudge//showJudgeResult";
+			}
+			
+		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu";
 		} else {
 			return "error";
 		}
 	}
-	
+
 	@RequestMapping(value = "selectJudgeInsurance", method = RequestMethod.GET)
 	public String selectJudgeInsurance(HttpServletRequest request, Model model) {
-		//선택한 보험 가져와서 리턴
+		// 선택한 보험 가져와서 리턴
 		Insurance insurance = this.insuranceJudgeService.selectJudgeInsurance(request);
-		model.addAttribute("insurance", insurance); //요율은 따로 보여줘야 할 수도
-		System.out.println("이예예예예예예예옝");
+		model.addAttribute("Insurance", insurance); 
 		return "financialDirector//insuranceJudge//selectPermitInsurance";
 	}
-	
-	
 
 	@RequestMapping(value = "selectPermitInsurance", method = RequestMethod.GET)
 	public String selectPermitInsurance(HttpServletRequest request, Model model) {
-		//선택에 따른 승인 비승인 보류
-		return "menu";
+		if (request.getParameter("selectPerit").equals("permit")) {
+			return permit(model);
+
+		} else if (request.getParameter("selectPerit").equals("notPermit")) {
+			return notPermit(model);
+		} else if (request.getParameter("selectPerit").equals("defer")) {
+
+			return defer(model);
+		} else {
+			return "error";
+		}
+	}
+
+	private String permit(Model model) {
+		if (this.insuranceJudgeService.permit()) {
+			model.addAttribute("JudgeResult", "해당 보험이 승인되었습니다.");
+			return "financialDirector//insuranceJudge//showJudgeResult";
+		} else {
+			return "error";
+		}
+	}
+
+	private String notPermit(Model model) {
+		if (this.insuranceJudgeService.notPermit()) {
+			model.addAttribute("JudgeResult", "해당 보험이 비승인되었습니다.");
+			return "financialDirector//insuranceJudge//showJudgeResult";
+		} else {
+			return "error";
+		}
+	}
+
+	private String defer(Model model) {
+		model.addAttribute("JudgeResult", "보류되었습니다.");
+		return "financialDirector//insuranceJudge//showJudgeResult";
+
+	}
+
+	@RequestMapping(value = "showJudgeResult", method = RequestMethod.GET)
+	public String showJudgeResult(HttpServletRequest request, Model model) {
+
+		return "menu//menu";
 	}
 }

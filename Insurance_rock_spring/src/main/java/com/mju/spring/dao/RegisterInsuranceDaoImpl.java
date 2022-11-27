@@ -18,6 +18,7 @@ public class RegisterInsuranceDaoImpl implements RegisterInsuranceDao {
 	private static final String SelectAll = "RegisterInsuranceMapper.selectAll";
 	private static final String SelectGeneral = "RegisterInsuranceMapper.selectGeneral";
 	private static final String SelectHouse = "RegisterInsuranceMapper.selectHouse";
+	private static final String Delete = "RegisterInsuranceMapper.delete";
 
 	@Override
 	public String retriveName(String insuranceName) {
@@ -48,6 +49,11 @@ public class RegisterInsuranceDaoImpl implements RegisterInsuranceDao {
 	@Override
 	public Insurance retriveHouseName(String insuranceName) {
 		return sqlSession.selectOne(SelectHouse, insuranceName);
+	}
+
+	@Override
+	public int delete(String insuranceID) {
+		return sqlSession.delete(Delete, insuranceID);
 	} 
 
 

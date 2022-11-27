@@ -53,11 +53,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 		this.insurance.setInsuranceType(request.getParameter("InsuranceType"));
 		this.insurance.setLongTerm(Boolean.parseBoolean(request.getParameter("longTerm")));
 
-		this.insuranceDTO = new InsuranceDto();
-		this.insuranceDTO.setLongTerm(this.insurance.isLongTerm());
-		this.insuranceDTO.setInsuranceType(this.insurance.getInsuranceType().toString());
-
-		return this.insuranceDTO;
+		//return this.insurance;
+		return null;
 	}
 
 	@Override
@@ -76,14 +73,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			this.insurance.setCompensateCondition(request.getParameter("compensateCondition"));
 			this.insurance.setExplanation(request.getParameter("explanation"));
 
-			this.insuranceDTO.setInsuranceName(this.insurance.getInsuranceName());
-			this.insuranceDTO.setSpecialContract(this.insurance.getSpecialContract());
-			this.insuranceDTO.setApplyCondition(this.insurance.getApplyCondition());
-			this.insuranceDTO.setCompensateCondition(this.insurance.getCompensateCondition());
-			this.insuranceDTO.setExplanation(this.insurance.getExplanation());
-			this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
-
-			return this.insuranceDTO;
+			//return this.insurance;
+			return null;
 		}
 
 	}
@@ -92,8 +83,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	public InsuranceDto getStandardFee() {
 		// 기존 요율별로 기준보험료 측정된거 DTO에 set
 		this.insurance.setStandardFee((int) (1000000000 * this.insurance.getPremiumRate()[0] / 100));
-		this.insuranceDTO.setStandardFee(this.insurance.getStandardFee());
-		return this.insuranceDTO;
+		//return this.insurance;
+		return null;
 	}
 
 	@Override
@@ -113,7 +104,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			return null;
 		} else {
 			this.insurance.setPremiumRate(rate);
-			this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
+			//this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
 			return getStandardFee();
 		}
 
@@ -214,17 +205,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 				fileWriter.write("0");
 				fileWriter.flush();
 
-				this.insuranceDTO.setInsuranceType(this.insurance.getInsuranceType().toString());
-				this.insuranceDTO.setInsuranceName(this.insurance.getInsuranceName());
-				this.insuranceDTO.setSpecialContract(this.insurance.getSpecialContract());
-				this.insuranceDTO.setStandardFee(this.insurance.getStandardFee());
-				this.insuranceDTO.setLongTerm(this.insurance.isLongTerm());
-				this.insuranceDTO.setApplyCondition(this.insurance.getApplyCondition());
-				this.insuranceDTO.setCompensateCondition(this.insurance.getCompensateCondition());
-				this.insuranceDTO.setExplanation(this.insurance.getExplanation());
-				this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
-
-				return this.insuranceDTO;
+				//return this.insurance;
+				return null;
 			} else {
 				return null;
 			}

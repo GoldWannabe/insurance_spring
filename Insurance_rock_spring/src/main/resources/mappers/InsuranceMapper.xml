@@ -22,5 +22,13 @@
 			SELECT insuranceName, insuranceType from Insurance where insuranceType = #{insuranceType}
 		</select>
 
+		<insert id="create">
+			INSERT INTO Insurance(insuranceID, insuranceName, insuranceType, StandardFee, specialContract, longTerm, applyCondition, compensateCondition, explanation, releaseDate) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation}, #{releaseDate})
+		</insert>
 		
+		<select id="selectInsuranceType" resultType="string">
+			SELECT insuranceType from Insurance where insuranceID = #{insuranceID}
+		</select>
+		
+
 	</mapper>

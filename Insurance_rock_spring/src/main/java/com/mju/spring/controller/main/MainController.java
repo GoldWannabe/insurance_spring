@@ -100,4 +100,17 @@ public class MainController {
 		}
 
 	}
+	
+	@RequestMapping(value = "compensateTeamMenu", method = RequestMethod.GET)
+	public String compensateTeamControl(HttpServletRequest request) {
+
+		if (request.getParameter("menu").equals("damageAssessment")) {
+			return "financialDirector//compensateTeam//selectAccidentReportMenu";
+		} else if (request.getParameter("menu").equals("cancel")) {
+			return "menu//menu";
+		} else {
+			return "error";
+		}
+
+	}
 }

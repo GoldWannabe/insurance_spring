@@ -20,8 +20,8 @@
 					<th>기준보험료</th>
 				</tr>
 			</thead>
-			<tbody>
-				<c:forEach var="list" items="${registerInsuranceList}" varStatus="status">
+			<tbody> 
+				<c:forEach var="list" items="${RegisterInsuranceList}" varStatus="status">
 					<tr>
 						<td><input name="name" value="<c:out value="${list.insuranceName}"/>" readonly></td>
 						<td><input name="type" value="<c:out value="${list.insuranceType}"/>" readonly></td>
