@@ -6,12 +6,12 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>selectJudgeInsurance</title>
+<title>selectAddContract</title>
 
 </head>
 <body>
 	<p>계약을 선택해주십시오.</p>
-	<form action="selectJudgeInsurance">
+	<form action="selectAddContract">
 		<table border="1">
 			<thead>
 				<tr>
