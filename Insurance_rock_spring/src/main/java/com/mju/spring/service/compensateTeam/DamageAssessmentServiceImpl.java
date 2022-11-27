@@ -25,7 +25,6 @@ import com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto;
 import com.mju.spring.dto.damageAssessment.compansate.UpdateContractDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
-import com.mju.spring.entity.Insurance.EInsurance;
 import com.mju.spring.entity.Provision;
 
 @Service
