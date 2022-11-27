@@ -2,6 +2,9 @@
 
 	<mapper namespace="HouseRateMapper">
 		<!--  SELECT -->
+		<insert id="create">
+			INSERT INTO HouseRate(insuranceID, insuranceRank, housePremiumRate) VALUES (#{insuranceID}, 1, #{premiumRate[0]}), (#{insuranceID}, 2, #{premiumRate[1]}), (#{insuranceID}, 3, #{premiumRate[2]})
+		</insert>
 		<select id="selectHouseRate" resultType="double">
 			SELECT housePremiumRate from HouseRate where insuranceID = #{insuranceID};
 		</select>

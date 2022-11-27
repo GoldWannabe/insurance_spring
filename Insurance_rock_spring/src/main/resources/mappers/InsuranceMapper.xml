@@ -21,5 +21,7 @@
 		<select id="selectHouseType" resultType="com.mju.spring.entity.HouseInsurance">
 			SELECT insuranceName, insuranceType from Insurance where insuranceType = #{insuranceType}
 		</select>
-		
+		<insert id="create">
+			INSERT INTO Insurance(insuranceID, insuranceName, insuranceType, StandardFee, specialContract, longTerm, applyCondition, compensateCondition, explanation, releaseDate) VALUES(#{insuranceID}, #{insuranceName}, #{insuranceType}, #{standardFee}, #{specialContract}, #{longTerm}, #{applyCondition}, #{compensateCondition}, #{explanation}, #{releaseDate})
+		</insert>
 	</mapper>

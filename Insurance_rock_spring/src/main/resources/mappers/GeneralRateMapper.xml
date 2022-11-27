@@ -2,6 +2,9 @@
 
 	<mapper namespace="GeneralRateMapper">
 		<!--  SELECT -->
+		<insert id="create">
+				INSERT INTO GeneralRate(insuranceID, insuranceRank, generalPremiumRate) VALUES (#{insuranceID}, 1, #{premiumRate[0]}), (#{insuranceID}, 2, #{premiumRate[1]}), (#{insuranceID}, 3, #{premiumRate[2]})
+		</insert>
 		<select id="selectGeneralRate" resultType="double">
 			SELECT generalPremiumRate from GeneralRate where insuranceID = #{insuranceID}
 		</select>

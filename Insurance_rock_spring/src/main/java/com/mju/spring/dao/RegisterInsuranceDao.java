@@ -22,4 +22,6 @@ public interface RegisterInsuranceDao {
 
 	public Insurance retriveHouseName(String insuranceName);
 
+	public int delete(String insuranceID);
+
 }

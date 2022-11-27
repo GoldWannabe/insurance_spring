@@ -13,4 +13,8 @@ public interface InsuranceJudgeService {
 
 	public Insurance selectJudgeInsurance(HttpServletRequest request);
 
+	public boolean permit();
+
+	public boolean notPermit();
+
 }

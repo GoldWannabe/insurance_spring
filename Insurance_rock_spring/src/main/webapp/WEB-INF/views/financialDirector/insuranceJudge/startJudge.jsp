@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +7,11 @@
 
 </head>
 <body>
-	<p>¹öÆ°À» ´­·¯ÁÖ¼¼¿ä.</p>  <br>
+	<p>ë²„íŠ¼ì„ ëˆŒëŸ¬ì£¼ì„¸ìš”.</p>  <br>
 	<div>
 		<form action = "startJudge">
-			<button type="submit" name = "menu" value="start">½É»ç½ÃÀÛ</button>
-			<button type="submit" name = "menu" value="cancel">Ãë¼Ò</button>
+			<button type="submit" name = "menu" value="start">ì‹¬ì‚¬ì‹œìž‘</button>
+			<button type="submit" name = "menu" value="cancel">ì·¨ì†Œ</button>
 		</form>
 	</div>
 	

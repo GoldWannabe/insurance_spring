@@ -17,6 +17,10 @@ public interface InsuranceDao {
 	
 	List<Insurance> retriveHouseInsuranceList(String insuranceType);
 
+	public int create(Insurance insurance);
+
+	public void commit();
+
 
 
 }
