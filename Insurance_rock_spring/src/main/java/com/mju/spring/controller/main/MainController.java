@@ -113,4 +113,11 @@ public class MainController {
 		}
 
 	}
+	@RequestMapping(value = "showResult", method = RequestMethod.GET)
+	public String showResult(HttpServletRequest request) {
+
+		
+			return "menu//menu";
+
+	}
 }
