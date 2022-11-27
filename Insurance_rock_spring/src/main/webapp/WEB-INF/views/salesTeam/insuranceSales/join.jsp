@@ -24,7 +24,7 @@
 </form>
 	<form action="join" >
 		고객 이름: <input type="text" name="customerName"> <br>
-		주민/사업자 번호: <input type="text" name="registrationNum"><br>
+		주민/사업자 번호: <input type="text" name="SSN"><br>
 		전화번호: <input type="text" name="phoneNum"><br>
 		주소: <input type="text" name="address"><br>
 		성별: [male, female,none]<br>
@@ -45,19 +45,19 @@
 		<input type="radio" name="height" value="true" />예
 		<input type="radio" name="height" value="false" />아니오 <br> <br> 
 		건물 재질(rock, wood etc.)<br>
-		<input type="radio" name="meterial" value="1" />1.wood
-		<input type="radio" name="meterial" value="2"/>2.rock 
-		<input type="radio" name="meterial" value="3" />3.concrete
-		<input type="radio" name="meterial" value="4" />4.iron
-		<input type="radio" name="meterial" value="5" />5.brick <br> <br> 
+		<input type="radio" name="meterial" value="wood" />1.wood
+		<input type="radio" name="meterial" value="rock"/>2.rock 
+		<input type="radio" name="meterial" value="concrete" />3.concrete
+		<input type="radio" name="meterial" value="iron" />4.iron
+		<input type="radio" name="meterial" value="brick" />5.brick <br> <br> 
 		건물 목적(living, factory etc.)<br> 
-		<input type="radio" name="goal" value="1" />1.living
-		<input type="radio" name="goal" value="2"/>2.factory 
-		<input type="radio" name="goal" value="3" />3.culturalAsset
-		<input type="radio" name="goal" value="4" />4.store
-		<input type="radio" name="goal" value="5" />5.office 
-		<input type="radio" name="goal" value="6" />6.corPark
-		<input type="radio" name="goal" value="7" />7.warehouse<br> <br> 
+		<input type="radio" name="purpose" value="living" />1.living
+		<input type="radio" name="purpose" value="factory"/>2.factory 
+		<input type="radio" name="purpose" value="culturalAsset" />3.culturalAsset
+		<input type="radio" name="purpose" value="store" />4.store
+		<input type="radio" name="purpose" value="office" />5.office 
+		<input type="radio" name="purpose" value="corPark" />6.corPark
+		<input type="radio" name="purpose" value="warehouse" />7.warehouse<br> <br> 
 		
 		<button type="submit" name = "join" value="join">가입 신청하기</button>
 		<button type="submit" name = "join" value="cancel">취소</button>

@@ -21,5 +21,6 @@
 		<mapper resource="mappers/RegisterGeneralRateMapper.xml" />
 		<mapper resource="mappers/GeneralRateMapper.xml" />
 		<mapper resource="mappers/HouseRateMapper.xml" />
+		<mapper resource="mappers/ApplyContractMapper.xml" />
 	</mappers>
 </configuration>

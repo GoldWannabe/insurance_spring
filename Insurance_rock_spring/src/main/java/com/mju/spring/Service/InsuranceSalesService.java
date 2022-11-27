@@ -12,11 +12,11 @@ public interface InsuranceSalesService {
 
 	public InsuranceDTO getInsurance(HttpServletRequest request);
 
-	public boolean createContract(HttpServletRequest request);
+	public boolean createApplyContract(HttpServletRequest request);
 
 	public boolean createCustomer(HttpServletRequest request);
 	
-	public boolean joinContractAndCustomer();
+	public boolean joinApplyContractAndCustomer();
 
 	
 
