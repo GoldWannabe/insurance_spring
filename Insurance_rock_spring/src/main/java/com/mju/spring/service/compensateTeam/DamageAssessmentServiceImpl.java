@@ -64,24 +64,30 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		selectContractDto.setCustomerName(request.getParameter("customerName"));
 		selectContractDto.setCustomerPhoneNum(request.getParameter("customerPhoneNum"));
 		
-		
 		// 계약 DB에서 가져옴.
 		List<Contract> selectContractList = this.contractDao.retriveNameAndPhoneNum(selectContractDto);
 		
 		this.accident.setCustomerName(selectContractDto.getCustomerName());
-		this.accident.setPhoneNum(selectContractDto.getCustomerPhoneNum());
+		this.accident.setCustomerPhoneNum(selectContractDto.getCustomerPhoneNum());
+		
 		return selectContractList;
 	}
+	
+	@Override
+	public void setSelectContract(HttpServletRequest request) {
+		this.accident.setContractID(request.getParameter("contractID"));
+		this.accident.setCustomerID(request.getParameter("customerID"));
+	}
+	
+	
 
 	public Accident addAccident(HttpServletRequest request) {
 
 		int liablityRate = Integer.parseInt(request.getParameter("liablityRate"));
 		int totalCost = Integer.parseInt(request.getParameter("totalCost"));
-		int liablityCost = liablityRate * totalCost;
+		int liablityCost = liablityRate * totalCost / 100;
 
-		this.accident.setID(UUID.randomUUID().toString());
-		this.accident.setCustomerID(request.getParameter("customerID"));
-		this.accident.setCustomerID(request.getParameter("contractID"));
+		this.accident.setAccidentID(UUID.randomUUID().toString());
 		this.accident.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
 		this.accident.setContent(request.getParameter("content"));
 		this.accident.setKindOfCost(request.getParameter("kindOfCost"));
@@ -91,9 +97,10 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		this.accident.setLiablityCost(liablityCost);
 		this.accident.setPayCompleted(false);
 
-		this.accidentDao.insertAccident(this.accident);
+		this.accidentDao.create(this.accident);
+		this.accidentDao.commit();
 		// +고객이름, 연락처 , 책임비용, 지급여부(true,false), accidentID, customerID, contractID
-
+		
 		return accident;
 	}
 
@@ -112,7 +119,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 	public Accident selectAccident(HttpServletRequest request) {
 		for (Accident accident : selectAccidentList) {
-			if (accident.getID() == request.getParameter("accientID")) {
+			if (accident.getAccidentID() == request.getParameter("accientID")) {
 				this.accident = accident;
 				return accident;
 			}
@@ -203,14 +210,14 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			
 			String[] contractIDAndAccidentID = new String[1];
 			contractIDAndAccidentID[0] = this.accident.getContractID();
-			contractIDAndAccidentID[1] = this.accident.getID();
+			contractIDAndAccidentID[1] = this.accident.getAccidentID();
 			contractAccidentDao.insertContractProvision(contractIDAndAccidentID);
 
 			provision.setProvisionID(UUID.randomUUID().toString());
 			provision.setCustomerID(this.accident.getCustomerID());
 			provision.setContractID(this.accident.getContractID());
 			provision.setCustomerName(this.accident.getCustomerName());
-			provision.setPhoneNum(this.accident.getPhoneNum());
+			provision.setPhoneNum(this.accident.getCustomerPhoneNum());
 			provision.setInsuranceName(contractProvisionDto.getInsuranceName());
 			provision.setBankName(customerBankDto.getBankName());
 			provision.setAccountNum(customerBankDto.getAccountNum());
@@ -228,5 +235,6 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		}
 		return null;
 	}
+
 
 }

@@ -12,13 +12,13 @@ import com.mju.spring.entity.Accident;
 public class AccidentDaoImpl implements AccidentDao{
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	
-	private static final String insertAccident = "AccidentMapper.insertAccident";
+	private static final String Create = "AccidentMapper.create";
 	private static final String selectAccident = "AccidentMapper.selectAccident";
 	private static final String updatePayComplation = "AccidentMapper.updatePayComplation";
 	
 	@Override
-	public void insertAccident(Accident accident) {
-		sqlSession.selectOne(insertAccident, accident);
+	public void create(Accident accident) {
+		sqlSession.insert(Create, accident);
 	}
 
 	@Override
@@ -30,6 +30,11 @@ public class AccidentDaoImpl implements AccidentDao{
 	@Override
 	public void updatePaycompleted(Accident accident) {
 		sqlSession.selectList(updatePayComplation, accident);
+	}
+
+	@Override
+	public void commit() {
+		sqlSession.commit();
 	}
 
 

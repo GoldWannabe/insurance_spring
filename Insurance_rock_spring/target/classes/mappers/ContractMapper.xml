@@ -2,9 +2,7 @@
 
 <mapper namespace="ContractMapper">
 	<select id="selectNameAndPhoneNum" resultType="com.mju.spring.entity.Contract">
-		SELECT * FROM
-		Contract WHERE customerName = #{customerName} and
-		customerPhoneNum = #{customerPhoneNum}
+		SELECT * FROM Contract WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum}
 	</select>
 
 	<select id="selectContractProvision" resultType="com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto">

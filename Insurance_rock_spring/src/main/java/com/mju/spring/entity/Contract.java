@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Contract {
 	private String customerID;
 	private String customerName;
-	private String phoneNum;
+	private String customerPhoneNum;
 	private String insuranceID;
 	private String insuranceName;
 	private String contractID;
@@ -32,11 +32,11 @@ public class Contract {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getPhoneNum() {
-		return phoneNum;
+	public String getCustomerPhoneNum() {
+		return customerPhoneNum;
 	}
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setCustomerPhoneNum(String customerPhoneNum) {
+		this.customerPhoneNum = customerPhoneNum;
 	}
 	public String getInsuranceID() {
 		return insuranceID;

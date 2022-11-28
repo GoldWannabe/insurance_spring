@@ -3,11 +3,11 @@ package com.mju.spring.entity;
 import java.time.LocalDate;
 
 public class Accident {
-	private String ID;
+	private String accidentID;
 	private String contractID;
 	private String customerID;
 	private String customerName;
-	private String phoneNum;
+	private String customerPhoneNum;
 	private LocalDate accidentDate;
 	private String content;
 	private int totalCost;
@@ -16,11 +16,11 @@ public class Accident {
 	private boolean payCompleted;
 	private int liablityRate;
 	private int liablityCost;
-	public String getID() {
-		return ID;
+	public String getAccidentID() {
+		return accidentID;
 	}
-	public void setID(String iD) {
-		ID = iD;
+	public void setAccidentID(String accidentID) {
+		this.accidentID = accidentID;
 	}
 	public String getContractID() {
 		return contractID;
@@ -40,11 +40,11 @@ public class Accident {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getPhoneNum() {
-		return phoneNum;
+	public String getCustomerPhoneNum() {
+		return customerPhoneNum;
 	}
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setCustomerPhoneNum(String phoneNum) {
+		this.customerPhoneNum = phoneNum;
 	}
 	public LocalDate getAccidentDate() {
 		return accidentDate;
