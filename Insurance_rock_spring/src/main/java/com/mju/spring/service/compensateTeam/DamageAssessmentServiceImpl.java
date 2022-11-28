@@ -20,6 +20,7 @@ import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.ProvisionDao;
+import com.mju.spring.dto.damageAssessment.compansate.ConctractAccidentDto;
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
 import com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto;
 import com.mju.spring.dto.damageAssessment.compansate.SelectAccidentDto;
@@ -69,7 +70,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		List<Contract> selectContractList = this.contractDao.retriveNameAndPhoneNum(selectContractDto);
 		
 		this.accident.setCustomerName(selectContractDto.getCustomerName());
-		this.accident.setPhoneNum(selectContractDto.getCustomerPhoneNum());
+		this.accident.setCustomerPhoneNum(selectContractDto.getCustomerPhoneNum());
 		return selectContractList;
 	}
 
@@ -81,7 +82,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 		this.accident.setID(UUID.randomUUID().toString());
 		this.accident.setCustomerID(request.getParameter("customerID"));
-		this.accident.setCustomerID(request.getParameter("contractID"));
+		this.accident.setContractID(request.getParameter("contractID"));
 		this.accident.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
 		this.accident.setContent(request.getParameter("content"));
 		this.accident.setKindOfCost(request.getParameter("kindOfCost"));
@@ -201,16 +202,17 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 				contractDao.updateContractProvisionFee(updateContractDto);
 			}
 			
-			String[] contractIDAndAccidentID = new String[1];
-			contractIDAndAccidentID[0] = this.accident.getContractID();
-			contractIDAndAccidentID[1] = this.accident.getID();
-			contractAccidentDao.insertContractProvision(contractIDAndAccidentID);
+			ConctractAccidentDto contractAccidentDto = new ConctractAccidentDto();
+			contractAccidentDto.setAccidentID(this.accident.getID());
+			contractAccidentDto.setContractID(this.accident.getContractID());
+			
+			contractAccidentDao.insertContractProvision(contractAccidentDto);
 
 			provision.setProvisionID(UUID.randomUUID().toString());
 			provision.setCustomerID(this.accident.getCustomerID());
 			provision.setContractID(this.accident.getContractID());
 			provision.setCustomerName(this.accident.getCustomerName());
-			provision.setPhoneNum(this.accident.getPhoneNum());
+			provision.setPhoneNum(this.accident.getCustomerPhoneNum());
 			provision.setInsuranceName(contractProvisionDto.getInsuranceName());
 			provision.setBankName(customerBankDto.getBankName());
 			provision.setAccountNum(customerBankDto.getAccountNum());

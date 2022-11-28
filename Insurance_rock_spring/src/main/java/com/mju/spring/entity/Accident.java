@@ -7,7 +7,7 @@ public class Accident {
 	private String contractID;
 	private String customerID;
 	private String customerName;
-	private String phoneNum;
+	private String customerPhoneNum;
 	private LocalDate accidentDate;
 	private String content;
 	private int totalCost;
@@ -40,11 +40,11 @@ public class Accident {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	public String getPhoneNum() {
-		return phoneNum;
+	public String getCustomerPhoneNum() {
+		return customerPhoneNum;
 	}
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+	public void setCustomerPhoneNum(String customerPhoneNum) {
+		this.customerPhoneNum = customerPhoneNum;
 	}
 	public LocalDate getAccidentDate() {
 		return accidentDate;
