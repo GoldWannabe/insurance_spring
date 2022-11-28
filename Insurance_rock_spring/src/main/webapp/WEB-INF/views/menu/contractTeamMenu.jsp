@@ -12,7 +12,7 @@
 	<div>
 	<form action="contractTeamMenu" >
 		<button type="submit" name="menu" value="design" >설계</button>
-		<button type="submit" name="menu" value="design">인수심사</button>
+		<button type="submit" name="menu" value="underwrite">인수심사</button>
 		<button type="submit" name="menu" value="design">계약관리</button></form>
 	</div>
 	

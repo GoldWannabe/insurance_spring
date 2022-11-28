@@ -61,8 +61,8 @@ public class MainController {
 
 		if (request.getParameter("menu").equals("design")) {
 			return "contractTeam//insuranceDesign//inputTypeAndTerm";
-		} else if (request.getParameter("menu").equals("")) {
-			return "";
+		} else if (request.getParameter("menu").equals("underwrite")) {
+			return "contractTeam//underwriting//selectUnderwrite";
 		} else if (request.getParameter("menu").equals("")) {
 			return "";
 		} else {
