@@ -20,6 +20,7 @@ import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.ProvisionDao;
+import com.mju.spring.dto.damageAssessment.compansate.ConctractAccidentDto;
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
 import com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto;
 import com.mju.spring.dto.damageAssessment.compansate.SelectAccidentDto;
@@ -69,7 +70,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		
 		this.accident.setCustomerName(selectContractDto.getCustomerName());
 		this.accident.setCustomerPhoneNum(selectContractDto.getCustomerPhoneNum());
-		
+
 		return selectContractList;
 	}
 	
@@ -207,11 +208,6 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 				
 				contractDao.updateContractProvisionFee(updateContractDto);
 			}
-			
-			String[] contractIDAndAccidentID = new String[1];
-			contractIDAndAccidentID[0] = this.accident.getContractID();
-			contractIDAndAccidentID[1] = this.accident.getAccidentID();
-			contractAccidentDao.insertContractProvision(contractIDAndAccidentID);
 
 			provision.setProvisionID(UUID.randomUUID().toString());
 			provision.setCustomerID(this.accident.getCustomerID());

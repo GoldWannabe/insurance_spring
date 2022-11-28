@@ -43,8 +43,9 @@ public class Accident {
 	public String getCustomerPhoneNum() {
 		return customerPhoneNum;
 	}
-	public void setCustomerPhoneNum(String phoneNum) {
-		this.customerPhoneNum = phoneNum;
+	
+	public void setCustomerPhoneNum(String customerPhoneNum) {
+		this.customerPhoneNum = customerPhoneNum;
 	}
 	public LocalDate getAccidentDate() {
 		return accidentDate;
