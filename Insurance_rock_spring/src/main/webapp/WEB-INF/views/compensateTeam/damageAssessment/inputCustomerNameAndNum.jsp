@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +8,9 @@
 </head>
 <body>
 	<form action="inputCustomerNameAndNum">
-		�̸�: <input type="text" name="name" required><br>
-		��ȭ��ȣ: <input type="number" name="num" required><br>
-		<button type="submit">��� �˻��ϱ�</button>
+		이름: <input type="text" name="customerName" required><br>
+		전화번호: <input type="number" name="customerPhoneNum" required><br>
+		<button type="submit">계약 검색하기</button>
 	</form>
 </body>
 </html>

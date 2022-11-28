@@ -15,5 +15,6 @@ public interface DamageAssessmentService {
 	public List<Accident> searchAccident(HttpServletRequest request);
 	public Accident selectAccident(HttpServletRequest request);
 	public Provision payCompensation();
+	public void setSelectContract(HttpServletRequest request);
 	
 }

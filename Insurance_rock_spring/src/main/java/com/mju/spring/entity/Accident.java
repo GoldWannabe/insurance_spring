@@ -3,7 +3,7 @@ package com.mju.spring.entity;
 import java.time.LocalDate;
 
 public class Accident {
-	private String ID;
+	private String accidentID;
 	private String contractID;
 	private String customerID;
 	private String customerName;
@@ -16,11 +16,11 @@ public class Accident {
 	private boolean payCompleted;
 	private int liablityRate;
 	private int liablityCost;
-	public String getID() {
-		return ID;
+	public String getAccidentID() {
+		return accidentID;
 	}
-	public void setID(String iD) {
-		ID = iD;
+	public void setAccidentID(String accidentID) {
+		this.accidentID = accidentID;
 	}
 	public String getContractID() {
 		return contractID;
@@ -43,6 +43,7 @@ public class Accident {
 	public String getCustomerPhoneNum() {
 		return customerPhoneNum;
 	}
+	
 	public void setCustomerPhoneNum(String customerPhoneNum) {
 		this.customerPhoneNum = customerPhoneNum;
 	}

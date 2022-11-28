@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +7,13 @@
 </head>
 <body>
 	<form action="inputAccidentInfo">
-		╩Г╟МЁ╞б╔: <input type="date" name="accidentDate" required><br>
-		╩Г╟МЁ╩©К: <input type="text" name="content" required><br> 
-		ця╨Я©К: <input type="number" name="totalCost" min="0" required><br>
-		╪угью╡: <input type="number" name="damagePer" min="0" max="100" required><br>
-		╨╦╩Са╬╥Ы: <input type="text" name="kindOfCost" min="0" required><br>
-		ц╔юс╨Яю╡: <input type="number" name="liablityRate" min="0" max="100" required><br>
-		<button type="submit">╩Г╟М а╒╪Жго╠Б</button>
+		Л┌╛ЙЁ═К┌═Л╖°: <input type="date" name="accidentDate" required><br>
+		Л┌╛ЙЁ═К┌╢Л ╘: <input type="text" name="content" required><br> 
+		Л╢²К╧└Л ╘: <input type="number" name="totalCost" min="0" required><br>
+		Л├░М∙╢Л°╗: <input type="number" name="damagePer" min="0" max="100" required><br>
+		КЁ╢Л┐│Л╒┘К╔≤: <input type="text" name="kindOfCost" min="0" required><br>
+		Л╠┘Л·└К╧└Л°╗: <input type="number" name="liablityRate" min="0" max="100" required><br>
+		<button type="submit">Л┌╛ЙЁ═ Л═▒Л┬≤М∙≤Й╦╟</button>
 	</form>
 </body>
 </html>

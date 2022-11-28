@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +8,9 @@
 </head>
 <body>
 	<form action="inputCustomerNameAndDate">
-		ÀÌ¸§: <input type="text" name="name" required><br>
-		»ç°í³¯Â¥: <input type="date" required><br>
-		<button type="submit">»ç°í³»¿ª °Ë»öÇÏ±â</button>
+		ì´ë¦„: <input type="text" name="name" required><br>
+		ì‚¬ê³ ë‚ ì§œ: <input type="date" required><br>
+		<button type="submit">ì‚¬ê³ ë‚´ì—­ ê²€ìƒ‰í•˜ê¸°</button>
 	</form>
 </body>
 </html>
