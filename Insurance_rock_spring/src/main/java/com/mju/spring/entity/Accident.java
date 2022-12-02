@@ -19,8 +19,9 @@ public class Accident {
 	public String getAccidentID() {
 		return accidentID;
 	}
-	public void setAccidentID(String accidnetID) {
-		this.accidentID = accidnetID;
+
+	public void setAccidentID(String accidentID) {
+		this.accidentID = accidentID;
 	}
 	public String getContractID() {
 		return contractID;
@@ -43,6 +44,7 @@ public class Accident {
 	public String getCustomerPhoneNum() {
 		return customerPhoneNum;
 	}
+	
 	public void setCustomerPhoneNum(String customerPhoneNum) {
 		this.customerPhoneNum = customerPhoneNum;
 	}

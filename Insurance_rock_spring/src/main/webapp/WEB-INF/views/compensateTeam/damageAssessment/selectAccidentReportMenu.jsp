@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +7,12 @@
 
 </head>
 <body>
-	<p>���Ͻô� �޴��� �ش��ϴ� ��ư�� �����ּ���.</p>  <br>
+	<p>원하시는 메뉴에 해당하는 버튼을 눌러주세요.</p>  <br>
 	<div>
 		<form action = "selectAccidentReportMenu">
-			<button type="submit" name = "menu" value="search">�˻�</button>
-			<button type="submit" name = "menu" value="add">�߰�</button>
-			<button type="submit" name = "menu" value="cancel">���</button>
+			<button type="submit" name = "menu" value="search">검색</button>
+			<button type="submit" name = "menu" value="add">추가</button>
+			<button type="submit" name = "menu" value="cancel">취소</button>
 		</form>
 	</div>
 	

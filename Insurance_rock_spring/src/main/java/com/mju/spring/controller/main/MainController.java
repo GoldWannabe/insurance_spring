@@ -47,7 +47,7 @@ public class MainController {
 		} else if (team.equals("salesTeam")) {
 			return "menu//salesTeamMenu";
 		} else if (team.equals("compensateTeam")) {
-			return "menu";
+			return "menu//compensateTeamMenu";
 		} else if (team.equals("policyholder")) {
 			return "test";
 		} else {
@@ -61,8 +61,8 @@ public class MainController {
 
 		if (request.getParameter("menu").equals("design")) {
 			return "contractTeam//insuranceDesign//inputTypeAndTerm";
-		} else if (request.getParameter("menu").equals("")) {
-			return "";
+		} else if (request.getParameter("menu").equals("underwrite")) {
+			return "contractTeam//underwriting//selectUnderwrite";
 		} else if (request.getParameter("menu").equals("")) {
 			return "";
 		} else {
@@ -105,7 +105,7 @@ public class MainController {
 	public String compensateTeamControl(HttpServletRequest request) {
 
 		if (request.getParameter("menu").equals("damageAssessment")) {
-			return "financialDirector//compensateTeam//selectAccidentReportMenu";
+			return "compensateTeam//damageAssessment//selectAccidentReportMenu";
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {

@@ -10,10 +10,12 @@ import com.mju.spring.entity.Accident;
 @Repository
 public interface AccidentDao {
 
-	public void insertAccident(Accident accident);
+	public void create(Accident accident);
 
 	public List<Accident> retriveNameAndDate(SelectAccidentDto selectAccidentDto);
 
 	public void updatePaycompleted(Accident accident );
+
+	public void commit();
 	
 }

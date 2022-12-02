@@ -1,9 +1,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="AccidentMapper">
-	<select id="insertAccident">
-		INSERT INTO Accident VALUES(#{accidentID},
-		#{contractID}, #{customerPhoneNum}, #{accidentDate}, #{content},
+	<select id="create">
+		INSERT INTO Accident (accidentID, contractID, customerID, customerName, customerPhoneNum, accidentDate, content, totalCost, damagePer,
+		kindOfCost, payCompleted, liablityRate, liablityCost) VALUES(
+		#{accidentID}, #{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{accidentDate}, #{content},
 		#{totalCost}, #{damagePer}, #{kindOfCost}, #{payCompleted},
 		#{liablityRate}, #{liablityCost})
 	</select>
