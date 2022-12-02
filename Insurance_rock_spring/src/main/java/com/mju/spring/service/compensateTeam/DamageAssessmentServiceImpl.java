@@ -211,6 +211,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 				updateContractDto.setLiablityCost(this.accident.getLiablityCost());
 				
 				contractDao.updateContractProvisionFee(updateContractDto);
+				this.contractDao.commit();
 			}
 			
 			ConctractAccidentDto contractAccidentDto = new ConctractAccidentDto();
@@ -218,6 +219,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			contractAccidentDto.setContractID(this.accident.getContractID());
 			
 			contractAccidentDao.insertContractProvision(contractAccidentDto);
+			this.contractAccidentDao.commit();
 
 
 			provision.setProvisionID(UUID.randomUUID().toString());
@@ -231,6 +233,8 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			provision.setCompensationDate(LocalDate.now());
 			// 지급ID, 고객ID, 가입자명, 연락처, 계좌번호,은행명, 보상금액, 지급날짜.보험이름, 장기여부, 보험종류, 계약ID를 저장.
 			provisionDao.inserNeProvision(provision);
+			this.provisionDao.commit();
+			
 			scanner.close();
 			return provision;
 		} catch (FileNotFoundException e) {

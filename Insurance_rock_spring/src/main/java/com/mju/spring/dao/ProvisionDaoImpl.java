@@ -13,7 +13,12 @@ public class ProvisionDaoImpl implements ProvisionDao{
 
 	@Override
 	public void inserNeProvision(Provision provision) {
-		sqlSession.selectOne(InsertProvision, provision);
+		sqlSession.insert(InsertProvision, provision);
+	}
+
+	@Override
+	public void commit() {
+		sqlSession.commit();
 	}
 	
 }
