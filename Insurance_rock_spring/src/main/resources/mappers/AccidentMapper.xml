@@ -13,7 +13,7 @@
 		accidentDate  = #{accidentDate}
 	</select>
 	<select id="updatePayComplation" resultType="com.mju.spring.entity.Accident">
-		UPDATE accident SET payCompleted = #{payCompleted}
+		UPDATE Accident SET payCompleted = #{payCompleted}
 		WHERE accidentID = #{ID}
 	</select>
 </mapper>
