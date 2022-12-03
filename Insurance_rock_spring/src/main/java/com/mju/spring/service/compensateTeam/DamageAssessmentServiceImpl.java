@@ -86,9 +86,11 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 		int liablityRate = Integer.parseInt(request.getParameter("liablityRate"));
 		int totalCost = Integer.parseInt(request.getParameter("totalCost"));
-		int liablityCost = liablityRate * totalCost / 100;
 
+		int liablityCost = totalCost*liablityRate / 100; 
 		this.accident.setAccidentID(UUID.randomUUID().toString());
+		this.accident.setCustomerID(request.getParameter("customerID"));
+		this.accident.setContractID(request.getParameter("contractID"));
 		this.accident.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
 		this.accident.setContent(request.getParameter("content"));
 		this.accident.setKindOfCost(request.getParameter("kindOfCost"));
@@ -98,9 +100,11 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		this.accident.setLiablityCost(liablityCost);
 		this.accident.setPayCompleted(false);
 
+
+		// +고객이름, 연락처 , 책임비용, 지급여부(true,false), accidentID, customerID, contractID
 		this.accidentDao.create(this.accident);
 		this.accidentDao.commit();
-		// +고객이름, 연락처 , 책임비용, 지급여부(true,false), accidentID, customerID, contractID
+
 		
 		return accident;
 	}
@@ -207,7 +211,16 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 				updateContractDto.setLiablityCost(this.accident.getLiablityCost());
 				
 				contractDao.updateContractProvisionFee(updateContractDto);
+				this.contractDao.commit();
 			}
+			
+			ConctractAccidentDto contractAccidentDto = new ConctractAccidentDto();
+			contractAccidentDto.setAccidentID(this.accident.getAccidentID());
+			contractAccidentDto.setContractID(this.accident.getContractID());
+			
+			contractAccidentDao.insertContractProvision(contractAccidentDto);
+			this.contractAccidentDao.commit();
+
 
 			provision.setProvisionID(UUID.randomUUID().toString());
 			provision.setCustomerID(this.accident.getCustomerID());
@@ -220,6 +233,8 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			provision.setCompensationDate(LocalDate.now());
 			// 지급ID, 고객ID, 가입자명, 연락처, 계좌번호,은행명, 보상금액, 지급날짜.보험이름, 장기여부, 보험종류, 계약ID를 저장.
 			provisionDao.inserNeProvision(provision);
+			this.provisionDao.commit();
+			
 			scanner.close();
 			return provision;
 		} catch (FileNotFoundException e) {

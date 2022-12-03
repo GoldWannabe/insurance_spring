@@ -10,4 +10,6 @@ public interface ContractAccidentDao {
 
 	public void insertContractProvision(ConctractAccidentDto contractAccidentDto);
 
+	public void commit();
+
 }

@@ -7,5 +7,7 @@ import com.mju.spring.entity.Provision;
 @Repository
 public interface ProvisionDao {
 	public void inserNeProvision(Provision provision);
+
+	public void commit();
 	
 }

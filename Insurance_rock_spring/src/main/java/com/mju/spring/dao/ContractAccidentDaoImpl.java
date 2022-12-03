@@ -13,8 +13,13 @@ public class ContractAccidentDaoImpl implements ContractAccidentDao{
 
 	@Override
 	public void insertContractProvision(ConctractAccidentDto contractAccidentDto) {
-		sqlSession.selectOne(InsertContractAccident, contractAccidentDto);
-		// TODO Auto-generated method stub
+		sqlSession.insert(InsertContractAccident, contractAccidentDto);
+		
+	}
+
+	@Override
+	public void commit() {
+		sqlSession.commit();
 		
 	}
 

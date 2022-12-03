@@ -16,4 +16,8 @@ public interface ContractDao {
 	public ContractProvisionDto retriveContract(String contractID);
 
 	public void updateContractProvisionFee(UpdateContractDto updateContractDto);
+
+	public void commit();
+
+	public int create(Contract applyContract);
 }

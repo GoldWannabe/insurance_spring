@@ -3,22 +3,25 @@ package com.mju.spring.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.mju.spring.entity.Provision;
+import com.mju.spring.entity.Rank;
+
 
 @Repository
-public class ProvisionDaoImpl implements ProvisionDao{
+public class RankDaoImpl implements RankDao {
+	
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	
-	private static final String InsertProvision = "ProvisionMapper.insertProvision";
+	private static final String Create = "RankMapper.create";
 
 	@Override
-	public void inserNeProvision(Provision provision) {
-		sqlSession.insert(InsertProvision, provision);
+	public int create(Rank rank) {
+		return sqlSession.insert(Create, rank);
 	}
 
 	@Override
 	public void commit() {
 		sqlSession.commit();
+		
 	}
-	
+
 }

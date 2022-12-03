@@ -31,7 +31,18 @@ public class ContractDaoImpl implements ContractDao{
 
 	@Override
 	public void updateContractProvisionFee(UpdateContractDto updateContractDto) {
-		sqlSession.selectOne(UpdateContractProvisionFee, updateContractDto);
+		sqlSession.update(UpdateContractProvisionFee, updateContractDto);
 	}
+
+	@Override
+	public void commit() {
+		sqlSession.commit();
+	}
+
+	@Override
+	public int create(Contract applyContract) {
+		return 0;
+	}
+	
 
 }

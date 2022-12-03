@@ -19,6 +19,7 @@ public class Accident {
 	public String getAccidentID() {
 		return accidentID;
 	}
+
 	public void setAccidentID(String accidentID) {
 		this.accidentID = accidentID;
 	}

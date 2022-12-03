@@ -68,7 +68,7 @@ public class InsuranceSalesController {
 	public String join(HttpServletRequest request, Model model) {
 
 		//일단은 여기서 계약과 고객 생성
-		if(this.insuranceSalesService.createContract(request) && this.insuranceSalesService.createCustomer(request)) {
+		if(this.insuranceSalesService.createApplyContract(request) && this.insuranceSalesService.createCustomer(request)) {
 			return joinContractAndCustomer(model);
 		} else {
 			return "error";
@@ -79,7 +79,7 @@ public class InsuranceSalesController {
 	}
 	
 	public String joinContractAndCustomer(Model model) {
-		if(this.insuranceSalesService.joinContractAndCustomer()) {
+		if(this.insuranceSalesService.joinApplyContractAndCustomer()) {
 			model.addAttribute("Finish", true);
 			return "salesTeam//insuranceSales//join";
 		} else {
