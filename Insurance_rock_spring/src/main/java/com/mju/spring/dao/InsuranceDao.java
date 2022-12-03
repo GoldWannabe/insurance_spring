@@ -23,6 +23,10 @@ public interface InsuranceDao {
 
 	public String retriveInsuranceType(String insuranceName);
 
+	public Insurance retriveGeneralById(String insuranceID);
+
+	public Insurance retriveHouseById(String insuranceID);
+
 
 
 

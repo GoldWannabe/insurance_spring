@@ -19,7 +19,8 @@ public class InsuranceDaoImpl implements InsuranceDao {
 	private static final String SelectHouseType = "InsuranceMapper.selectHouseType";
 	private static final String Create = "InsuranceMapper.create";
 	private static final String SelectInsuranceType = "InsuranceMapper.selectInsuranceType";
-
+	private static final String SelectGeneralById = "InsuranceMapper.selectGeneralById";
+	private static final String SelectHouseById = "InsuranceMapper.selectHouseById";
 
 
 	@Override
@@ -61,6 +62,16 @@ public class InsuranceDaoImpl implements InsuranceDao {
 	@Override
 	public String retriveInsuranceType(String insuranceID) {
 		return sqlSession.selectOne(SelectInsuranceType, insuranceID);
+	}
+
+	@Override
+	public Insurance retriveGeneralById(String insuranceID) {
+		return sqlSession.selectOne(SelectGeneralById, insuranceID);
+	}
+
+	@Override
+	public Insurance retriveHouseById(String insuranceID) {
+		return sqlSession.selectOne(SelectHouseById, insuranceID);
 	}
 
 

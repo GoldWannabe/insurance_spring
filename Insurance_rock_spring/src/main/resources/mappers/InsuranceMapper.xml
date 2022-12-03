@@ -30,5 +30,11 @@
 			SELECT insuranceType from Insurance where insuranceID = #{insuranceID}
 		</select>
 		
-
+		<select id="selectGeneralById" resultType="com.mju.spring.entity.GeneralInsurance">
+			SELECT * from Insurance where insuranceID = #{insuranceID}
+		</select>
+		
+		<select id="selectHouseById" resultType="com.mju.spring.entity.HouseInsurance">
+			SELECT * from Insurance where insuranceID = #{insuranceID}
+		</select>
 	</mapper>
