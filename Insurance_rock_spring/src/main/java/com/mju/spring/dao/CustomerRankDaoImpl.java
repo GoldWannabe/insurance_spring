@@ -13,6 +13,7 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	
 	private static final String SelectRenewCustomerRank = "CustomerRankMapper.selectRenewCustomerRank";
 	private static final String SelectRankID = "CustomerRankMapper.selectRankID";
+	private static final String Create = "CustomerRankMapper.create";
 
 	@Override
 	public int create(CustomerRankDto customerRankDTO) {
@@ -32,6 +33,12 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	@Override
 	public String retriveRankID(String contractID) {
 		return sqlSession.selectOne(SelectRankID, contractID);
+	}
+
+	@Override
+	public void insertCustomerRank(RenewCustomerRankDto renewCustomerRankDto) {
+		sqlSession.insert(Create, renewCustomerRankDto);
+		
 	}
 	
 	

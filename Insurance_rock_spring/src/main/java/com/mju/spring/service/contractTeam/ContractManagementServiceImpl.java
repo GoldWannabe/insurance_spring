@@ -15,6 +15,7 @@ import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAcci
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManagementDto;
 import com.mju.spring.entity.Contract;
+import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Rank;
 
 
@@ -72,13 +73,14 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 		rank.setScale(Integer.parseInt(request.getParameter("scale")));
 		rank.setSurroundingFacilities(Double.valueOf(request.getParameter("surroundingFacilities")));
 		rank.setPurpose(request.getParameter("purpose"));
+	
+		renewCustomerRankDto.setRankID("*"+renewCustomerRankDto.getRankID());
+		customerRankDao.insertCustomerRank(renewCustomerRankDto);
 		
 		//RankID, material, fireFacilities,height,scale,surroundingFacilities,purpose
 		this.rankDao.create(rank);
 		this.rankDao.commit();
-		
-		this.rankDao.deleteRank(rank.getRankID());
-		this.rankDao.commit();
+
 		//계약 관리 할 때, 갱신 부분을 할 경우 rank 업데이트 하지 말고 현재 랭크 id 맨 앞에 *붙여서 새로 저장해주세요
 		
 	}

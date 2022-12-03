@@ -28,16 +28,16 @@
 		스케일(Int) <input type="number" name="rankInfo" placeholder="정수" onkeyup="noSpaceForm(this);" required/> <br>
 		주변시설(Float) <input type="number" name="rankInfo" placeholder="실수" onkeyup="noSpaceForm(this);"required/> <br>
 		높이가 15층 이상입니까? <br>
-		<input type="radio" name="height" value="true" />예
+		<input type="radio" name="height" value="true" required/>예
 		<input type="radio" name="height" value="false" />아니오 <br> <br> 
 		건물 재질(rock, wood etc.)<br>
-		<input type="radio" name="meterial" value="wood" />1.wood
+		<input type="radio" name="meterial" value="wood" required/>1.wood
 		<input type="radio" name="meterial" value="rock"/>2.rock 
 		<input type="radio" name="meterial" value="concrete" />3.concrete
 		<input type="radio" name="meterial" value="iron" />4.iron
 		<input type="radio" name="meterial" value="brick" />5.brick <br> <br> 
 		건물 목적(living, factory etc.)<br> 
-		<input type="radio" name="goal" value="living" />1.living
+		<input type="radio" name="goal" value="living" required/>1.living
 		<input type="radio" name="goal" value="factory"/>2.factory 
 		<input type="radio" name="goal" value="culturalAsset" />3.culturalAsset
 		<input type="radio" name="goal" value="store" />4.store

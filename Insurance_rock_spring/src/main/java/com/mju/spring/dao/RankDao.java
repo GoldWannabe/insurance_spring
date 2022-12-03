@@ -12,5 +12,4 @@ public interface RankDao {
 
 	public Rank retriveRankById(String rankID);
 
-
 }

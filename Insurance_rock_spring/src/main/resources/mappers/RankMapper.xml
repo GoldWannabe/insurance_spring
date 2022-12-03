@@ -13,4 +13,5 @@
 	<select id="selectRankById" resultType="com.mju.spring.entity.Rank">
 		SELECT * from iRank where RankID = #{rankID}
 	</select>
+
 </mapper>

@@ -10,7 +10,10 @@ public interface CustomerRankDao {
 
 	public void commit();
 
-	public RenewCustomerRankDto retriveAllId(String customerID);
+
+	public RenewCustomerRankDto retriveAllId(String contractID);
 
 	public String retriveRankID(String contractID);
+
+	public void insertCustomerRank(RenewCustomerRankDto renewCustomerRankDto);
 }
