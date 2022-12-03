@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.mju.spring.dao.ApplyContractDao;
 import com.mju.spring.dao.ApplyContractDaoImpl;
-import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.CustomerRankDao;
 import com.mju.spring.dao.GeneralRateDao;

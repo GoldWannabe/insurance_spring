@@ -2,7 +2,7 @@
 
 <mapper namespace="ApplyContractMapper">
 	
-	<select id="selectAll" resultType="com.mju.spring.dto.contractTeam.Underwriting.ApplyContractDTO">
+	<select id="selectAll" resultType="com.mju.spring.dto.contractTeam.Underwriting.ApplyContractDto">
 		select * from ApplyContract
 	</select>
 	<select id="create">
