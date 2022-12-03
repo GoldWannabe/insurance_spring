@@ -1,6 +1,6 @@
-package com.mju.spring.dto.damageAssessment.compansate;
+package com.mju.spring.dto.contractTeam.contractManagement;
 
-public class ConctractAccidentDto {
+public class ContractManagementAccidentDto {
 	private String contractID;
 	private String accidentID;
 	

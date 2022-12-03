@@ -1,12 +1,13 @@
 package com.mju.spring.dto.contractTeam.Underwriting;
 
+import com.mju.spring.entity.Rank;
 
 public class VerifyApplyContractDto {
 	
 	private int insuranceFee;
 	private int standardFee;
 	private int securityFee;
-	//private Rank rank;
+	private Rank rank;
 	private int period;
 	private int paymentCycle;
 	private String applyCondition;
@@ -29,12 +30,12 @@ public class VerifyApplyContractDto {
 	public void setSecurityFee(int securityFee) {
 		this.securityFee = securityFee;
 	}
-//	public Rank getRank() {
-//		return rank;
-//	}
-//	public void setRank(Rank rank) {
-//		this.rank = rank;
-//	}
+	public Rank getRank() {
+		return rank;
+	}
+	public void setRank(Rank rank) {
+		this.rank = rank;
+	}
 	public int getPeriod() {
 		return period;
 	}

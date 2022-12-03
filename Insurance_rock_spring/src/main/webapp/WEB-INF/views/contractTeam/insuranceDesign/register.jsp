@@ -6,20 +6,10 @@
 <meta charset="EUC-KR">
 <title>insuranceInfo</title>
 
-	<script>
-	function registerCompletion(form) {
-		alert("보험 등록이 완료되었습니다.");
-			form.action = "register";
-			form.submit();
-		  
-	}
-	</script>
-
-
 </head>
 <body>
 
-	<form action = "register" onsubmit="alert('임시저장 되었습니다.');">
+	<form action = "register">
 
 		<p>-----보험 Info-----</p>
 		<p>보험 이름: ${InsuranceName}</p>
@@ -36,7 +26,7 @@
 		
 		확인을 누르시면 설계가 완료됩니다.
 
-		<input  type="button" value="등록" onclick="UseStandardRate(this.form);"/>
+		<button  type="submit" name="register" value="register">등록</button>
 		<button type="submit" name="register" value="cancel">취소</button> 
 	</form>
 

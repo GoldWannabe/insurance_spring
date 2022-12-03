@@ -37,7 +37,6 @@ public class UnderwritingController {
 	// getMaterialRank
 	// verifyInsuranceFee 최종 요율 계산
 
-//selectRenew	
 	@RequestMapping(value = "selectUnderwrite", method = RequestMethod.GET)
 	public String selectUnderwrite(HttpServletRequest request, Model model) {
 		if (request.getParameter("underwriteMenu").equals("apply")) {
@@ -60,7 +59,7 @@ public class UnderwritingController {
 	@RequestMapping(value = "selectApply", method = RequestMethod.GET)
 	public String selectApply(HttpServletRequest request, Model model) {
 		if (request.getParameter("selectVerify").equals("verify")) {
-			return verifyApply(model);
+			return verifyApply(request, model);
 		} else if (request.getParameter("selectVerify").equals("cancel")) {
 			return "menu//menu";
 		} else {
@@ -69,8 +68,8 @@ public class UnderwritingController {
 
 	}
 
-	private String verifyApply(Model model) {
-		VerifyApplyContractDto verifyApplyContract = this.underwritingService.verifyApply(); // 저장될 정보와 실패했을 경우
+	private String verifyApply(HttpServletRequest request, Model model) {
+		VerifyApplyContractDto verifyApplyContract = this.underwritingService.verifyApply(request); // 저장될 정보와 실패했을 경우
 		if (verifyApplyContract == null) {
 			ReasonDto reasonDto = this.underwritingService.getReason();
 			model.addAttribute("JudgeResult",
@@ -78,7 +77,7 @@ public class UnderwritingController {
 			return "menu//showResult";
 		}
 		model.addAttribute("ApplyContract", verifyApplyContract);
-		// model.addAttribute("Rank", verifyApplyContract.getRank());
+		model.addAttribute("Rank", verifyApplyContract.getRank());
 
 		return "contractTeam//applyVerify//selectApplyPermit";
 	}
@@ -143,8 +142,8 @@ public class UnderwritingController {
 			return "menu//showResult";
 		}
 		model.addAttribute("RenewContract", verifyRenewContract);
-		// model.addAttribute("PreviousRank", verifyRenewContract.getPreviousRank());
-		// model.addAttribute("newRank", verifyRenewContract.getNewRank());
+		model.addAttribute("PreviousRank", verifyRenewContract.getPreviousRank());
+		model.addAttribute("newRank", verifyRenewContract.getNewRank());
 
 		return "contractTeam//renewVerify//selectRenewPermit";
 	}

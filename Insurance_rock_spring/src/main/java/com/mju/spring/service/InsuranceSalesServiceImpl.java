@@ -142,7 +142,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		this.customerDTO.setSSN(this.customer.getSSN());
 		this.customerDTO.setPhoneNum(this.customer.getPhoneNum());
 		this.customerDTO.setAddress(this.customer.getAddress());
-		this.customerDTO.setSex(this.customer.getSex());
+		this.customerDTO.setSex(this.customer.getSex().toString());
 		this.customerDTO.setBankName(this.customer.getBankName());
 		this.customerDTO.setAccountNum(this.customer.getAccountNum());
 		this.customerDTO.setInsuranceNum(this.customer.getInsuranceNum());

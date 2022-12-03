@@ -1,11 +1,16 @@
 package com.mju.spring.dao;
 
-import com.mju.spring.dto.damageAssessment.compansate.ConctractAccidentDto;
+import java.util.List;
+
+import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
+import com.mju.spring.dto.damageAssessment.compansate.ContractAccidentDto;
 
 public interface ContractAccidentDao {
 
-	public void insertContractProvision(ConctractAccidentDto contractAccidentDto);
+	public void insertContractProvision(ContractAccidentDto contractAccidentDto);
 
 	public void commit();
+
+	public List<ContractManagementAccidentDto> retriveContractAccident(String parameter);
 
 }

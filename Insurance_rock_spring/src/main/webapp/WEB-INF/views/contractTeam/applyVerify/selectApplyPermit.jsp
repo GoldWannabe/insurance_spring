@@ -8,18 +8,19 @@
 </head>
 <body>
 	<p>원하시는 메뉴에 해당하는 버튼을 눌러주세요.</p>
-	<br>
-
+	<br> 
 	<form action="selectApplyPermit">
-
-		<p>가입 요청 보험료: ${Insurance.insuranceName}</p>
-		<p>기준 보험료: ${Insurance.standardFee}</p>
-		<p>담보액: ${Insurance.specialContract}</p>
-		<p>등급: ${Insurance.longTerm}</p>
-		<p>가입기간: ${Insurance.insuranceType}</p>
-		<p>납부방식: ${Insurance.applyCondition}</p>
-		<p>가입 조건: ${Insurance.compensateCondition}</p>
-		
+		<p>기존 보험료: ${RenewContract.previousInsuranceFee} --> 갱신 후 보험료: ${RenewContract.previousInsuranceFee}</p>
+		<p>기존 담보액: ${RenewContract.previousSecurityFee} --> 갱신 후 담보액: ${RenewContract.newSecurityFee}</p>
+		<p>현재 만료일: ${RenewContract.endDate}</p>
+		<p>연장기간: ${RenewContract.period}</p>
+		<p>재질: ${PreviousRank.material} --> ${newRank.material}</p>
+		<p>용도: ${PreviousRank.purpose} --> ${newRank.purpose}</p>
+		<p>크기(평수): ${PreviousRank.scale} --> ${newRank.scale}</p>
+		<p>고층여부: ${PreviousRank.height} --> ${newRank.height}</p>
+		<p>소방시설 점수: ${PreviousRank.fireFacilities} --> ${newRank.fireFacilities}</p>
+		<p>주변시설 점수: ${PreviousRank.surroundingFacilities} --> ${newRank.surroundingFacilities}</p>
+		<p>최종등급: ${RenewContract.totalRank}</p>
 
 		<div>
 			<button type="submit" name="selectPerit" value="permit">계약</button>
