@@ -1,0 +1,8 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ApplyContractMapper">
+	
+	<select id="selectAll" resultType="com.mju.spring.dto.contractTeam.Underwriting.ApplyContractDTO">
+		select * from ApplyContract
+	</select>
+</mapper>
