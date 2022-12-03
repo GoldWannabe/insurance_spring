@@ -21,7 +21,7 @@
 <body>
 
 	<form action = "register" onsubmit="alert('임시저장 되었습니다.');">
-	<!-- qwer -->
+	
 		<p>-----보험 Info-----</p>
 		<p>보험 이름: ${InsuranceName}</p>
 		<p>보험 종류: ${InsuranceType}</p>

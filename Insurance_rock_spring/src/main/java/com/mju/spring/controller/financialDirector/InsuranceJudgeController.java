@@ -16,13 +16,13 @@ import com.mju.spring.service.financialDirector.InsuranceJudgeService;
 
 @Controller
 public class InsuranceJudgeController {
-
+        
 	@Autowired
 	InsuranceJudgeService insuranceJudgeService;
 
 	@RequestMapping(value = "startJudge", method = RequestMethod.GET)
 	public String startJudge(HttpServletRequest request, Model model) {
-		// 모든 보험 가져와서 리턴
+		// 모든 보험 가져와서 리턴 dd
 		if (request.getParameter("menu").equals("start")) {
 			List<RegisterInsuranceDto> registerInsuranceDaoList = this.insuranceJudgeService.getRegisterInsurance();
 			
