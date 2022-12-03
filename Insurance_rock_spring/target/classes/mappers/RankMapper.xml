@@ -9,4 +9,8 @@
 	<delete id="deleteRankRenew">
 		DELETE FROM iRank WHERE RankID = #{RankID}
 	</delete>
+	
+	<select id="selectRankById" resultType="com.mju.spring.entity.Rank">
+		SELECT * from iRank where RankID = #{rankID}
+	</select>
 </mapper>
