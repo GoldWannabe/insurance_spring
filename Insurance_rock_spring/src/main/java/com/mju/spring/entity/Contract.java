@@ -18,6 +18,14 @@ public class Contract {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private int unpaidFee;
+	private String reason;
+	
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
 	private ArrayList<String> accidentHistory = new ArrayList<String>();
 	
 	public String getCustomerID() {
