@@ -8,16 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.mju.spring.service.contractTeam.InsuranceDesignService;
 
 @Controller
 public class MainController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
+	@Autowired
+	InsuranceDesignService insuranceDesignService;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -60,7 +65,12 @@ public class MainController {
 	public String financialDirectormControl(HttpServletRequest request) {
 
 		if (request.getParameter("menu").equals("design")) {
-			return "contractTeam//insuranceDesign//inputTypeAndTerm";
+			//임시저장된 내용이 있다면. 가져와서 바로 return register로.
+			if(insuranceDesignService.getTempInsurance(request) != null) {
+				return "contractTeam//insuranceDesign//register";			
+			}else {
+				return "contractTeam//insuranceDesign//inputTypeAndTerm";				
+			}
 		} else if (request.getParameter("menu").equals("underwrite")) {
 			return "contractTeam//underwriting//selectUnderwrite";
 		} else if (request.getParameter("menu").equals("")) {

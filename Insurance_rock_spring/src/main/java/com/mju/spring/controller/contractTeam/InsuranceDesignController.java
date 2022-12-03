@@ -100,10 +100,14 @@ public class InsuranceDesignController {
 	@RequestMapping(value = "register", method = RequestMethod.GET)
 	public String register(HttpServletRequest request, Model model) {
 //		예 누르면 등록
-		insuranceDesignService.register();
-		if (request.getParameter("register").equals("cancel")) {
+		if(request.getParameter("register").equals("register")) {
+			model.addAttribute("JudgeResult", "보험 등록이 완료되었습니다.");
+			insuranceDesignService.register();		
+			return "menu//showResult";
+		}else if (request.getParameter("register").equals("cancel")) {
+			model.addAttribute("JudgeResult", "입력된 정보가 임시저장되었습니다.");
 			insuranceDesignService.saveTempInsurance();
-			return "menu";
+			return "menu//showResult";
 		}
 		return null;
 	}
