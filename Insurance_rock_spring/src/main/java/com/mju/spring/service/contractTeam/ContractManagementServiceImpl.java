@@ -1,7 +1,5 @@
 package com.mju.spring.service.contractTeam;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,13 +10,13 @@ import org.springframework.stereotype.Service;
 import com.mju.spring.dao.ContractAccidentDao;
 import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerRankDao;
+import com.mju.spring.dao.RankDao;
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManagementDto;
 import com.mju.spring.entity.Contract;
-import com.mju.spring.entity.Customer;
+import com.mju.spring.entity.Rank;
 
-import Model.Customer.Rank;
 
 @Service
 public class ContractManagementServiceImpl implements ContractManagementService{
@@ -32,7 +30,9 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 	@Autowired
 	CustomerRankDao customerRankDao;
 	
-	private Customer customer;
+	@Autowired
+	RankDao rankDao;
+	
 	private Contract contract;
 	
 	@Override
@@ -50,9 +50,8 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 	@Override
 	public List<ContractManagementAccidentDto> searchAccidentHistory(HttpServletRequest request) {
 		List<ContractManagementAccidentDto> contractAccidentList = this.contractAccidentDao.retriveContractAccident(request.getParameter("contractID"));
-		this.customer = new Customer();
 		this.contract = new Contract();
-		this.customer.setCustomerID(request.getParameter("customerID"));
+		this.contract.setCustomerID(request.getParameter("customerID"));
 		this.contract.setContractID(request.getParameter("contractID"));
 		if(!contractAccidentList.isEmpty()) {
 			return contractAccidentList;
@@ -65,22 +64,23 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 	@Override
 	public void renewRank(HttpServletRequest request) {
 		RenewCustomerRankDto renewCustomerRankDto = this.customerRankDao.retriveAllId(this.contract.getContractID());
+		Rank rank = new Rank();
+		rank.setRankID("*"+renewCustomerRankDto.getRankID());
+		rank.setMaterial(request.getParameter("material"));
+		rank.setFireFacilities(Integer.parseInt(request.getParameter("fireFacilities")));
+		rank.setHeight(Boolean.valueOf(request.getParameter("height")));
+		rank.setScale(Integer.parseInt(request.getParameter("scale")));
+		rank.setSurroundingFacilities(Double.valueOf(request.getParameter("surroundingFacilities")));
+		rank.setPurpose(request.getParameter("purpose"));
 		
-		//customer에 각각 다 custoemrID, contractID(List), rankID(List)가 다 set이 되어있어야함.
-		if(this.setRankByID(this.contract.getContractID())) {
-			
-		}
-	}
-
-	public boolean setRankByID(String contractID) {
-//		Rank rank = new Rank();
-//		for (int i = 0; i < contractID.size(); i++) {
-//			if (this.contractID.get(i).equals(contractID)) {
-//				ResultSet resultSet = this.rank.retriveByID(this.rankID.get(i));
-//				return setRank(resultSet);
-//			}
-//		}
-		return false;
+		//RankID, material, fireFacilities,height,scale,surroundingFacilities,purpose
+		this.rankDao.create(rank);
+		this.rankDao.commit();
+		
+		this.rankDao.deleteRank(rank.getRankID());
+		this.rankDao.commit();
+		//계약 관리 할 때, 갱신 부분을 할 경우 rank 업데이트 하지 말고 현재 랭크 id 맨 앞에 *붙여서 새로 저장해주세요
+		
 	}
 
 }

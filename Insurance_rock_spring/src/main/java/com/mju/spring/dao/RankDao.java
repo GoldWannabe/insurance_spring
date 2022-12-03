@@ -4,9 +4,11 @@ import com.mju.spring.entity.Rank;
 
 public interface RankDao {
 	
-	int create(Rank rank);
+	public int create(Rank rank);
 	
-	void commit();
+	public void commit();
+
+	public void deleteRank(String rankID);
 
 
 }
