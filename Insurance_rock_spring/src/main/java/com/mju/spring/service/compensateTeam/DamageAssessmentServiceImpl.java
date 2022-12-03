@@ -30,6 +30,8 @@ import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Provision;
 
+
+
 @Service
 public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
