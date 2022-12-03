@@ -14,7 +14,7 @@ import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 public class CustomerRankDaoImpl implements CustomerRankDao {
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	
-	private static final String SelectRenewCustomerRankList = "CustomerRankMapper.selectRenewCustomerRankList";
+	private static final String SelectRenewCustomerRank = "CustomerRankMapper.selectRenewCustomerRank";
 
 	@Override
 	public int create(CustomerRankDto customerRankDTO) {
@@ -28,8 +28,8 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	}
 
 	@Override
-	public List<RenewCustomerRankDto> retriveAllId(String customerID) {
-		return sqlSession.selectList(SelectRenewCustomerRankList, customerID);
+	public RenewCustomerRankDto retriveAllId(String contractID) {
+		return sqlSession.selectOne(SelectRenewCustomerRank, contractID);
 	}
 	
 	

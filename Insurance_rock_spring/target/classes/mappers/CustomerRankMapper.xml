@@ -2,9 +2,9 @@
 
 <mapper namespace="CustomerRankMapper">
 	
-	<select id="selectRenewCustomerRankList" resultType="com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto">
+	<select id="selectRenewCustomerRank" resultType="com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto">
 		SELECT * from
-		customerRank where customerID = #{customerID}
+		customerRank where contractID = #{contractID}
 	</select>
 	
 </mapper>

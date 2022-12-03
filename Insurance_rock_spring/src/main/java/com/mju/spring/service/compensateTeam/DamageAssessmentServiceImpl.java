@@ -120,7 +120,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 	public List<Accident> searchAccident(HttpServletRequest request) {
 		// 가입자명, 연락처, 사고날짜, 사고내용, 총비용, 손해정도, 비용종류, 지급여뷰, 책임비율, 책임비용
-		
+		this.selectAccidentList.clear();
 		SelectAccidentDto selectAccidentDto = new SelectAccidentDto();
 		selectAccidentDto.setCustomerName(request.getParameter("customerName"));
 		selectAccidentDto.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
