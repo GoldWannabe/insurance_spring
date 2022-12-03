@@ -15,6 +15,7 @@ import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAcci
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManagementDto;
 import com.mju.spring.entity.Contract;
+import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Rank;
 
 
@@ -72,6 +73,9 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 		rank.setScale(Integer.parseInt(request.getParameter("scale")));
 		rank.setSurroundingFacilities(Double.valueOf(request.getParameter("surroundingFacilities")));
 		rank.setPurpose(request.getParameter("purpose"));
+	
+		renewCustomerRankDto.setRankID("*"+renewCustomerRankDto.getRankID());
+		customerRankDao.insertCustomerRank(renewCustomerRankDto);
 		
 		//RankID, material, fireFacilities,height,scale,surroundingFacilities,purpose
 		this.rankDao.create(rank);
