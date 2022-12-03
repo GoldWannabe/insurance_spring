@@ -1,10 +1,11 @@
-package com.mju.spring.service;
+package com.mju.spring.service.contractTeam;
 
 import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.RegisterGeneralRateDao;
 import com.mju.spring.dao.RegisterHouseRateDao;
 import com.mju.spring.dao.RegisterInsuranceDao;
 import com.mju.spring.dto.InsuranceDto;
+import com.mju.spring.dto.InsuranceTypeAndTermDto;
 import com.mju.spring.entity.GeneralInsurance;
 import com.mju.spring.entity.HouseInsurance;
 import com.mju.spring.entity.Insurance;
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 
 	private Insurance insurance;
-	private InsuranceDto insuranceDTO;
+	private InsuranceTypeAndTermDto insuranceTypeAndTermDto;
 
 	@Autowired
 	InsuranceDao insuranceDAO;
@@ -35,30 +36,31 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Autowired
 	RegisterHouseRateDao registerHouseRateDao;
 
+	 public InsuranceTypeAndTermDto getinsuranceTypeAndTerm(HttpServletRequest request) {
+	      // 보험 new DTO 정보 추가
+	      // 리턴 DTO
+	      InsuranceTypeAndTermDto insuranceTypeAndTermDto = new InsuranceTypeAndTermDto();
+	      if (request.getParameter("InsuranceType").equals(Insurance.EInsurance.general.toString())) {
+	         this.insurance = new GeneralInsurance();
+	      } else if (request.getParameter("InsuranceType").equals(Insurance.EInsurance.house.toString())) {
+	         this.insurance = new HouseInsurance();
+	      } else {
+	         return null;
+	      }
+
+	      this.insurance.setInsuranceID(UUID.randomUUID().toString());
+	      this.insurance.setInsuranceType(request.getParameter("InsuranceType"));
+	      this.insurance.setLongTerm(Boolean.parseBoolean(request.getParameter("longTerm")));
+	      
+	      this.insuranceTypeAndTermDto.setInsuranceType(insurance.getInsuranceType());
+	      this.insuranceTypeAndTermDto.setLongTerm(insurance.isLongTerm());
+
+	      
+	      return insuranceTypeAndTermDto;
+	   }
+
 	@Override
-	public InsuranceDto getinsuranceTypeAndTerm(HttpServletRequest request) {
-		// 보험 new DTO 정보 추가
-		// 리턴 DTO
-
-		if (request.getParameter("InsuranceType").equals(Insurance.EInsurance.general.toString())) {
-			this.insurance = new GeneralInsurance();
-
-		} else if (request.getParameter("InsuranceType").equals(Insurance.EInsurance.house.toString())) {
-			this.insurance = new HouseInsurance();
-		} else {
-			return null;
-		}
-
-		this.insurance.setInsuranceID(UUID.randomUUID().toString());
-		this.insurance.setInsuranceType(request.getParameter("InsuranceType"));
-		this.insurance.setLongTerm(Boolean.parseBoolean(request.getParameter("longTerm")));
-
-		//return this.insurance;
-		return null;
-	}
-
-	@Override
-	public InsuranceDto checkName(HttpServletRequest request) {
+	public Insurance checkName(HttpServletRequest request) {
 		// DTO로 받는다. 기본요율까지 +보험이름,특약,가입조건,보상조건,설명도 받아서 DTO에 Set해줘
 		// 중복이 된 것이 있으면 다시this.
 
@@ -73,22 +75,22 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			this.insurance.setCompensateCondition(request.getParameter("compensateCondition"));
 			this.insurance.setExplanation(request.getParameter("explanation"));
 
-			//return this.insurance;
-			return null;
+			return this.insurance;
+//			return null;
 		}
 
 	}
 
 	@Override
-	public InsuranceDto getStandardFee() {
+	public Insurance getStandardFee() {
 		// 기존 요율별로 기준보험료 측정된거 DTO에 set
 		this.insurance.setStandardFee((int) (1000000000 * this.insurance.getPremiumRate()[0] / 100));
-		//return this.insurance;
-		return null;
+		return this.insurance;
+//		return null;
 	}
 
 	@Override
-	public InsuranceDto checkRate(HttpServletRequest request) {
+	public Insurance checkRate(HttpServletRequest request) {
 		// 요율 체크
 		boolean wringRateFlag = false;
 
@@ -168,7 +170,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	}
 
 	@Override
-	public InsuranceDto getTempInsurance(HttpServletRequest request) {
+	public Insurance getTempInsurance(HttpServletRequest request) {
 
 		File file = new File(".//File//tempInsurance.txt");
 		try {
@@ -205,8 +207,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 				fileWriter.write("0");
 				fileWriter.flush();
 
-				//return this.insurance;
-				return null;
+				return this.insurance;
+//				return null;
 			} else {
 				return null;
 			}

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	
 <!DOCTYPE html>
 <html>
@@ -9,36 +8,36 @@
 
 	<script>
 	function registerCompletion(form) {
-		alert("º¸Çè µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+		alert("ë³´í—˜ ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 			form.action = "register";
 			form.submit();
 		  
 	}
 	</script>
 
-   
+
 </head>
 <body>
 
-	<form action = "register" onsubmit="alert('ÀÓ½ÃÀúÀå µÇ¾ú½À´Ï´Ù.');">
-	
-		<p>-----º¸Çè Info-----</p>
-		<p>º¸Çè ÀÌ¸§: ${InsuranceName}</p>
-		<p>º¸Çè Á¾·ù: ${InsuranceType}</p>
-		<p>±âÁØ º¸Çè·á: ${StandardFee}</p>		
-		<p>Æ¯¾à: ${SpecialContract}</p>
-		<p>Àå±â ¿©ºÎ: ${LongTerm}</p>
-		<p>°¡ÀÔ Á¶°Ç: ${ApplyCondition}</p>
-		<p>º¸»ó Á¶°Ç: ${CompensateCondition}</p>
-		<p>¼³¸í: ${Explanation}</p>
-		<p>¿äÀ²: [1µî±Ş, 2µî±Ş, 3µî±Ş ] [ ${PremiumRate[0]}, ${PremiumRate[1]}, ${PremiumRate[2]} ]</p>
-		
-		<p>µî·ÏÇÏ½Ã°Ú½À´Ï±î?</p>
-		
-		È®ÀÎÀ» ´©¸£½Ã¸é ¼³°è°¡ ¿Ï·áµË´Ï´Ù.
+	<form action = "register" onsubmit="alert('ì„ì‹œì €ì¥ ë˜ì—ˆìŠµë‹ˆë‹¤.');">
 
-		<input  type="button" value="µî·Ï" onclick="UseStandardRate(this.form);"/>
-		<button type="submit" name="register" value="cancel">Ãë¼Ò</button> 
+		<p>-----ë³´í—˜ Info-----</p>
+		<p>ë³´í—˜ ì´ë¦„: ${InsuranceName}</p>
+		<p>ë³´í—˜ ì¢…ë¥˜: ${InsuranceType}</p>
+		<p>ê¸°ì¤€ ë³´í—˜ë£Œ: ${StandardFee}</p>		
+		<p>íŠ¹ì•½: ${SpecialContract}</p>
+		<p>ì¥ê¸° ì—¬ë¶€: ${LongTerm}</p>
+		<p>ê°€ì… ì¡°ê±´: ${ApplyCondition}</p>
+		<p>ë³´ìƒ ì¡°ê±´: ${CompensateCondition}</p>
+		<p>ì„¤ëª…: ${Explanation}</p>
+		<p>ìš”ìœ¨: [1ë“±ê¸‰, 2ë“±ê¸‰, 3ë“±ê¸‰ ] [ ${PremiumRate[0]}, ${PremiumRate[1]}, ${PremiumRate[2]} ]</p>
+		
+		<p>ë“±ë¡í•˜ì‹œê² ìŠµë‹ˆê¹Œ?</p>
+		
+		í™•ì¸ì„ ëˆ„ë¥´ì‹œë©´ ì„¤ê³„ê°€ ì™„ë£Œë©ë‹ˆë‹¤.
+
+		<input  type="button" value="ë“±ë¡" onclick="UseStandardRate(this.form);"/>
+		<button type="submit" name="register" value="cancel">ì·¨ì†Œ</button> 
 	</form>
 
 </body>
