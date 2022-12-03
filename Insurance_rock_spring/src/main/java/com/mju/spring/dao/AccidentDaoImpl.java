@@ -9,13 +9,13 @@ import com.mju.spring.dto.damageAssessment.compansate.SelectAccidentDto;
 import com.mju.spring.entity.Accident;
 
 @Repository
-public class AccidentDaoImpl implements AccidentDao{
+public class AccidentDaoImpl implements AccidentDao {
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
-	
+
 	private static final String Create = "AccidentMapper.create";
 	private static final String selectAccident = "AccidentMapper.selectAccident";
 	private static final String updatePayComplation = "AccidentMapper.updatePayComplation";
-	
+
 	@Override
 	public void create(Accident accident) {
 		sqlSession.insert(Create, accident);
@@ -24,7 +24,7 @@ public class AccidentDaoImpl implements AccidentDao{
 	@Override
 	public List<Accident> retriveNameAndDate(SelectAccidentDto selectAccidentDto) {
 		return sqlSession.selectList(selectAccident, selectAccidentDto);
-		
+
 	}
 
 	@Override
@@ -36,6 +36,5 @@ public class AccidentDaoImpl implements AccidentDao{
 	public void commit() {
 		sqlSession.commit();
 	}
-
 
 }

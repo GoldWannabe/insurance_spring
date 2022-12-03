@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mju.spring.entity.Insurance;
 
-@Repository
 public interface InsuranceDao {
 
 	public String retriveName(String insuranceName);
