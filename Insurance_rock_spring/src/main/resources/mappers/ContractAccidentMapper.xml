@@ -4,4 +4,10 @@
 	<insert id="insertContractAccident">
 		INSERT INTO ContractAccident VALUES(#{contractID}, #{accidentID})
 	</insert>
+	
+	<select id="selectContractManagementAccident" resultType="com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto">
+		SELECT contractID, accidentID from
+		ContractAccident where contractID = #{contractID}
+	</select>
+	
 </mapper>

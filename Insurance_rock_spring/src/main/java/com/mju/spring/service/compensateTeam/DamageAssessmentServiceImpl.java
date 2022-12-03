@@ -20,7 +20,7 @@ import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.ProvisionDao;
-import com.mju.spring.dto.damageAssessment.compansate.ConctractAccidentDto;
+import com.mju.spring.dto.damageAssessment.compansate.ContractAccidentDto;
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
 import com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto;
 import com.mju.spring.dto.damageAssessment.compansate.SelectAccidentDto;
@@ -91,8 +91,8 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 		int liablityCost = totalCost*liablityRate / 100; 
 		this.accident.setAccidentID(UUID.randomUUID().toString());
-		this.accident.setCustomerID(request.getParameter("customerID"));
-		this.accident.setContractID(request.getParameter("contractID"));
+		this.accident.setCustomerID(this.accident.getCustomerID());
+		this.accident.setContractID(this.accident.getContractID());
 		this.accident.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
 		this.accident.setContent(request.getParameter("content"));
 		this.accident.setKindOfCost(request.getParameter("kindOfCost"));
@@ -106,6 +106,13 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		// +고객이름, 연락처 , 책임비용, 지급여부(true,false), accidentID, customerID, contractID
 		this.accidentDao.create(this.accident);
 		this.accidentDao.commit();
+		
+		ContractAccidentDto contractAccidentDto = new ContractAccidentDto();
+		contractAccidentDto.setAccidentID(this.accident.getAccidentID());
+		contractAccidentDto.setContractID(this.accident.getContractID());
+		
+		contractAccidentDao.insertContractProvision(contractAccidentDto);
+		this.contractAccidentDao.commit();
 
 		
 		return accident;
@@ -215,14 +222,6 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 				contractDao.updateContractProvisionFee(updateContractDto);
 				this.contractDao.commit();
 			}
-			
-			ConctractAccidentDto contractAccidentDto = new ConctractAccidentDto();
-			contractAccidentDto.setAccidentID(this.accident.getAccidentID());
-			contractAccidentDto.setContractID(this.accident.getContractID());
-			
-			contractAccidentDao.insertContractProvision(contractAccidentDto);
-			this.contractAccidentDao.commit();
-
 
 			provision.setProvisionID(UUID.randomUUID().toString());
 			provision.setCustomerID(this.accident.getCustomerID());

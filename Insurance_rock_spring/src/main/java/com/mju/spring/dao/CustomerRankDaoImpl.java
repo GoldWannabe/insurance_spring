@@ -1,12 +1,20 @@
 package com.mju.spring.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.mju.spring.dto.CustomerRankDto;
+import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 
 
 @Repository
 public class CustomerRankDaoImpl implements CustomerRankDao {
+	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
+	
+	private static final String SelectRenewCustomerRankList = "CustomerRankMapper.selectRenewCustomerRankList";
 
 	@Override
 	public int create(CustomerRankDto customerRankDTO) {
@@ -17,6 +25,11 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	public void commit() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<RenewCustomerRankDto> retriveAllId(String customerID) {
+		return sqlSession.selectList(SelectRenewCustomerRankList, customerID);
 	}
 	
 	

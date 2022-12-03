@@ -73,8 +73,8 @@ public class MainController {
 			}
 		} else if (request.getParameter("menu").equals("underwrite")) {
 			return "contractTeam//underwriting//selectUnderwrite";
-		} else if (request.getParameter("menu").equals("")) {
-			return "";
+		} else if (request.getParameter("menu").equals("contractManagement")) {
+			return "contractTeam//contractManagement//selectContractSearchAndCancel";
 		} else {
 			return "error";
 		}
