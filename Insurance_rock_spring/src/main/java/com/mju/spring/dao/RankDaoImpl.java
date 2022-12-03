@@ -7,7 +7,7 @@ import com.mju.spring.entity.Rank;
 
 
 @Repository
-public class RankDAOImpl implements RankDAO {
+public class RankDaoImpl implements RankDao {
 	
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	

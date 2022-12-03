@@ -12,7 +12,7 @@ import com.mju.spring.entity.Contract;
 
 
 @Repository
-public class ApplyContractDAOImpl implements ContractDao {
+public class ApplyContractDaoImpl implements ContractDao {
 	
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	

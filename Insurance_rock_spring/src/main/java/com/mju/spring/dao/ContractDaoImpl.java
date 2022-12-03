@@ -38,6 +38,11 @@ public class ContractDaoImpl implements ContractDao{
 	public void commit() {
 		sqlSession.commit();
 	}
+
+	@Override
+	public int create(Contract applyContract) {
+		return 0;
+	}
 	
 
 }

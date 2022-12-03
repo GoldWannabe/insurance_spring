@@ -1,13 +1,11 @@
-package com.mju.spring.dto;
+package com.mju.spring.entity;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mju.spring.entity.Rank;
 
-
-public class CustomerDto {
+public class Customer {
 	
 	private String customerID;
 	private String name;

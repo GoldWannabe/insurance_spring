@@ -18,4 +18,6 @@ public interface ContractDao {
 	public void updateContractProvisionFee(UpdateContractDto updateContractDto);
 
 	public void commit();
+
+	public int create(Contract applyContract);
 }

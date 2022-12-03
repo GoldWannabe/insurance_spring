@@ -8,20 +8,39 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mju.spring.dao.ApplyContractDaoImpl;
+import com.mju.spring.dao.ContractDao;
+import com.mju.spring.dao.CustomerDao;
+import com.mju.spring.dao.CustomerRankDao;
 import com.mju.spring.dao.GeneralRateDao;
 import com.mju.spring.dao.HouseRateDao;
 import com.mju.spring.dao.InsuranceDao;
+import com.mju.spring.dao.RankDao;
+import com.mju.spring.dto.ApplyContractDto;
+import com.mju.spring.dto.CustomerDto;
+import com.mju.spring.dto.CustomerRankDto;
 import com.mju.spring.dto.InsuranceDto;
+import com.mju.spring.entity.Contract;
+import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.GeneralInsurance;
 import com.mju.spring.entity.HouseInsurance;
 import com.mju.spring.entity.Insurance;
 import com.mju.spring.entity.Insurance.EInsurance;
+import com.mju.spring.entity.Rank;
 
 @Service
 public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 	private Insurance insurance;
 	private InsuranceDto insuranceDTO;
+	private ApplyContractDto applyContractDTO;
+	private CustomerDto customerDTO;
+	private CustomerRankDto customerRankDTO;
+	
+	private Contract applyContract;
+	private Customer customer;
+	private Rank rank;
+	
 
 	@Autowired
 	InsuranceDao insuranceDAO;
@@ -31,6 +50,19 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 	@Autowired
 	GeneralRateDao generalRateDAO;
+	
+	@Autowired
+	ContractDao applyContractDAO;
+	
+	@Autowired
+	CustomerDao customerDAO;
+	
+	@Autowired
+	RankDao rankDAO;
+	
+	@Autowired
+	CustomerRankDao customerRankDAO;
+	
 
 	@Override
 	public List<InsuranceDto> getInsuranceList(HttpServletRequest request) {
@@ -92,18 +124,73 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	}
 
 	@Override
-	public boolean createContract(HttpServletRequest request) {
-
-		return false;
-	}
-
-	@Override
 	public boolean createCustomer(HttpServletRequest request) {
-		return false;
+		this.customer = new Customer();
+		
+		this.customer.setName(request.getParameter("customerName"));
+		this.customer.setSSN(request.getParameter("SSN"));
+		this.customer.setPhoneNum(request.getParameter("phoneNum"));
+		this.customer.setAddress(request.getParameter("address"));
+		this.customer.setSex(request.getParameter("gender"));
+		this.customer.setBankName(request.getParameter("bankName"));
+		this.customer.setAccountNum(request.getParameter("accountNum"));
+		//applycontract = 0.1 (contract = 1)
+		this.customer.setInsuranceNum(0.1);
+		
+		this.customerDTO = new CustomerDto();
+		this.customerDTO.setName(this.customer.getName());
+		this.customerDTO.setSSN(this.customer.getSSN());
+		this.customerDTO.setPhoneNum(this.customer.getPhoneNum());
+		this.customerDTO.setAddress(this.customer.getAddress());
+		this.customerDTO.setSex(this.customer.getSex());
+		this.customerDTO.setBankName(this.customer.getBankName());
+		this.customerDTO.setAccountNum(this.customer.getAccountNum());
+		this.customerDTO.setInsuranceNum(this.customer.getInsuranceNum());
+		
+		if(this.customerDTO != null) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean createApplyContract(HttpServletRequest request) {
+		this.applyContract = new Contract();
+		this.rank = new Rank();
+		
+		this.applyContract.setCustomerID(this.customer.getCustomerID());
+		this.applyContract.setCustomerName(this.customer.getName());
+		this.applyContract.setCustomerPhoneNum(this.customer.getPhoneNum());
+		this.applyContract.setInsuranceID(this.insurance.getInsuranceID());
+		this.applyContract.setInsuranceName(this.insurance.getInsuranceName());
+		this.applyContract.setSecurityFee(Integer.valueOf(request.getParameter("securityFee")));
+		this.applyContract.setInsuranceFee(Integer.valueOf(request.getParameter("insuranceFee")));
+		this.applyContract.setPaymentCycle(Integer.valueOf(request.getParameter("paymentCycle")));
+		this.applyContract.setPeriod(Integer.valueOf(request.getParameter("period")));
+		
+		this.rank.setFireFacilities(Integer.valueOf(request.getParameter("fireFedilities")));
+		this.rank.setScale(Integer.valueOf(request.getParameter("scale")));
+		this.rank.setSurroundingFacilities(Double.valueOf(request.getParameter("surroundingFedilities")));
+		this.rank.setHeight(Boolean.valueOf(request.getParameter("height")));
+		this.rank.setMaterial(request.getParameter("meterial"));
+		this.rank.setPurpose(request.getParameter("goal"));
+		
+		if(this.applyContract != null && this.rank != null) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 	@Override
-	public boolean joinContractAndCustomer() {
+	public boolean joinApplyContractAndCustomer() {
+		this.applyContractDAO = new ApplyContractDaoImpl();
+		String[] customerRank = new String[]{this.customer.getCustomerID(), this.applyContract.getContractID(), this.rank.getRankID()};
+		
+		if(this.rankDAO.create(this.rank) == 1 && this.applyContractDAO.create(this.applyContract) == 1) {
+			this.applyContractDAO.commit();
+		}
 		return false;
 	}
 
