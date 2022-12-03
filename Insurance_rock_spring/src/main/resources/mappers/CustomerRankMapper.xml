@@ -7,4 +7,7 @@
 		customerRank where contractID = #{contractID}
 	</select>
 	
+	<select id="selectRankID" resultType="string">
+		SELECT RankID from customerRank where contractID = #{contractID}
+	</select>
 </mapper>

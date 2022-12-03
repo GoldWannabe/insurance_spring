@@ -1,12 +1,9 @@
 package com.mju.spring.entity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 public class Customer {
-	
+
 	private String customerID;
 	private String name;
 	private String SSN;
@@ -120,9 +117,5 @@ public class Customer {
 	public void setRankID(ArrayList<String> rankID) {
 		this.rankID = rankID;
 	};
-
-	
-	
-
 
 }

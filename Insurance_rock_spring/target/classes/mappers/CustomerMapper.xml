@@ -5,4 +5,8 @@
 		SELECT bankName, accountNum FROM
 		customer WHERE customerID = #{customerID}
 	</select>
+	
+	<select id="selectCustomerById" resultType="com.mju.spring.entity.Customer">
+		SELECT * FROM customer WHERE customerID = #{customerID}
+	</select>
 </mapper>
