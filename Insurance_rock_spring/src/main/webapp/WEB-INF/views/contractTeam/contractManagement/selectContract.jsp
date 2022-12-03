@@ -52,9 +52,9 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-
+			
 		</table>
-
+		<p> ${NotContract} </p>
 	</form>
 
 </body>

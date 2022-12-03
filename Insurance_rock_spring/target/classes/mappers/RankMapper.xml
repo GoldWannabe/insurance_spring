@@ -5,8 +5,4 @@
 	<select id="create">
 		INSERT INTO Rank(RankID, material, fireFacilities, height, scale, surroundingFacilities, purpose) VALUES (#{RankID}, #{material}, #{fireFacilities}, #{height}, #{scale}, #{surroundingFacilities}, #{purpose})
 	</select>
-	
-	<delete id="deleteRankRenew">
-		DELETE FROM iRank WHERE RankID = #{RankID}
-	</delete>
 </mapper>

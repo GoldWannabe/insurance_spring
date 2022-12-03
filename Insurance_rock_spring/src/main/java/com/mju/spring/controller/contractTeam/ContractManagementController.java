@@ -38,7 +38,11 @@ public class ContractManagementController {
 	@RequestMapping(value = "inputNameAndPhoneNum", method = RequestMethod.GET)
 	public String inputNameAndPhoneNum(HttpServletRequest request, Model model) {
 		List<Contract> contractList  = this.contractManagementService.contractSearch(request);
-		model.addAttribute("ContractList", contractList);
+		if( contractList != null) {
+			model.addAttribute("ContractList", contractList);
+		}else {
+			model.addAttribute("NotContract", "해당 고객님의 계약이 존재하지 않습니다.");
+		}
 
 		return "contractTeam//contractManagement//selectContract";
 	}

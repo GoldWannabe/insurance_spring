@@ -12,7 +12,6 @@ public class RankDaoImpl implements RankDao {
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	
 	private static final String Create = "RankMapper.create";
-	private static final String DeleteRankRenew = "RankMapper.deleteRankRenew";
 
 	@Override
 	public int create(Rank rank) {
@@ -22,12 +21,6 @@ public class RankDaoImpl implements RankDao {
 	@Override
 	public void commit() {
 		sqlSession.commit();
-		
-	}
-
-	@Override
-	public void deleteRank(String rankID) {
-		sqlSession.delete(DeleteRankRenew, rankID);
 		
 	}
 

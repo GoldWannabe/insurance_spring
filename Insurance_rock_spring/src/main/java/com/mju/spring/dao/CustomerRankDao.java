@@ -10,5 +10,5 @@ public interface CustomerRankDao {
 
 	public void commit();
 
-	public RenewCustomerRankDto retriveAllId(String customerID);
+	public RenewCustomerRankDto retriveAllId(String contractID);
 }
