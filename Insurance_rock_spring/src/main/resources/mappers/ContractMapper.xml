@@ -10,8 +10,8 @@
 		Contract where contractID = #{contractID}
 	</select>
 
-	<select id="updateContractProvisionFee" resultType = "com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto">
+	<update id="updateContractProvisionFee">
 		UPDATE Contract SET provisionFee = #{liablityCost} + #{provisionFee} 
 		WHERE contractID = #{contractID}
-	</select>
+	</update>
 </mapper>

@@ -1,20 +1,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="AccidentMapper">
-	<select id="create">
+	<insert id="create">
 		INSERT INTO Accident (accidentID, contractID, customerID, customerName, customerPhoneNum, accidentDate, content, totalCost, damagePer,
 		kindOfCost, payCompleted, liablityRate, liablityCost) VALUES(
 		#{accidentID}, #{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{accidentDate}, #{content},
 		#{totalCost}, #{damagePer}, #{kindOfCost}, #{payCompleted},
 		#{liablityRate}, #{liablityCost})
-	</select>
+	</insert>
 	<select id="selectAccident" resultType="com.mju.spring.entity.Accident">
 		SELECT * FROM
 		Accident WHERE customerName = #{customerName} and
 		accidentDate  = #{accidentDate}
 	</select>
-	<select id="updatePayComplation" resultType="com.mju.spring.entity.Accident">
+	<update id="updatePayComplation">
 		UPDATE Accident SET payCompleted = #{payCompleted}
 		WHERE accidentID = #{ID}
-	</select>
+	</update>
 </mapper>

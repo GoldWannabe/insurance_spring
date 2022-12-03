@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +8,7 @@
 <script>
 
 	function UseStandardRate(check) {
-		  if (confirm('±âÁ¸ ¿äÀ²À» »ç¿ëÇÏ½Ã°Ú½À´Ï±î?')==1) {
+		  if (confirm('ê¸°ì¡´ ìš”ìœ¨ì„ ì‚¬ìš©í•˜ì‹œê² ìŠµë‹ˆê¹Œ?')==1) {
 			check.value = "confirm";
 		  } else {
 			check.value = "cancel";
@@ -21,14 +20,14 @@
 </head>
 <body>
 	<form action = inputInsuranceInfo>
-		<p>º¸Çè Á¾·ù: ${InsuranceType}</p>
-		<p>Àå±â ¿©ºÎ: ${LongTerm}</p>
-		<br> ÀÌ¸§: <input type="text" name="insuranceName"> <br>
-		Æ¯¾à: <input type="text" name="specialContract"> <br>
-		°¡ÀÔÁ¶°Ç: <input type="text" name="applyCondition"> <br>
-		º¸»ó Á¶°Ç: <input type="text" name="compensateCondition"/> <br>
-		¼³¸í: <input type="text" name="explanation"> <br>
-		<input name = "check" type="submit" value="´ÙÀ½" onclick="UseStandardRate(this);"/>
+		<p>ë³´í—˜ ì¢…ë¥˜: ${InsuranceType}</p>
+		<p>ì¥ê¸° ì—¬ë¶€: ${LongTerm}</p>
+		<br> ì´ë¦„: <input type="text" name="insuranceName"> <br>
+		íŠ¹ì•½: <input type="text" name="specialContract"> <br>
+		ê°€ì…ì¡°ê±´: <input type="text" name="applyCondition"> <br>
+		ë³´ìƒ ì¡°ê±´: <input type="text" name="compensateCondition"/> <br>
+		ì„¤ëª…: <input type="text" name="explanation"> <br>
+		<input name = "check" type="submit" value="ë‹¤ìŒ" onclick="UseStandardRate(this);"/>
 	</form>
 </body>
 </html>
