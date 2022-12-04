@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>applyRankRenew</title>
+<title>applyRenew</title>
 	<script>
         // 공백 사용 못 하게
         function noSpaceForm(obj) {             
@@ -22,8 +22,8 @@
 	</script>
 </head>
 <body>
-	<p>등급 정보들을 다시 입력해주세요.</p>
-	<form action="applyRankRenew">
+	<form action="applyRenew">
+	<p>-----------계약 갱신 등급-----------</p>
 		소화시설(Float) <input type="number" name="fireFacilities" placeholder="실수" onkeyup="noSpaceForm(this);" required/> <br>
 		스케일(Int) <input type="number" name="scale" placeholder="정수" onkeyup="noSpaceForm(this);" required/> <br>
 		주변시설(Float) <input type="number" name="surroundingFacilities" placeholder="실수" onkeyup="noSpaceForm(this);"required/> <br>
@@ -44,6 +44,12 @@
 		<input type="radio" name="purpose" value="office" />5.office 
 		<input type="radio" name="purpose" value="corPark" />6.corPark
 		<input type="radio" name="purpose" value="warehouse" />7.warehouse<br> <br> 
+	<p>------------계약 갱신 기타---------------</p>
+		담보액 : <input type="number" name="securityFee" onkeyup="noSpaceForm(this);" required/> <br>
+		보험료 : <input type="number" name="insuranceFee" onkeyup="noSpaceForm(this);" required/> <br>
+		납부방식 : <input type="number" name="paymentCycle" placeholder="1~12개월이내" min="1" max="12" onkeyup="noSpaceForm(this);"required/> <br>
+		연장 기간 :  <input type="number" name="period" placeholder="6개월이상" min="6" onkeyup="noSpaceForm(this);"required/> <br>
+		
 		<div>
 			<button type="submit">등급 갱신 신청</button>
 		</div>

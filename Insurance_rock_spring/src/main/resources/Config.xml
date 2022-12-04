@@ -31,5 +31,6 @@
 		  
 		<mapper resource="mappers/CustomerRankMapper.xml" />
 		<mapper resource="mappers/RankMapper.xml" />
+		<mapper resource="mappers/RenewContractMapper.xml" />
 	</mappers>
 </configuration>
