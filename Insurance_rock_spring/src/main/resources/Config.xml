@@ -29,7 +29,8 @@
 		<mapper resource="mappers/ProvisionMapper.xml" />
 		<mapper resource="mappers/ApplyContractMapper.xml" />
 		  
-		 <mapper resource="mappers/CustomerRankMapper.xml" />
+		<mapper resource="mappers/CustomerRankMapper.xml" />
 		<mapper resource="mappers/RankMapper.xml" />
+		<mapper resource="mappers/RenewContractMapper.xml" />
 	</mappers>
 </configuration>

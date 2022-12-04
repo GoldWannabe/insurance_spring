@@ -1,4 +1,4 @@
-package com.mju.spring.service.compensateTeam;
+package com.mju.spring.service.contractTeam;
 
 import java.util.List;
 
@@ -13,8 +13,6 @@ public interface ContractManagementService {
 
 	public List<ContractManagementAccidentDto> searchAccidentHistory(HttpServletRequest request);
 
-	public void renewRank(HttpServletRequest request);
-	
-	
+	public boolean applyRenew(HttpServletRequest request);
 
 }

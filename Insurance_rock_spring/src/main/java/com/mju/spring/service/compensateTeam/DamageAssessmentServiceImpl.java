@@ -59,6 +59,9 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	@Autowired
 	ProvisionDao provisionDao;
 
+	
+	private List<Contract> selectContractList;
+	
 	public List<Contract> addcheck(HttpServletRequest request) {
 		SelectContractDto selectContractDto = new SelectContractDto();
 		
@@ -68,7 +71,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		selectContractDto.setCustomerPhoneNum(request.getParameter("customerPhoneNum"));
 		
 		// 계약 DB에서 가져옴.
-		List<Contract> selectContractList = this.contractDao.retriveNameAndPhoneNum(selectContractDto);
+		this.selectContractList = this.contractDao.retriveNameAndPhoneNum(selectContractDto);
 		
 		this.accident.setCustomerName(selectContractDto.getCustomerName());
 		this.accident.setCustomerPhoneNum(selectContractDto.getCustomerPhoneNum());
@@ -78,8 +81,10 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	
 	@Override
 	public void setSelectContract(HttpServletRequest request) {
-		this.accident.setContractID(request.getParameter("contractID"));
-		this.accident.setCustomerID(request.getParameter("customerID"));
+		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getContractID();
+		String customerID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerID();
+		this.accident.setContractID(contractID);
+		this.accident.setCustomerID(customerID);
 	}
 	
 	

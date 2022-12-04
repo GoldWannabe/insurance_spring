@@ -22,7 +22,7 @@
 	<form action = inputNameAndPhoneNum>
 	<p>검색할 계약의 가입자명과 연락처를 입력해주세요</p>
 
-		가입자명: <input type="text" name="customerName" placeholder="이름을 적어주세요" required/> <br>
+		가입자명: <input type="text" name="customerName" placeholder="이름을 적어주세요" onkeyup="noSpaceForm(this);" required/> <br>
 		연락처: <input type="number" name="customerPhoneNum" placeholder="ex)000 0000 0000" maxlength="11"  onkeyup="noSpaceForm(this);"required/> <br>
 		<button type="submit"  name = "next" value="next">다음</button>
 	</form>

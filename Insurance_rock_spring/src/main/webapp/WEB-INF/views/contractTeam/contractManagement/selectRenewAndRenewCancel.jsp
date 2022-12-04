@@ -16,7 +16,7 @@
 			<thead>
 				<tr>
 					<th>계약ID</th>
-					<th>고객ID</th>	
+					<th>사고ID</th>	
 				</tr>
 			</thead>
 			<tbody> 									
