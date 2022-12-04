@@ -1,4 +1,4 @@
-package com.mju.spring.service;
+package com.mju.spring.service.salesTeam;
 
 import java.util.List;
 
