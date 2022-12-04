@@ -1,19 +1,16 @@
-package com.mju.spring.dto;
+package com.mju.spring.dto.contractTeam.insuranceDesign;
 
 import com.mju.spring.entity.Insurance.EInsurance;
 
 public class InsuranceTypeAndTermDto {
-	public enum EInsurance {
-		general, house
-	};
 
-	private com.mju.spring.entity.Insurance.EInsurance insuranceType;
+	private EInsurance insuranceType;
 	private boolean longTerm;
 	
-	public com.mju.spring.entity.Insurance.EInsurance getInsuranceType() {
+	public EInsurance getInsuranceType() {
 		return insuranceType;
 	}
-	public void setInsuranceType(com.mju.spring.entity.Insurance.EInsurance insuranceType) {
+	public void setInsuranceType(EInsurance insuranceType) {
 		this.insuranceType = insuranceType;
 	}
 	public boolean isLongTerm() {

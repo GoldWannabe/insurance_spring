@@ -22,22 +22,24 @@
 					<th>연장기간(달)</th>
 				</tr>
 			</thead>
-			<tbody> 
+			<tbody>
 				<c:forEach var="list" items="${RenewContractList}" varStatus="status">
 					<tr>
-						
-						<td><input name="index" value="<c:out value="${status.index}"/>" readonly></td>				
-						<td><c:out value="${list.paymentCycle}"/></td>
-						<td><c:out value="${list.securityFee}"/></td>
-						<td><c:out value="${list.insuranceFee}"/></td>
-						<td><c:out value="${list.period}"/></td>
-						
-						<td><button type="submit" name="selectVerify" value="verify">검증</button></td>
+
+						<td><input name="index" value="<c:out value="${status.index}"/>" readonly></td>
+						<td><c:out value="${list.paymentCycle}" /></td>
+						<td><c:out value="${list.securityFee}" /></td>
+						<td><c:out value="${list.insuranceFee}" /></td>
+						<td><c:out value="${list.period}" /></td>
+
+						<td><button type="submit" name="selectVerify" value="${status.index}">검증</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
 
 		</table>
+	</form>
+	<form action="underwriteCancel">
 		<button type="submit" name="selectVerify" value="cancel">취소</button>
 	</form>
 
