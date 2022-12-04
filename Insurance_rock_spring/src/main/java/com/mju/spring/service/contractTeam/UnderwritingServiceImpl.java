@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mju.spring.dao.ApplyContractDao;
+import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.CustomerRankDao;
 import com.mju.spring.dao.GeneralRateDao;
@@ -42,6 +43,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	HouseRateDao houseRateDao;
 	@Autowired
 	CustomerDao customerDao;
+	@Autowired
+	ContractDao contractDao;
 	@Autowired
 	CustomerRankDao customerRankDao;
 	@Autowired
@@ -393,6 +396,9 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		this.contract.setStartDate(LocalDate.now());
 		this.contract.setEndDate(this.contract.getStartDate().plusMonths(this.contract.getPeriod()));
 		
+		if(this.contractDao.create(this.contract) == 1) {
+			this.contractDao.commit();
+		}
 		
 		return false;
 	}
