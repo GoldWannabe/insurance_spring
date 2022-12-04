@@ -2,13 +2,10 @@
 
 <mapper namespace="RankMapper">
 	<!-- Insert -->
-	<select id="create">
-		INSERT INTO Rank(RankID, material, fireFacilities, height, scale, surroundingFacilities, purpose) VALUES (#{RankID}, #{material}, #{fireFacilities}, #{height}, #{scale}, #{surroundingFacilities}, #{purpose})
-	</select>
-	
-	<delete id="deleteRankRenew">
-		DELETE FROM iRank WHERE RankID = #{RankID}
-	</delete>
+	<insert id="create">
+		INSERT INTO iRank(RankID, material, fireFacilities, height, scale, surroundingFacilities, purpose) VALUES 
+		(#{rankID}, #{material}, #{fireFacilities}, #{height}, #{scale}, #{surroundingFacilities}, #{purpose})
+	</insert>
 	
 	<select id="selectRankById" resultType="com.mju.spring.entity.Rank">
 		SELECT * from iRank where RankID = #{rankID}

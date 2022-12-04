@@ -12,6 +12,6 @@
 	</select>
 	
 	<insert id="create">
-		INSERT INTO customerRank(customerID, contractID, RankID) VALUES (#{customerID}, #{contractID}, #{RankID})
+		INSERT INTO customerRank(customerID, contractID, RankID) VALUES (#{customerID}, #{contractID}, #{rankID})
 	</insert>
 </mapper>
