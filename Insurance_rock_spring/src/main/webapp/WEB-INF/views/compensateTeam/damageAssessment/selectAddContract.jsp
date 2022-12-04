@@ -25,7 +25,6 @@
 					<th>지급액</th>
 					<th>시작일</th>
 					<th>만료일</th>
-					<th>비고</th>
 					
 				</tr>
 			</thead>
@@ -33,7 +32,6 @@
 															
 				<c:forEach var="list" items="${ContractList}" varStatus="status">
 					<tr>
-
 						<td><c:out value="${list.customerName}"/> </td>
 						<td><c:out value="${list.customerPhoneNum}"/></td>						
 						<td><c:out value="${list.insuranceName}"/></td>
@@ -44,12 +42,8 @@
 						<td><c:out value="${list.provisionFee}"/></td>
 						<td><c:out value="${list.startDate}"/></td>
 						<td><c:out value="${list.endDate}"/></td>
-						<td><input type="hidden" name="contractID" value="<c:out value="${list.contractID}"/>">
-						<input type="hidden" name="customerID" value="<c:out value="${list.customerID}"/>">
-						<input type="hidden" name="insuranceID" value="<c:out value="${list.insuranceID}"/>">
-						</td>
 						
-						<td><button type="submit">선택</button></td>
+						<td><button type="submit" name = "index" value="<c:out value="${status.index}"/>">선택</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
