@@ -1,4 +1,4 @@
-package com.mju.spring.service.contractTeam;
+package com.mju.spring.service.compensateTeam;
 
 import java.util.List;
 

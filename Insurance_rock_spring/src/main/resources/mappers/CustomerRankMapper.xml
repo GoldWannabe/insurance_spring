@@ -11,7 +11,7 @@
 		SELECT RankID from customerRank where contractID = #{contractID}
 	</select>
 	
-	<insert id="create" resultType="com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto">
+	<insert id="create">
 		INSERT INTO customerRank(customerID, contractID, RankID) VALUES (#{customerID}, #{contractID}, #{RankID})
 	</insert>
 </mapper>

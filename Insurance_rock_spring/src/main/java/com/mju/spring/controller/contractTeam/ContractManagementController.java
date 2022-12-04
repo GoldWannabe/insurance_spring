@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
 import com.mju.spring.entity.Contract;
-import com.mju.spring.service.contractTeam.ContractManagementService;
+import com.mju.spring.service.compensateTeam.ContractManagementService;
 
 @Controller
 public class ContractManagementController {
