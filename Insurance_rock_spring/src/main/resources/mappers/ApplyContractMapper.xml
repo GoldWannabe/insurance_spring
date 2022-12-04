@@ -8,5 +8,8 @@
 	<select id="create">
 			INSERT INTO ApplyContract(contractID, customerID, customerName, customerPhoneNum, insuranceID, insuranceName, paymentCycle, insuranceFee, securityFee, period) VALUES (#{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{insuranceID}, #{insuranceName}, #{paymentCycle}, #{insuranceFee}, #{securityFee}, #{period})
 		</select>
+	<delete id="delete">
+		DELETE FROM ApplyContract WHERE contractID = #{contractID}
+	</delete>
 </mapper>
 

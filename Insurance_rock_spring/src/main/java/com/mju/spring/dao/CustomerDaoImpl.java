@@ -12,6 +12,7 @@ public class CustomerDaoImpl implements CustomerDao{
 	
 	private static final String SelectBankNameAndAccountNum = "CustomerMapper.selectBankNameAndAccountNum";
 	private static final String SelectCustomerById = "CustomerMapper.selectCustomerById";
+	private static final String UpdateCustomerInsuranceNum = "CustomerMapper.updateCustomerInsuranceNum";
 
 	@Override
 	public CustomerBankDto retrivecustomerBank(String customerID) {
@@ -21,6 +22,16 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public Customer retriveCustomerById(String customerID) {
 		return sqlSession.selectOne(SelectCustomerById, customerID);
+	}
+
+	@Override
+	public int updateCustomer(Customer customer) {
+		return sqlSession.update(UpdateCustomerInsuranceNum, customer);
+	}
+
+	@Override
+	public void commit() {
+		sqlSession.commit();
 	}
 	
 }

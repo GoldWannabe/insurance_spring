@@ -13,4 +13,6 @@ public interface ApplyContractDao {
 
 	int create(Contract applyContract);
 
+	int delete(String contractID);
+
 }

@@ -21,6 +21,7 @@ public class ContractDaoImpl implements ContractDao{
 	private static final String UpdateContractProvisionFee = "ContractMapper.updateContractProvisionFee";
 	private static final String SelectContractManagement = "ContractMapper.selectContractManagement";
 	private static final String DeleteContractManagement = "ContractMapper.deleteContractManagement";
+	private static final String Create = "ContractMapper.create";
 
 	@Override
 	public List<Contract> retriveNameAndPhoneNum(SelectContractDto selectContractDto) {
@@ -43,8 +44,8 @@ public class ContractDaoImpl implements ContractDao{
 	}
 
 	@Override
-	public int create(Contract applyContract) {
-		return 0;
+	public int create(Contract contract) {
+		return sqlSession.insert(Create, contract);
 	}
 
 	@Override

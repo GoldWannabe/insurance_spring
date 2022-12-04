@@ -14,7 +14,6 @@
 		accidentDate  = #{accidentDate}
 	</select>
 	<update id="updatePayComplation">
-		UPDATE Accident SET payCompleted = #{payCompleted}
-		WHERE accidentID = #{ID}
+		UPDATE Accident SET insuranceNum = #{insuranceNum} WHERE accidentID = #{ID}
 	</update>
 </mapper>

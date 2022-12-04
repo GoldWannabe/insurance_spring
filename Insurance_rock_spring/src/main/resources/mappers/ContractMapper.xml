@@ -20,7 +20,10 @@
 	</select>
 	
 	<delete id="deleteContractManagement">
-		DELETE FROM contract WHERE contractID = ${contractID}
+		DELETE FROM contract WHERE contractID = #{contractID}
 	</delete>
 	
+	<insert id="create">
+		insert into contract(contractID, customerID, customerName, customerPhoneNum, insuranceID, insuranceName, paymentCycle, insuranceFee, unpaidFee, securityFee, provisionFee, startDate, endDate) values (#{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{insuranceID}, #{insuranceName}, #{paymentCycle}, #{insuranceFee}, #{unpaidFee}, #{securityFee}, #{provisionFee}, #{startDate}, #{endDate})
+	</insert>
 </mapper>

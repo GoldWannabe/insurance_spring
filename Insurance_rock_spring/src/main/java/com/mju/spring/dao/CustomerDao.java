@@ -7,5 +7,9 @@ public interface CustomerDao {
 	public CustomerBankDto retrivecustomerBank(String customerID);
 
 	public Customer retriveCustomerById(String customerID);
+
+	public int updateCustomer(Customer customer);
+
+	public void commit();
 	
 }

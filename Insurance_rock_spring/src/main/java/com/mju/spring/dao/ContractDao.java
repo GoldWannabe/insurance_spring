@@ -17,7 +17,7 @@ public interface ContractDao {
 
 	public void commit();
 
-	public int create(Contract applyContract);
+	public int create(Contract contract);
 
 	public List<Contract> retriveContractManagement(SelectContractManagementDto selectContractManagementDto);
 

@@ -68,19 +68,13 @@ public class UnderwritingController {
 	}
 
 	private String verifyApply(HttpServletRequest request, Model model) {
-		System.out.println("98765");
 		VerifyApplyContractDto verifyApplyContract = this.underwritingService.verifyApply(request); // 저장될 정보와 실패했을 경우
 		if (verifyApplyContract == null) {
 			
-			ReasonDto reasonDto = this.underwritingService.getReason();
-			System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			model.addAttribute("JudgeResult",
-					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			return "menu//showResult";
+			return notPermitApply(model);
 		}
 		model.addAttribute("ApplyContract", verifyApplyContract);
 		model.addAttribute("Rank", verifyApplyContract.getRank());
-		System.out.println("123456");
 		return "contractTeam//applyVerify//selectApplyPermit";
 	}
 
@@ -90,10 +84,11 @@ public class UnderwritingController {
 		if (request.getParameter("selectPerit").equals("permit")) {
 			return permitApply(model);
 		} else if (request.getParameter("selectPerit").equals("notPermit")) {
+			this.underwritingService.setReason(request);
 			return notPermitApply(model);
 		} else if (request.getParameter("selectPerit").equals("cancel")) {
 			model.addAttribute("JudgeResult", "취소되었습니다.");
-			return "financialDirector//insuranceJudge//showJudgeResult";
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
@@ -103,19 +98,23 @@ public class UnderwritingController {
 	private String permitApply(Model model) {
 		if (this.underwritingService.permitApply()) {
 			model.addAttribute("JudgeResult", "계약되었습니다.");
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
-		return null;
 	}
 
 	private String notPermitApply(Model model) {
 		if (this.underwritingService.notPermitApply()) {
-			model.addAttribute("JudgeResult", "반려되었습니다.");
+			ReasonDto reasonDto = this.underwritingService.getReason();
+			System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			model.addAttribute("JudgeResult",
+					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
-		return null;
+
 	}
 
 	private String getRenew(Model model) {
@@ -152,7 +151,7 @@ public class UnderwritingController {
 			return notPermitRenew(model);
 		} else if (request.getParameter("selectPerit").equals("cancel")) {
 			model.addAttribute("JudgeResult", "취소되었습니다.");
-			return "financialDirector//insuranceJudge//showJudgeResult";
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
@@ -162,19 +161,19 @@ public class UnderwritingController {
 	private String permitRenew(Model model) {
 		if (this.underwritingService.permitRenew()) {
 			model.addAttribute("JudgeResult", "계약되었습니다.");
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
-		return null;
 	}
 
 	private String notPermitRenew(Model model) {
 		if (this.underwritingService.notPermitRenew()) {
 			model.addAttribute("JudgeResult", "반려되었습니다.");
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
-		return null;
 	}
 
 	@RequestMapping(value = "underwriteCancel", method = RequestMethod.GET)

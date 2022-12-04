@@ -15,6 +15,7 @@ public class ApplyContractDaoImpl implements ApplyContractDao {
 
 	private static final String Create = "ApplyContractMapper.create";
 	private static final String SelectAll = "ApplyContractMapper.selectAll";
+	private static final String Delete = "ApplyContractMapper.delete";
 
 	@Override
 	public int create(Contract applyContract) {
@@ -29,6 +30,11 @@ public class ApplyContractDaoImpl implements ApplyContractDao {
 	@Override
 	public void commit() {
 		sqlSession.commit();
+	}
+
+	@Override
+	public int delete(String contractID) {
+		return sqlSession.delete(Delete, contractID);
 	}
 
 }

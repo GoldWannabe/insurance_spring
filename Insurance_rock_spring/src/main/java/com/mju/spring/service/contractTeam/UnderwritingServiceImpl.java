@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mju.spring.dao.ApplyContractDao;
 import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
@@ -383,6 +382,10 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	@Override
+	public void setReason(HttpServletRequest request) {
+		this.contract.setReason(request.getParameter("reason"));
+	}
+	@Override
 	public ReasonDto getReason() {
 		ReasonDto reasonDto = new ReasonDto();
 		reasonDto.setReason(this.contract.getReason());
@@ -398,14 +401,33 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		
 		if(this.contractDao.create(this.contract) == 1) {
 			this.contractDao.commit();
+			return deleteApply();
 		}
 		
 		return false;
 	}
 
+	private boolean deleteApply() {
+		if(this.applyContractDao.delete(this.contract.getContractID()) == 1) {
+			this.applyContractDao.commit();
+			return updateCustomer();
+		} else {
+		return false;
+		}
+	}
+
+	private boolean updateCustomer() {
+		this.customer.setAccountNum(this.customer.getAccountNum()+0.9);
+		if(this.customerDao.updateCustomer(this.customer) == 1) {
+			this.customerDao.commit();
+			return true;
+		}
+		return false;
+	}
+
 	@Override
 	public boolean notPermitApply() {
-		// TODO Auto-generated method stub
+		
 		return false;
 	}
 
@@ -420,5 +442,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }
