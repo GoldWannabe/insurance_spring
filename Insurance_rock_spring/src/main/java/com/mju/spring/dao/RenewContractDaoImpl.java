@@ -13,10 +13,11 @@ public class RenewContractDaoImpl implements RenewContractDao{
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	
 	private static final String insertRenewContract = "RenewContractMapper.insertRenewContract";
+	private static final String SelectAll = "RenewContractMapper.selectAll";
 	
 	@Override
 	public List<RenewContractDto> retriveRenewContractList() {
-		return null;
+		return sqlSession.selectList(SelectAll);
 	}
 
 	@Override

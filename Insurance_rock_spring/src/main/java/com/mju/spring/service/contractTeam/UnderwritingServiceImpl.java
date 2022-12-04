@@ -12,6 +12,7 @@ import com.mju.spring.dao.ApplyContractDao;
 import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.CustomerRankDao;
+import com.mju.spring.dao.FailContractDao;
 import com.mju.spring.dao.GeneralRateDao;
 import com.mju.spring.dao.HouseRateDao;
 import com.mju.spring.dao.InsuranceDao;
@@ -48,6 +49,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	CustomerRankDao customerRankDao;
 	@Autowired
 	RankDao rankDao;
+	@Autowired
+	FailContractDao failContractDao;
 
 	private Contract contract;
 	private Insurance insurance;
@@ -398,7 +401,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		this.contract.setProvisionFee(0);
 		this.contract.setStartDate(LocalDate.now());
 		this.contract.setEndDate(this.contract.getStartDate().plusMonths(this.contract.getPeriod()));
-		
+		this.customer.setInsuranceNum(this.customer.getInsuranceNum()+0.9);
 		if(this.contractDao.create(this.contract) == 1) {
 			this.contractDao.commit();
 			return deleteApply();
@@ -417,7 +420,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	private boolean updateCustomer() {
-		this.customer.setAccountNum(this.customer.getAccountNum()+0.9);
+		
 		if(this.customerDao.updateInsuranceNum(this.customer) == 1) {
 			this.customerDao.commit();
 			return true;
@@ -427,13 +430,22 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 	@Override
 	public boolean notPermitApply() {
+		this.customer.setInsuranceNum(this.customer.getInsuranceNum()-0.1);
+		return addFailContract();
+	}
+
+	private boolean addFailContract() {
+		if(this.failContractDao.create(this.contract) == 1) {
+			this.failContractDao.commit();
+			return deleteApply();
+		}
 		
-		return false;
+		return false;		
 	}
 
 	@Override
 	public boolean permitRenew() {
-		// TODO Auto-generated method stub
+		//contractRank도 삭제해야함
 		return false;
 	}
 

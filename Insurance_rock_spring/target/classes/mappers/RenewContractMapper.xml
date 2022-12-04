@@ -6,5 +6,7 @@
 			INSERT INTO renewContract(contractID, customerID, insuranceID, paymentCycle, insuranceFee, securityFee, period) VALUES
 			(#{contractID}, #{customerID}, #{insuranceID}, #{paymentCycle}, #{insuranceFee}, #{securityFee}, #{period})
 		</insert>
-		
+		<select id="selectAll" resultType="com.mju.spring.dto.contractTeam.Underwriting.RenewContractDto">
+		select * from RenewContract
+	</select>
 	</mapper>
