@@ -20,7 +20,7 @@
 	</select>
 	
 	<delete id="deleteContractManagement">
-		DELETE FROM contract WHERE contractID = ${contractID}
+		DELETE FROM contract WHERE contractID = #{contractID}
 	</delete>
 	
 </mapper>

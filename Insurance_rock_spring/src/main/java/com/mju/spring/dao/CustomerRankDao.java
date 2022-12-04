@@ -16,4 +16,5 @@ public interface CustomerRankDao {
 	public String retriveRankID(String contractID);
 
 	public void insertCustomerRank(RenewCustomerRankDto renewCustomerRankDto);
+
 }

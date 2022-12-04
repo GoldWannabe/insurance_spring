@@ -66,9 +66,15 @@ public class ContractManagementController {
 			return "contractTeam//contractManagement//applyRenew";
 		}else if(request.getParameter("RenewMenu").equals("renewCancel")) {
 			CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto = this.contractManagementService.cancelRenew(request);
-			model.addAttribute("CustomerName", customerNameAndInsuranceNameDto.getCustomerName());
-			model.addAttribute("InsuranceName", customerNameAndInsuranceNameDto.getInsuranceName());
-			return "contractTeam//contractManagement//showCancelRenew";
+			if(customerNameAndInsuranceNameDto != null) {
+				model.addAttribute("CustomerName", customerNameAndInsuranceNameDto.getCustomerName());
+				model.addAttribute("InsuranceName", customerNameAndInsuranceNameDto.getInsuranceName());
+				return "contractTeam//contractManagement//showCancelRenew";
+			}else {
+				model.addAttribute("JudgeResult", "해당 계약은 이미 갱신 신청 접수가 되어 해지할수없습니다. 다른 계약을 선택하시거나 고객센터(010-1234-5678)로 문의주기실 바랍니다.");	
+				return "menu//showResult";	
+			}
+			
 		}else if(request.getParameter("RenewMenu").equals("cancel")) {
 			model.addAttribute("JudgeResult", "홈화면으로 돌아갑니다.");
 			return "menu//showResult";	
