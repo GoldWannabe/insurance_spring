@@ -107,11 +107,5 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 		
 	}
 
-	@Override
-	public boolean renewBesides(HttpServletRequest request) {
-		
-		return false;
-		
-	}
 
 }

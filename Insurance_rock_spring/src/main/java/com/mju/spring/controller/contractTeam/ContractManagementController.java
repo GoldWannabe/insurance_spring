@@ -73,22 +73,13 @@ public class ContractManagementController {
 			return "error";
 		}
 	}
-//	@RequestMapping(value = "selectRankAndBesides", method = RequestMethod.GET)
-//	public String selectRankAndBesides(HttpServletRequest request, Model model) {
-//		if(request.getParameter("renew").equals("rankRenew")) {
-//			return "contractTeam//contractManagement//applyRankRenew";
-//		}else if(request.getParameter("renew").equals("BesidesRenew")) {
-//			return "contractTeam//contractManagement//applyBesidesRenew";
-//		}else {
-//			return "error";
-//		}
-//	}
+
 	@RequestMapping(value = "applyRenew", method = RequestMethod.GET)
 	public String applyRankRenew(HttpServletRequest request, Model model) {
 		//계약 관리 할 때, 갱신 부분을 할 경우 rank 업데이트 하지 말고 현재 랭크 id 맨 앞에 *붙여서 새로 저장 //이미 갱신완료된 계약의 경우 제외할것.
 		boolean cheakRenew = this.contractManagementService.applyRenew(request);
 		if(cheakRenew) {
-			model.addAttribute("JudgeResult", "계약 등급 갱신 신청이 완료되었습니다.");			
+			model.addAttribute("JudgeResult", "계약 갱신 신청이 완료되었습니다.");			
 			return "menu//showResult";	
 		}else {
 			model.addAttribute("JudgeResult", "DB문제로 인해 오류가 발생했습니다. 고객센터 (010-1234-5678)에 문의 부탁드립니다. 불편을 드려 죄송합니다.");	
@@ -98,19 +89,5 @@ public class ContractManagementController {
 		
 	}
 	
-	@RequestMapping(value = "applyBesidesRenew", method = RequestMethod.GET)
-	public String applyBesidesRenew(HttpServletRequest request, Model model) {
-		
-		boolean cheakRenewBesides = this.contractManagementService.renewBesides(request);
-		if(cheakRenewBesides) {
-			model.addAttribute("JudgeResult", "계약 등급 갱신 신청이 완료되었습니다.");			
-			return "menu//showResult";	
-		}else {
-			model.addAttribute("JudgeResult", "DB문제로 인해 오류가 발생했습니다. 고객센터 (010-1234-5678)에 문의 부탁드립니다. 불편을 드려 죄송합니다.");	
-			return "menu//showResult";	
-		}
-		
-		
-	}
 	
 }

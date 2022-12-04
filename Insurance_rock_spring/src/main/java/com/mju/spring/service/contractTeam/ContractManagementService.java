@@ -13,9 +13,6 @@ public interface ContractManagementService {
 
 	public List<ContractManagementAccidentDto> searchAccidentHistory(HttpServletRequest request);
 
-
-	public boolean renewBesides(HttpServletRequest request);
-
 	public boolean applyRenew(HttpServletRequest request);
 	
 	
