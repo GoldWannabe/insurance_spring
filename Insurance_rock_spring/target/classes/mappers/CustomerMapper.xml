@@ -13,4 +13,7 @@
 		UPDATE customer SET insuranceNum = #{insuranceNum}
 		WHERE customerID = #{customerID}
 	</update>
+	<select id="selectInsuranceNum" resultType="double">
+		SELECT insuranceNum FROM customer WHERE customerID = #{customerID}
+	</select>
 </mapper>

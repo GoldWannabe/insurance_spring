@@ -27,7 +27,11 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 
 	@Override
 	public RenewCustomerRankDto retriveAllId(String contractID) {
-		return sqlSession.selectOne(SelectRenewCustomerRank, contractID);
+		try {
+			return sqlSession.selectOne(SelectRenewCustomerRank, contractID);			
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

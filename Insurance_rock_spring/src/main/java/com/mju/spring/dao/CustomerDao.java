@@ -8,8 +8,12 @@ public interface CustomerDao {
 
 	public Customer retriveCustomerById(String customerID);
 
+	public Double selectInsuranceNum(String customerID);
+	
 	public int updateCustomer(Customer customer);
 
 	public void commit();
+	
+	
 	
 }

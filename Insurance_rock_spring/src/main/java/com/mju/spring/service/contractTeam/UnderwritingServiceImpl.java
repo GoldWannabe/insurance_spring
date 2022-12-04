@@ -418,7 +418,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 	private boolean updateCustomer() {
 		this.customer.setAccountNum(this.customer.getAccountNum()+0.9);
-		if(this.customerDao.updateCustomer(this.customer) == 1) {
+		if(this.customerDao.updateInsuranceNum(this.customer) == 1) {
 			this.customerDao.commit();
 			return true;
 		}

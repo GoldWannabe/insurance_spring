@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.mju.spring.dao.ContractAccidentDao;
 import com.mju.spring.dao.ContractDao;
+import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.CustomerRankDao;
 import com.mju.spring.dao.RankDao;
 import com.mju.spring.dao.RenewContractDao;
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
+import com.mju.spring.dto.contractTeam.contractManagement.CustomerIDAndInsuranceNumDto;
 import com.mju.spring.dto.contractTeam.contractManagement.CustomerNameAndInsuranceNameDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewContractManagementDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
@@ -37,11 +39,15 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 	RankDao rankDao;
 
 	@Autowired
-	RenewContractDao renewContractDao;;
+	RenewContractDao renewContractDao;
+	
+
+	@Autowired
+	CustomerDao customerDao;
 
 	private List<Contract> selectContractList;
 	private RenewContractManagementDto renewContractManagementDto;
-
+	private CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto;
 	@Override
 	public List<Contract> contractSearch(HttpServletRequest request) {
 		SelectContractManagementDto selectContractManagementDto = new SelectContractManagementDto();
@@ -63,7 +69,11 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 		this.renewContractManagementDto.setContractID(contractID);
 		this.renewContractManagementDto.setCustomerID(customerID);
 		this.renewContractManagementDto.setInsuranceID(insuranceID);
-
+		this.customerNameAndInsuranceNameDto = new CustomerNameAndInsuranceNameDto();
+		String customerName = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerName();
+		String insuranceName = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getInsuranceName();
+		this.customerNameAndInsuranceNameDto.setCustomerName(customerName);
+		this.customerNameAndInsuranceNameDto.setInsuranceName(insuranceName);
 		List<ContractManagementAccidentDto> contractAccidentList = this.contractAccidentDao
 				.retriveContractAccident(contractID);
 
@@ -74,8 +84,8 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 	@Override
 	public boolean applyRenew(HttpServletRequest request) {
 		RenewCustomerRankDto renewCustomerRankDto = this.customerRankDao.retriveAllId(this.renewContractManagementDto.getContractID());
-		int starExist = renewCustomerRankDto.getRankID().indexOf("*") + 1;// 있으면 1 없으면 0
-		if (starExist == 0) {
+//		int starExist = renewCustomerRankDto.getRankID().indexOf("*") + 1;// 있으면 1 없으면 0
+		if (renewCustomerRankDto != null) {
 
 			Rank rank = new Rank();
 			rank.setRankID("*" + renewCustomerRankDto.getRankID());
@@ -94,9 +104,9 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 			this.customerRankDao.commit();
 
 			this.renewContractManagementDto.setSecurityFee(Integer.parseInt(request.getParameter("securityFee")));
-			this.renewContractManagementDto.setInsuranceFee(Integer.parseInt(request.getParameter("securityFee")));
-			this.renewContractManagementDto.setPaymentCycle(Integer.parseInt(request.getParameter("securityFee")));
-			this.renewContractManagementDto.setPeriod(Integer.parseInt(request.getParameter("securityFee")));
+			this.renewContractManagementDto.setInsuranceFee(Integer.parseInt(request.getParameter("insuranceFee")));
+			this.renewContractManagementDto.setPaymentCycle(Integer.parseInt(request.getParameter("paymentCycle")));
+			this.renewContractManagementDto.setPeriod(Integer.parseInt(request.getParameter("period")));
 
 			this.renewContractDao.insertApplyRenew(this.renewContractManagementDto);
 			this.renewContractDao.commit();
@@ -118,19 +128,25 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 		// TODO Auto-generated method stub
 		// 1. 갱신 신청을 한것은 삭제할수없도록 하기
 		// 2. 계약 해지는 계약DB에서 완전히 계약을 삭제하고 고객의 가입 보험 개수 를 -1로 수정한다.
-		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getContractID();
-		String customerName = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerName();
-		String insuranceName = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getInsuranceName();
+		String contractID = this.renewContractManagementDto.getContractID();
+		String customerID = this.renewContractManagementDto.getCustomerID();
 
-		RenewCustomerRankDto renewCustomerRankDto = this.customerRankDao.retriveAllId(this.renewContractManagementDto.getContractID());
-		int starExist = renewCustomerRankDto.getRankID().indexOf("*") + 1;// 별이 있으면 1 별이 없으면 0
-		
-		CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto = new CustomerNameAndInsuranceNameDto();
-		customerNameAndInsuranceNameDto.setCustomerName(customerName);
-		customerNameAndInsuranceNameDto.setInsuranceName(insuranceName);
-		if (starExist == 0) {
+		RenewCustomerRankDto renewCustomerRankDto = this.customerRankDao.retriveAllId(contractID);
+//		int starExist = renewCustomerRankDto.getRankID().indexOf("*") + 1;// 별이 있으면 1 별이 없으면 0
+		if (renewCustomerRankDto !=  null) {
 			this.contractDao.deleteContractManagement(contractID);
-//			this.customer
+			this.contractDao.commit();
+			
+			//고객 DB 가져와야함.
+			Double insuranceNum =  this.customerDao.selectInsuranceNum(customerID);
+			System.out.println(insuranceNum);
+			CustomerIDAndInsuranceNumDto customerIDAndInsuranceNumDto = new CustomerIDAndInsuranceNumDto();
+			customerIDAndInsuranceNumDto.setCustomerID(customerID);
+			customerIDAndInsuranceNumDto.setInsuranceNum(insuranceNum-1);
+			
+			this.customerDao.updateInsuranceNum(customerIDAndInsuranceNumDto);
+			this.customerDao.commit();
+			
 			return customerNameAndInsuranceNameDto;
 		}else {
 			return null;			
