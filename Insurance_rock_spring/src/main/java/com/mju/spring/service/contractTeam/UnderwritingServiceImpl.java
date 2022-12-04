@@ -1,5 +1,6 @@
 package com.mju.spring.service.contractTeam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +53,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	private Rank rank;
 	private List<ApplyContractDto> applyContractDtoList;
 	private List<RenewContractDto> renewContractDtoList;
+	private int total = -1;
+	private int standardFee =0;
 
 	@Override
 	public List<ApplyContractDto> getApply() {
@@ -69,16 +72,29 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	@Override
 	public VerifyApplyContractDto verifyApply(HttpServletRequest request) {
 		
-		setApplyToContract(Integer.parseInt(request.getParameter("index")));
+		setApplyToContract(Integer.parseInt(request.getParameter("num")));
 		if (!getInsurance() || !getCustomer()) {
-			return null;
+			return null; //오류 던져야함
 		}
 
 		if (!verifyPeriod() || !verifyPremium()) {
 			return null;
 		}
 
-		return null;
+		return setResultApply();
+	}
+
+	private VerifyApplyContractDto setResultApply() {
+		VerifyApplyContractDto verifyApplyContractDto = new VerifyApplyContractDto();
+		verifyApplyContractDto.setInsuranceFee(this.contract.getInsuranceFee());
+		verifyApplyContractDto.setStandardFee(this.standardFee);
+		verifyApplyContractDto.setSecurityFee(this.contract.getSecurityFee());
+		verifyApplyContractDto.setRank(this.rank);
+		verifyApplyContractDto.setPeriod(this.contract.getPeriod());
+		verifyApplyContractDto.setPaymentCycle(this.contract.getPaymentCycle());
+		verifyApplyContractDto.setApplyCondition(this.insurance.getApplyCondition());
+		verifyApplyContractDto.setTotalRank(this.total);
+		return verifyApplyContractDto;
 	}
 
 	private void setApplyToContract(int index) {
@@ -121,7 +137,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		rankIDList.add(this.customerRankDao.retriveRankID(this.contract.getContractID()));
 		this.customer.setRankID(rankIDList);
 		this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(0)));
-
+		this.rank = this.customer.getRank();
 		return true;
 	}
 
@@ -129,15 +145,16 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		if ((this.contract.getPeriod() >= 36) && (this.insurance.isLongTerm() != true)) {
 			String reason = "장기 계약 불가능한 보험";
 			this.contract.setReason(reason);
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	private boolean verifyPremium() {
 
 		double rank = getMaterialRank();
 
-		switch (this.customer.getRank().getPurpose()) {
+		switch (this.rank.getPurpose()) {
 		case "living":
 			rank = verifyLiving(rank);
 			break;
@@ -166,7 +183,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	private double getMaterialRank() {
-		switch (this.customer.getRank().getMaterial()) {
+		switch (this.rank.getMaterial()) {
 		case "rock":
 			return 1;
 
@@ -189,10 +206,10 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities1();
 		totalRank = totalRank + checkSurroundingFacilities1();
-		if (this.customer.getRank().isHeight()) {
+		if (this.rank.isHeight()) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getScale() > 30) {
+		if (this.rank.getScale() > 30) {
 			totalRank = totalRank + 0.5;
 		}
 		return totalRank;
@@ -202,13 +219,13 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities2();
 		totalRank = totalRank + checkSurroundingFacilities2();
-		if (this.customer.getRank().isHeight()) {
+		if (this.rank.isHeight()) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getScale() > 200) {
+		if (this.rank.getScale() > 200) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getMaterial().equals("wood")) {
+		if (this.rank.getMaterial().equals("wood")) {
 			totalRank = totalRank + 1.0;
 		}
 		return totalRank;
@@ -218,10 +235,10 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities2();
 		totalRank = totalRank + checkSurroundingFacilities2();
-		if (this.customer.getRank().getScale() > 60) {
+		if (this.rank.getScale() > 60) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getMaterial().equals("wood")) {
+		if (this.rank.getMaterial().equals("wood")) {
 			totalRank = totalRank + 0.5;
 		}
 		return totalRank;
@@ -231,10 +248,10 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities1();
 		totalRank = totalRank + checkSurroundingFacilities1();
-		if (this.customer.getRank().isHeight()) {
+		if (this.rank.isHeight()) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getScale() > 20) {
+		if (this.rank.getScale() > 20) {
 			totalRank = totalRank + 0.5;
 		}
 
@@ -245,10 +262,10 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities1();
 		totalRank = totalRank + checkSurroundingFacilities1();
-		if (this.customer.getRank().isHeight()) {
+		if (this.rank.isHeight()) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getScale() > 20) {
+		if (this.rank.getScale() > 20) {
 			totalRank = totalRank + 0.5;
 		}
 		return totalRank;
@@ -258,7 +275,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities1();
 		totalRank = totalRank + checkSurroundingFacilities1();
-		if (this.customer.getRank().getScale() > 200) {
+		if (this.rank.getScale() > 200) {
 			totalRank = totalRank + 0.5;
 		}
 		return totalRank;
@@ -268,20 +285,20 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		double totalRank = rank;
 		totalRank = totalRank + checkFirefacilities2();
 		totalRank = totalRank + checkSurroundingFacilities2();
-		if (this.customer.getRank().isHeight()) {
+		if (this.rank.isHeight()) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getScale() > 200) {
+		if (this.rank.getScale() > 200) {
 			totalRank = totalRank + 0.5;
 		}
-		if (this.customer.getRank().getMaterial().equals("wood")) {
+		if (this.rank.getMaterial().equals("wood")) {
 			totalRank = totalRank + 1.0;
 		}
 		return totalRank;
 	}
 
 	private double checkFirefacilities1() {
-		double facilities = this.customer.getRank().getFireFacilities();
+		double facilities = this.rank.getFireFacilities();
 		if (facilities > 4) {
 			return -0.6;
 		} else if (facilities > 2) {
@@ -294,7 +311,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	private double checkFirefacilities2() {
-		double facilities = this.customer.getRank().getFireFacilities();
+		double facilities = this.rank.getFireFacilities();
 		if (facilities > 4) {
 			return -0.5;
 		} else if (facilities > 2) {
@@ -307,7 +324,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	private double checkSurroundingFacilities1() {
-		double facilities = this.customer.getRank().getSurroundingFacilities();
+		double facilities = this.rank.getSurroundingFacilities();
 		if (facilities < 2) {
 			return 0.2;
 		} else if (facilities < 4) {
@@ -320,7 +337,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	private double checkSurroundingFacilities2() {
-		double facilities = this.customer.getRank().getSurroundingFacilities();
+		double facilities = this.rank.getSurroundingFacilities();
 		if (facilities < 2) {
 			return 0.1;
 		} else if (facilities < 4) {
@@ -336,17 +353,20 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 		double rate;
 		if (rank < 1.5) {
+			this.total = 1;
 			rate = this.insurance.getPremiumRate()[0];
 		} else if (rank < 2.5) {
+			this.total = 2;
 			rate = this.insurance.getPremiumRate()[1];
 		} else {
+			this.total = 3;
 			rate = this.insurance.getPremiumRate()[2];
 		}
 
-		int standardFee = (int) (this.contract.getSecurityFee() * rate / 100);
+		this.standardFee = (int) (this.contract.getSecurityFee() * rate / 100);
 
-		if (standardFee > this.contract.getInsuranceFee()) {
-			String reason = "보험료가 기준보험료 보다 적습니다.";
+		if (this.standardFee > this.contract.getInsuranceFee()) {
+			this.contract.setReason("보험료가 기준보험료 보다 적습니다."); 
 			return false;
 		} else {
 
@@ -368,7 +388,12 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 	@Override
 	public boolean permitApply() {
-		// TODO Auto-generated method stub
+		this.contract.setUnpaidFee(this.contract.getInsuranceFee());
+		this.contract.setProvisionFee(0);
+		this.contract.setStartDate(LocalDate.now());
+		this.contract.setEndDate(this.contract.getStartDate().plusMonths(this.contract.getPeriod()));
+		
+		
 		return false;
 	}
 

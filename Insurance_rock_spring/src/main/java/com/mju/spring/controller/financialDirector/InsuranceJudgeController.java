@@ -35,7 +35,7 @@ public class InsuranceJudgeController {
 			}
 			
 		} else if (request.getParameter("menu").equals("cancel")) {
-			return "menu";
+			return "menu//menu";
 		} else {
 			return "error";
 		}
@@ -67,7 +67,7 @@ public class InsuranceJudgeController {
 	private String permit(Model model) {
 		if (this.insuranceJudgeService.permit()) {
 			model.addAttribute("JudgeResult", "해당 보험이 승인되었습니다.");
-			return "financialDirector//insuranceJudge//showJudgeResult";
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
@@ -76,7 +76,7 @@ public class InsuranceJudgeController {
 	private String notPermit(Model model) {
 		if (this.insuranceJudgeService.notPermit()) {
 			model.addAttribute("JudgeResult", "해당 보험이 비승인되었습니다.");
-			return "financialDirector//insuranceJudge//showJudgeResult";
+			return "menu//showResult";
 		} else {
 			return "error";
 		}
@@ -84,13 +84,8 @@ public class InsuranceJudgeController {
 
 	private String defer(Model model) {
 		model.addAttribute("JudgeResult", "보류되었습니다.");
-		return "financialDirector//insuranceJudge//showJudgeResult";
+		return "menu//showResult";
 
 	}
 
-	@RequestMapping(value = "showJudgeResult", method = RequestMethod.GET)
-	public String showJudgeResult(HttpServletRequest request, Model model) {
-
-		return "menu//menu";
-	}
 }

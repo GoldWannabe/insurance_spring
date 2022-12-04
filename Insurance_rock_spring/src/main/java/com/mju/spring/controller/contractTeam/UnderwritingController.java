@@ -52,33 +52,35 @@ public class UnderwritingController {
 
 	private String getApply(Model model) {
 		List<ApplyContractDto> applyContractList = this.underwritingService.getApply();
-		model.addAttribute("ApplyContractList", applyContractList);
-		return "contractTeam//underwriting//selectApply";
+		if (applyContractList.size() > 0) {
+			model.addAttribute("ApplyContractList", applyContractList);
+			return "contractTeam//underwriting//selectApply";
+		} else {
+			model.addAttribute("JudgeResult", "심사할 계약이 없습니다");
+			return "menu//showResult";
+
+		}
 	}
 
 	@RequestMapping(value = "selectApply", method = RequestMethod.GET)
-	public String selectApply(HttpServletRequest request, Model model) {
-		if (request.getParameter("selectVerify").equals("verify")) {
+	public String selectApply(HttpServletRequest request, Model model) {	
 			return verifyApply(request, model);
-		} else if (request.getParameter("selectVerify").equals("cancel")) {
-			return "menu//menu";
-		} else {
-			return "error";
-		}
-
 	}
 
 	private String verifyApply(HttpServletRequest request, Model model) {
+		System.out.println("98765");
 		VerifyApplyContractDto verifyApplyContract = this.underwritingService.verifyApply(request); // 저장될 정보와 실패했을 경우
 		if (verifyApplyContract == null) {
+			
 			ReasonDto reasonDto = this.underwritingService.getReason();
+			System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
 			model.addAttribute("JudgeResult",
 					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
 			return "menu//showResult";
 		}
 		model.addAttribute("ApplyContract", verifyApplyContract);
 		model.addAttribute("Rank", verifyApplyContract.getRank());
-
+		System.out.println("123456");
 		return "contractTeam//applyVerify//selectApplyPermit";
 	}
 
@@ -119,18 +121,12 @@ public class UnderwritingController {
 	private String getRenew(Model model) {
 		List<RenewContractDto> renewContractList = this.underwritingService.getRenew();
 		model.addAttribute("RenewContractList", renewContractList);
-		return "contractTeam//underwriting//selectApplyRenew";
+		return "contractTeam//underwriting//selectRenew";
 	}
 
 	@RequestMapping(value = "selectRenew", method = RequestMethod.GET)
-	public String selectRenew(HttpServletRequest request, Model model) {
-		if (request.getParameter("selectVerify").equals("verify")) {
+	public String selectRenew(HttpServletRequest request, Model model) {		
 			return verifyRenew(model);
-		} else if (request.getParameter("selectVerify").equals("cancel")) {
-			return "menu//menu";
-		} else {
-			return "error";
-		}
 	}
 
 	private String verifyRenew(Model model) {
@@ -179,5 +175,12 @@ public class UnderwritingController {
 			return "error";
 		}
 		return null;
+	}
+
+	@RequestMapping(value = "underwriteCancel", method = RequestMethod.GET)
+	public String cancelUnderwrite() {
+
+		return "menu//menu";
+
 	}
 }

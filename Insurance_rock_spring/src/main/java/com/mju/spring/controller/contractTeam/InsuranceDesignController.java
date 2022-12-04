@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.dto.InsuranceDto;
-import com.mju.spring.dto.InsuranceTypeAndTermDto;
+import com.mju.spring.dto.contractTeam.insuranceDesign.InsuranceTypeAndTermDto;
 import com.mju.spring.entity.Insurance;
 import com.mju.spring.service.contractTeam.InsuranceDesignService;
 

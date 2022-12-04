@@ -11,7 +11,8 @@ public class VerifyApplyContractDto {
 	private int period;
 	private int paymentCycle;
 	private String applyCondition;
-	private double totalRank;
+	private int totalRank;
+	
 	public int getInsuranceFee() {
 		return insuranceFee;
 	}
@@ -54,10 +55,10 @@ public class VerifyApplyContractDto {
 	public void setApplyCondition(String applyCondition) {
 		this.applyCondition = applyCondition;
 	}
-	public double getTotalRank() {
+	public int getTotalRank() {
 		return totalRank;
 	}
-	public void setTotalRank(double totalRank) {
+	public void setTotalRank(int totalRank) {
 		this.totalRank = totalRank;
 	}
 

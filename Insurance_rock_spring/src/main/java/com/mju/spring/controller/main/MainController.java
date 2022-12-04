@@ -87,7 +87,7 @@ public class MainController {
 		if (request.getParameter("menu").equals("judge")) {
 			return "financialDirector//insuranceJudge//startJudge";
 		} else if (request.getParameter("menu").equals("cancel")) {
-			return "menu";
+			return "menu//menu";
 		} else {
 			return "error";
 		}
@@ -104,7 +104,7 @@ public class MainController {
 		} else if (request.getParameter("menu").equals("channelManagement")) {
 			return "";
 		} else if (request.getParameter("menu").equals("cancellation")) {
-			return "menu";
+			return "menu//menu";
 		} else {
 			return "error";
 		}
