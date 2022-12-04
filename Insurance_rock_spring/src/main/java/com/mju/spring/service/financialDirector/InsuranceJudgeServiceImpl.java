@@ -35,25 +35,28 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 	GeneralRateDao generalRateDao;
 
 	private Insurance insurance;
+	private List<RegisterInsuranceDto> registerInsuranceDtoList;
 
 	@Override
 	public List<RegisterInsuranceDto> getRegisterInsurance() {
-		return this.registerInsuranceDao.retriveRegisterInsuranceList();
+		this.registerInsuranceDtoList = this.registerInsuranceDao.retriveRegisterInsuranceList();
+		return this.registerInsuranceDtoList;
 	}
 
 	@Override
 	public Insurance selectJudgeInsurance(HttpServletRequest request) {
-
-		if (request.getParameter("type").equals("general")) {
+		String name = this.registerInsuranceDtoList.get(Integer.parseInt(request.getParameter("num"))).getInsuranceName();
+		EInsurance type = this.registerInsuranceDtoList.get(Integer.parseInt(request.getParameter("num"))).getInsuranceType();
+		if (type.equals(EInsurance.general)) {
 			// 이어서 요율도 따로 받아와야함
-			this.insurance = this.registerInsuranceDao.retriveGeneralName(request.getParameter("name"));
+			this.insurance = this.registerInsuranceDao.retriveGeneralName(name);
 			List<Double> rateList = (this.registerGeneralRateDao.retriveById(this.insurance.getInsuranceID()));
 			double[] rate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
 			this.insurance.setPremiumRate(rate);
 			return this.insurance;
 
-		} else if (request.getParameter("type").equals("house")) {
-			this.insurance = this.registerInsuranceDao.retriveHouseName(request.getParameter("name"));
+		} else if (type.equals(EInsurance.house)) {
+			this.insurance = this.registerInsuranceDao.retriveHouseName(name);
 			List<Double> rateList = (this.registerHouseRateDao.retriveById(this.insurance.getInsuranceID()));
 			double[] rate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
 			this.insurance.setPremiumRate(rate);

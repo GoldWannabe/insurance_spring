@@ -68,6 +68,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 	@Override
 	public VerifyApplyContractDto verifyApply(HttpServletRequest request) {
+		
 		setApplyToContract(Integer.parseInt(request.getParameter("index")));
 		if (!getInsurance() || !getCustomer()) {
 			return null;
