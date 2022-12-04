@@ -20,6 +20,7 @@ public class ContractDaoImpl implements ContractDao{
 	private static final String SelectContractProvision = "ContractMapper.selectContractProvision";
 	private static final String UpdateContractProvisionFee = "ContractMapper.updateContractProvisionFee";
 	private static final String SelectContractManagement = "ContractMapper.selectContractManagement";
+	private static final String DeleteContractManagement = "ContractMapper.deleteContractManagement";
 
 	@Override
 	public List<Contract> retriveNameAndPhoneNum(SelectContractDto selectContractDto) {
@@ -49,6 +50,11 @@ public class ContractDaoImpl implements ContractDao{
 	@Override
 	public List<Contract> retriveContractManagement(SelectContractManagementDto selectContractManagementDto) {
 		return sqlSession.selectList(SelectContractManagement, selectContractManagementDto);
+	}
+
+	@Override
+	public void deleteContractManagement(String contractID) {
+		sqlSession.delete(DeleteContractManagement, contractID);		
 	}
 	
 

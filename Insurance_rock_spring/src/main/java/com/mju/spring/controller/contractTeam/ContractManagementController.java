@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
+import com.mju.spring.dto.contractTeam.contractManagement.CustomerNameAndInsuranceNameDto;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.service.contractTeam.ContractManagementService;
 
@@ -64,8 +65,9 @@ public class ContractManagementController {
 		if(request.getParameter("RenewMenu").equals("renew")) {
 			return "contractTeam//contractManagement//applyRenew";
 		}else if(request.getParameter("RenewMenu").equals("renewCancel")) {
-			model.addAttribute("CustomerName", "");
-			model.addAttribute("InsuranceName","");
+			CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto = this.contractManagementService.cancelRenew(request);
+			model.addAttribute("CustomerName", customerNameAndInsuranceNameDto.getCustomerName());
+			model.addAttribute("InsuranceName", customerNameAndInsuranceNameDto.getInsuranceName());
 			return "contractTeam//contractManagement//showCancelRenew";
 		}else if(request.getParameter("RenewMenu").equals("cancel")) {
 			model.addAttribute("JudgeResult", "홈화면으로 돌아갑니다.");
@@ -83,7 +85,7 @@ public class ContractManagementController {
 			model.addAttribute("JudgeResult", "계약 갱신 신청이 완료되었습니다.");			
 			return "menu//showResult";	
 		}else {
-			model.addAttribute("JudgeResult", "DB문제로 인해 오류가 발생했습니다. 고객센터 (010-1234-5678)에 문의 부탁드립니다. 불편을 드려 죄송합니다.");	
+			model.addAttribute("JudgeResult", "해당 계약은 이미 갱신 신청 접수가 된 계약입니다. 다른 계약을 선택하시거나 고객센터(010-1234-5678)로 문의주기실 바랍니다.");	
 			return "menu//showResult";	
 		}
 		

@@ -20,4 +20,6 @@ public interface ContractDao {
 	public int create(Contract applyContract);
 
 	public List<Contract> retriveContractManagement(SelectContractManagementDto selectContractManagementDto);
+
+	public void deleteContractManagement(String contractID);
 }

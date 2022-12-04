@@ -19,4 +19,8 @@
 		SELECT * FROM Contract WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum}
 	</select>
 	
+	<delete id="deleteContractManagement">
+		DELETE FROM contract WHERE contractID = ${contractID}
+	</delete>
+	
 </mapper>
