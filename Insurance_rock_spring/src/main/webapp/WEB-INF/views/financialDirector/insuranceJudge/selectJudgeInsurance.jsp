@@ -23,10 +23,10 @@
 			<tbody> 
 				<c:forEach var="list" items="${RegisterInsuranceList}" varStatus="status">
 					<tr>
-						<td><input name="name" value="<c:out value="${list.insuranceName}"/>" readonly></td>
+						<td><input name="name" value="<c:out value="${list.insuranceName}"/>"  readonly></td>
 						<td><input name="type" value="<c:out value="${list.insuranceType}"/>" readonly></td>
 						<td><c:out value="${list.standardFee}" /></td>
-						<td><button type="submit">선택</button></td>
+						<td><button type="submit" name="num" value="<c:out value="${status.index}"/>">선택</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>
