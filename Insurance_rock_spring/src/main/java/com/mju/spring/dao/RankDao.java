@@ -8,4 +8,8 @@ public interface RankDao {
 	
 	public void commit();
 
+	public void deleteRank(String rankID);
+
+	public Rank retriveRankById(String rankID);
+
 }

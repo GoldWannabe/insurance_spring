@@ -1,7 +1,5 @@
 package com.mju.spring.entity;
 
-import java.util.UUID;
-
 public class Rank {
 	private String rankID;
 	private EMaterial material;
@@ -9,7 +7,7 @@ public class Rank {
 	private boolean height;
 	private int scale;
 	private double surroundingFacilities;
-
+	private EPurpose purpose;
 	private enum EMaterial {
 		wood, rock, concrete, iron, brick
 	};
@@ -17,12 +15,6 @@ public class Rank {
 	private enum EPurpose {
 		living, factory, culturalAsset, store, office, carPark, warehouse
 	};
-	
-	public Rank() {
-		this.rankID = UUID.randomUUID().toString();
-	}
-
-	private EPurpose purpose;
 
 	public String getRankID() {
 		return this.rankID;
@@ -69,17 +61,8 @@ public class Rank {
 	}
 
 	public void setMaterial(String material) {
-		if (material.equals(EMaterial.rock.toString())) {
-			this.material = EMaterial.rock;
-		} else if (material.equals(EMaterial.wood.toString())) {
-			this.material = EMaterial.wood;
-		} else if (material.equals(EMaterial.concrete.toString())) {
-			this.material = EMaterial.concrete;
-		} else if (material.equals(EMaterial.iron.toString())) {
-			this.material = EMaterial.iron;
-		} else if (material.equals(EMaterial.brick.toString())) {
-			this.material = EMaterial.brick;
-		}
+			this.material = EMaterial.valueOf(material);
+		
 	}
 
 	public String getPurpose() {
@@ -87,21 +70,9 @@ public class Rank {
 	}
 
 	public void setPurpose(String purpose) {
-		if (purpose.equals(EPurpose.living.toString())) {
-			this.purpose = EPurpose.living;
-		} else if (purpose.equals(EPurpose.factory.toString())) {
-			this.purpose = EPurpose.factory;
-		} else if (purpose.equals(EPurpose.culturalAsset.toString())) {
-			this.purpose = EPurpose.culturalAsset;
-		} else if (purpose.equals(EPurpose.store.toString())) {
-			this.purpose = EPurpose.store;
-		} else if (purpose.equals(EPurpose.office.toString())) {
-			this.purpose = EPurpose.office;
-		} else if (purpose.equals(EPurpose.carPark.toString())) {
-			this.purpose = EPurpose.carPark;
-		} else if (purpose.equals(EPurpose.warehouse.toString())) {
-			this.purpose = EPurpose.warehouse;
-		}
-
+			this.purpose = EPurpose.valueOf(purpose);
+		
 	}
+	
+	
 }

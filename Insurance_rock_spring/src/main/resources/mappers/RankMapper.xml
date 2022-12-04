@@ -5,4 +5,13 @@
 	<select id="create">
 		INSERT INTO Rank(RankID, material, fireFacilities, height, scale, surroundingFacilities, purpose) VALUES (#{RankID}, #{material}, #{fireFacilities}, #{height}, #{scale}, #{surroundingFacilities}, #{purpose})
 	</select>
+	
+	<delete id="deleteRankRenew">
+		DELETE FROM iRank WHERE RankID = #{RankID}
+	</delete>
+	
+	<select id="selectRankById" resultType="com.mju.spring.entity.Rank">
+		SELECT * from iRank where RankID = #{rankID}
+	</select>
+
 </mapper>
