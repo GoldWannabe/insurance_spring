@@ -66,11 +66,11 @@ public class MainController {
 
 		if (request.getParameter("menu").equals("design")) {
 			//임시저장된 내용이 있다면. 가져와서 바로 return register로.
-			if(insuranceDesignService.getTempInsurance(request) != null) {
-				return "contractTeam//insuranceDesign//register";			
-			}else {
+//			if(insuranceDesignService.getTempInsurance(request) != null) {
+//				return "contractTeam//insuranceDesign//register";			
+//			}else {
 				return "contractTeam//insuranceDesign//inputTypeAndTerm";				
-			}
+//			}
 		} else if (request.getParameter("menu").equals("underwrite")) {
 			return "contractTeam//underwriting//selectUnderwrite";
 		} else if (request.getParameter("menu").equals("contractManagement")) {

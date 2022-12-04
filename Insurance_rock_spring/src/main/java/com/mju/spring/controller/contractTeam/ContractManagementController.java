@@ -64,8 +64,9 @@ public class ContractManagementController {
 		if(request.getParameter("RenewMenu").equals("renew")) {
 			return "contractTeam//contractManagement//applyRenew";
 		}else if(request.getParameter("RenewMenu").equals("renewCancel")) {
-			
-			return "contractTeam//contractManagement//";
+			model.addAttribute("CustomerName", "");
+			model.addAttribute("InsuranceName","");
+			return "contractTeam//contractManagement//showCancelRenew";
 		}else if(request.getParameter("RenewMenu").equals("cancel")) {
 			model.addAttribute("JudgeResult", "홈화면으로 돌아갑니다.");
 			return "menu//showResult";	
@@ -75,7 +76,7 @@ public class ContractManagementController {
 	}
 
 	@RequestMapping(value = "applyRenew", method = RequestMethod.GET)
-	public String applyRankRenew(HttpServletRequest request, Model model) {
+	public String applyRenew(HttpServletRequest request, Model model) {
 		//계약 관리 할 때, 갱신 부분을 할 경우 rank 업데이트 하지 말고 현재 랭크 id 맨 앞에 *붙여서 새로 저장 //이미 갱신완료된 계약의 경우 제외할것.
 		boolean cheakRenew = this.contractManagementService.applyRenew(request);
 		if(cheakRenew) {

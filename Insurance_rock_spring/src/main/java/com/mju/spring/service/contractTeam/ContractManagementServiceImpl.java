@@ -56,7 +56,6 @@ public class ContractManagementServiceImpl implements ContractManagementService{
 
 	@Override
 	public List<ContractManagementAccidentDto> searchAccidentHistory(HttpServletRequest request) {
-		// contractID                           | customerID                           | insuranceID                          | paymentCycle | insuranceFee | securityFee | period
 		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getContractID();
 		String customerID =  this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerID();
 		String insuranceID =this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getInsuranceID();
