@@ -11,4 +11,6 @@ public interface RenewContractDao {
 	public void insertApplyRenew(RenewContractManagementDto renewContractManagementDto);
 
 	public void commit();
+
+	public int deleteRenew(String contractID);
 }

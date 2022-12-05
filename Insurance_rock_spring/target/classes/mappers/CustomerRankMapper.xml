@@ -14,4 +14,8 @@
 	<insert id="create">
 		INSERT INTO customerRank(customerID, contractID, RankID) VALUES (#{customerID}, #{contractID}, #{rankID})
 	</insert>
+	
+	<delete id="deleteCustomerRank">
+		DELETE FROM customerRank WHERE RankID = #{rankID}
+	</delete>
 </mapper>

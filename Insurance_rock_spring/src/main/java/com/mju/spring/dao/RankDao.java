@@ -10,4 +10,8 @@ public interface RankDao {
 
 	public Rank retriveRankById(String rankID);
 
+	public int updateRank(Rank rank);
+
+	public int deleteRank(String rankID);
+
 }

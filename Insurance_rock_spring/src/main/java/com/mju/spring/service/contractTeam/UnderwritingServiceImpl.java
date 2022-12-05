@@ -413,7 +413,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		
 		this.previousInsuranceFee = this.contract.getInsuranceFee();
 		this.previousSecurityFee = this.contract.getSecurityFee();
-		
+
 		this.contract.setPaymentCycle(renewContractDto.getPaymentCycle());
 		this.contract.setInsuranceFee(renewContractDto.getInsuranceFee());
 		this.contract.setSecurityFee(renewContractDto.getSecurityFee());	
@@ -441,6 +441,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 
 	private boolean checkRiseFee() {
+		
 		int minFee = (int) (this.previousInsuranceFee * (1.1 + 0.1 * this.contract.getAccidentHistory().size()));
 		if (this.contract.getInsuranceFee() <= minFee) {
 			String reason = "보험금이 인상률이 적습니다. (최소보험료:"+ minFee +"원)";
@@ -512,13 +513,62 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 	@Override
 	public boolean permitRenew() {
-		//contractRank도 삭제해야함
+		//contractRank도 삭제해야함 + rank 기존꺼 삭제 및 업데이트
+		//renew 삭제 및 업데이트
+		
+		return updateRenew();
+	}
+
+	private boolean updateRenew() {
+		this.contract.setEndDate(this.contract.getEndDate().plusMonths(this.contract.getPeriod()));
+		if(this.contractDao.updateRenew(this.contract) == 1) {
+			this.contractDao.commit();
+			return updateRank();
+		}
+		return false;
+	}
+
+	private boolean updateRank() {
+		this.rank.setRankID(this.rank.getRankID().substring(1));
+		if(this.rankDao.updateRank(this.rank)==1) {
+			this.rankDao.commit();
+			this.rank.setRankID("*"+this.rank.getRankID());
+			return deleteRenew();
+		}
+		
+		
 		return false;
 	}
 
 	@Override
 	public boolean notPermitRenew() {
-		// TODO Auto-generated method stub
+		//contractRank 삭제+ rank 삭제
+		//renew 삭제
+		return deleteRenew();
+	}
+
+	private boolean deleteRenew() {
+		if(this.renewContractDao.deleteRenew(this.contract.getContractID())==1) {
+			this.renewContractDao.commit();
+			return deleteContractRank();
+		}
+		
+		return false;
+	}
+
+	private boolean deleteContractRank() {
+		if(this.customerRankDao.deleteCustomerRank(this.rank.getRankID())==1) {
+			this.customerRankDao.commit();
+			return deleteRank();
+		}
+		return false;
+	}
+
+	private boolean deleteRank() {
+		if(this.rankDao.deleteRank(this.rank.getRankID())==1) {
+			this.rankDao.commit();
+			return true;
+		}
 		return false;
 	}
 

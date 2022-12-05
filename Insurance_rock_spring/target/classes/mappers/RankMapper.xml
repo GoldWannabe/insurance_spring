@@ -10,5 +10,12 @@
 	<select id="selectRankById" resultType="com.mju.spring.entity.Rank">
 		SELECT * from iRank where RankID = #{rankID}
 	</select>
-
+	
+	<update id="updateRank">
+		UPDATE iRank SET height = #{height} and scale = #{scale} and material = #{material} and fireFacilities = #{fireFacilities} and surroundingFacilities = #{surroundingFacilities} and purpose = #{purpose} WHERE RankID = #{rankID}
+	</update>
+	
+	<delete id="deleteRank">
+		DELETE FROM iRank WHERE RankID = #{rankID}
+	</delete>
 </mapper>
