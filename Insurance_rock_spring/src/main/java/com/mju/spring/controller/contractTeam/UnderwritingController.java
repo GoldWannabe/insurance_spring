@@ -136,11 +136,11 @@ public class UnderwritingController {
 
 	@RequestMapping(value = "selectRenew", method = RequestMethod.GET)
 	public String selectRenew(HttpServletRequest request, Model model) {
-		return verifyRenew(model);
+		return verifyRenew(request, model);
 	}
 
-	private String verifyRenew(Model model) {
-		VerifyRenewContractDto verifyRenewContract = this.underwritingService.verifyRenew();
+	private String verifyRenew(HttpServletRequest request, Model model) {
+		VerifyRenewContractDto verifyRenewContract = this.underwritingService.verifyRenew(request);
 		if (verifyRenewContract == null) {
 			return notPermitRenew(model);
 		}

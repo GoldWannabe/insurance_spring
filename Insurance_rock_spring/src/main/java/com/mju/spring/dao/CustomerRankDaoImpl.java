@@ -1,5 +1,7 @@
 package com.mju.spring.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +16,7 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	private static final String SelectRenewCustomerRank = "CustomerRankMapper.selectRenewCustomerRank";
 	private static final String SelectRankID = "CustomerRankMapper.selectRankID";
 	private static final String Create = "CustomerRankMapper.create";
-
+	
 	@Override
 	public int create(CustomerRankDto customerRankDTO) {
 		return 0;
@@ -44,6 +46,10 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 		sqlSession.insert(Create, renewCustomerRankDto);
 		
 	}
+
+	@Override
+	public List<String> retriveRankIDList(String contractID) {
+		return sqlSession.selectList(SelectRankID, contractID);	}
 	
 	
 

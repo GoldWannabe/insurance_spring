@@ -60,6 +60,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	private List<RenewContractDto> renewContractDtoList;
 	private int total = -1;
 	private int standardFee =0;
+	private int previousInsuranceFee = 0;
+	private int previousSecurityFee = 0;
 
 	@Override
 	public List<ApplyContractDto> getApply() {
@@ -380,8 +382,61 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 	
 	@Override
-	public VerifyRenewContractDto verifyRenew() {
-		return null;
+	public VerifyRenewContractDto verifyRenew(HttpServletRequest request) {
+		setRenewToContract(Integer.parseInt(request.getParameter("num")));
+		if (!getInsurance() || !getRenewCustomer()) {
+			return null; //오류 던져야함
+		}
+
+		if (!verifyPeriod() || !verifyPremium() || !checkRiseFee()) {
+			return null;
+		}
+
+		return null; /////////////////////////////////
+	}
+	
+	private void setRenewToContract(int index) {
+		RenewContractDto renewContractDto = this.renewContractDtoList.get(index);
+		this.contract = contractDao.retriveContractById(renewContractDto.getContractID());
+		
+		this.previousInsuranceFee = this.contract.getInsuranceFee();
+		this.previousSecurityFee = this.contract.getSecurityFee();
+		
+		this.contract.setPaymentCycle(renewContractDto.getPaymentCycle());
+		this.contract.setInsuranceFee(renewContractDto.getInsuranceFee());
+		this.contract.setSecurityFee(renewContractDto.getSecurityFee());	
+		this.contract.setPeriod(renewContractDto.getPeriod());
+		
+	}
+	
+	private boolean getRenewCustomer() {
+		this.customer = this.customerDao.retriveCustomerById(this.contract.getCustomerID());
+		
+		ArrayList<String> rankIDList = new ArrayList<String>(this.customerRankDao.retriveRankIDList(this.contract.getContractID()));
+		this.customer.setRankID(rankIDList);
+		
+		if(rankIDList.get(0).charAt(0) == '*') {
+			this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(1)));
+			this.rank = this.rankDao.retriveRankById(this.customer.getRankID().get(0));
+		} else if(rankIDList.get(1).charAt(0) == '*') {
+			this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(0)));
+			this.rank = this.rankDao.retriveRankById(this.customer.getRankID().get(1));
+		} else {
+			return false;
+		}
+
+		return true;		
+	}
+
+
+
+	private boolean checkRiseFee() {
+		int minFee = (int) (this.previousInsuranceFee * (1.1 + 0.1 * this.contract.getAccidentHistory().size()));
+		if (this.contract.getInsuranceFee() <= minFee) {
+			return false;
+		} else {
+			return true;
+		}	
 	}
 
 	@Override

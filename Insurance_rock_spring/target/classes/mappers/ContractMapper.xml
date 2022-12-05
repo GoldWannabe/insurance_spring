@@ -26,4 +26,8 @@
 	<insert id="create">
 		insert into contract(contractID, customerID, customerName, customerPhoneNum, insuranceID, insuranceName, paymentCycle, insuranceFee, unpaidFee, securityFee, provisionFee, startDate, endDate) values (#{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{insuranceID}, #{insuranceName}, #{paymentCycle}, #{insuranceFee}, #{unpaidFee}, #{securityFee}, #{provisionFee}, #{startDate}, #{endDate})
 	</insert>
+	
+	<select id="selectContractById" resultType="com.mju.spring.entity.Contract">
+		SELECT * FROM Contract WHERE customerID = #{contractID}
+	</select>
 </mapper>
