@@ -437,7 +437,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		}
 		return true;		
 	}
-
+ 
 
 
 	private boolean checkRiseFee() {
