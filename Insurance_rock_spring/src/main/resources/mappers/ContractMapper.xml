@@ -28,6 +28,6 @@
 	</insert>
 	
 	<select id="selectContractById" resultType="com.mju.spring.entity.Contract">
-		SELECT * FROM Contract WHERE customerID = #{contractID}
+		SELECT * FROM Contract WHERE contractID = #{contractID}
 	</select>
 </mapper>

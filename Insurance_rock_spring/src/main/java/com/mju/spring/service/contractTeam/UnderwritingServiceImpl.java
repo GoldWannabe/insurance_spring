@@ -387,14 +387,26 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		if (!getInsurance() || !getRenewCustomer()) {
 			return null; //오류 던져야함
 		}
-
 		if (!verifyPeriod() || !verifyPremium() || !checkRiseFee()) {
 			return null;
 		}
-
-		return null; /////////////////////////////////
+		return setResultRenew();
 	}
 	
+	private VerifyRenewContractDto setResultRenew() {
+		VerifyRenewContractDto verifyRenewContractDto = new VerifyRenewContractDto();
+		verifyRenewContractDto.setPreviousInsuranceFee(this.previousInsuranceFee);
+		verifyRenewContractDto.setNewInsuranceFee(this.contract.getInsuranceFee());
+		verifyRenewContractDto.setPreviousSecurityFee(this.previousSecurityFee);
+		verifyRenewContractDto.setNewSecurityFee(this.contract.getSecurityFee());
+		verifyRenewContractDto.setEndDate(this.contract.getEndDate());
+		verifyRenewContractDto.setPeriod(this.contract.getPeriod());
+		verifyRenewContractDto.setPreviousRank(this.customer.getRank());
+		verifyRenewContractDto.setNewRank(this.rank);
+		verifyRenewContractDto.setTotalRank(this.total);
+		return verifyRenewContractDto;
+	}
+
 	private void setRenewToContract(int index) {
 		RenewContractDto renewContractDto = this.renewContractDtoList.get(index);
 		this.contract = contractDao.retriveContractById(renewContractDto.getContractID());
@@ -414,7 +426,6 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		
 		ArrayList<String> rankIDList = new ArrayList<String>(this.customerRankDao.retriveRankIDList(this.contract.getContractID()));
 		this.customer.setRankID(rankIDList);
-		
 		if(rankIDList.get(0).charAt(0) == '*') {
 			this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(1)));
 			this.rank = this.rankDao.retriveRankById(this.customer.getRankID().get(0));
@@ -424,7 +435,6 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		} else {
 			return false;
 		}
-
 		return true;		
 	}
 
@@ -433,6 +443,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	private boolean checkRiseFee() {
 		int minFee = (int) (this.previousInsuranceFee * (1.1 + 0.1 * this.contract.getAccidentHistory().size()));
 		if (this.contract.getInsuranceFee() <= minFee) {
+			String reason = "보험금이 인상률이 적습니다. (최소보험료:"+ minFee +"원)";
+			this.contract.setReason(reason);
 			return false;
 		} else {
 			return true;

@@ -136,6 +136,7 @@ public class UnderwritingController {
 
 	@RequestMapping(value = "selectRenew", method = RequestMethod.GET)
 	public String selectRenew(HttpServletRequest request, Model model) {
+		System.out.println("1");
 		return verifyRenew(request, model);
 	}
 
@@ -147,7 +148,6 @@ public class UnderwritingController {
 		model.addAttribute("RenewContract", verifyRenewContract);
 		model.addAttribute("PreviousRank", verifyRenewContract.getPreviousRank());
 		model.addAttribute("newRank", verifyRenewContract.getNewRank());
-
 		return "contractTeam//renewVerify//selectRenewPermit";
 	}
 
