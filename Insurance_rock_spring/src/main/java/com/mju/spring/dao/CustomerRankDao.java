@@ -1,6 +1,5 @@
 package com.mju.spring.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.mju.spring.dto.CustomerRankDto;
@@ -10,7 +9,6 @@ public interface CustomerRankDao {
 	public int create(CustomerRankDto customerRankDTO);
 
 	public void commit();
-
 
 	public RenewCustomerRankDto retriveAllId(String contractID);
 

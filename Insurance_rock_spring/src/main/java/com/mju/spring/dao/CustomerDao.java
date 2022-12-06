@@ -16,7 +16,8 @@ public interface CustomerDao {
 	public void commit();
 
 	public void updateInsuranceNum(CustomerIDAndInsuranceNumDto customerIDAndInsuranceNumDto);
-	
+
+	public int create(Customer customer);
 	
 	
 }
