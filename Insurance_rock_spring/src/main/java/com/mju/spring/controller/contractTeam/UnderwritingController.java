@@ -63,14 +63,14 @@ public class UnderwritingController {
 	}
 
 	@RequestMapping(value = "selectApply", method = RequestMethod.GET)
-	public String selectApply(HttpServletRequest request, Model model) {	
-			return verifyApply(request, model);
+	public String selectApply(HttpServletRequest request, Model model) {
+		return verifyApply(request, model);
 	}
 
 	private String verifyApply(HttpServletRequest request, Model model) {
 		VerifyApplyContractDto verifyApplyContract = this.underwritingService.verifyApply(request); // 저장될 정보와 실패했을 경우
 		if (verifyApplyContract == null) {
-			
+
 			return notPermitApply(model);
 		}
 		model.addAttribute("ApplyContract", verifyApplyContract);
@@ -97,8 +97,7 @@ public class UnderwritingController {
 
 	private String permitApply(Model model) {
 		if (this.underwritingService.permitApply()) {
-			model.addAttribute("JudgeResult", "계약되었습니다.");
-			return "menu//showResult";
+			return "contractTeam//applyResult//selectContinue";
 		} else {
 			return "error";
 		}
@@ -107,10 +106,21 @@ public class UnderwritingController {
 	private String notPermitApply(Model model) {
 		if (this.underwritingService.notPermitApply()) {
 			ReasonDto reasonDto = this.underwritingService.getReason();
-			System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			model.addAttribute("JudgeResult",
-					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			String reason ="계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
+			model.addAttribute("JudgeResult", reason);
 			return "menu//showResult";
+		} else {
+			return "error";
+		}
+
+	}
+
+	@RequestMapping(value = "selectContinue", method = RequestMethod.GET)
+	public String selectContinue(HttpServletRequest request) {
+		if (request.getParameter("continue").equals("yes")) {
+			return "contractTeam//underwriting//selectUnderwrite";
+		} else if (request.getParameter("continue").equals("no")) {
+			return "menu//menu";
 		} else {
 			return "error";
 		}
@@ -119,27 +129,29 @@ public class UnderwritingController {
 
 	private String getRenew(Model model) {
 		List<RenewContractDto> renewContractList = this.underwritingService.getRenew();
-		model.addAttribute("RenewContractList", renewContractList);
-		return "contractTeam//underwriting//selectRenew";
+		if (renewContractList.size() > 0) {
+			model.addAttribute("RenewContractList", renewContractList);
+			return "contractTeam//underwriting//selectRenew";
+		} else {
+			model.addAttribute("JudgeResult", "심사할 계약이 없습니다");
+			return "menu//showResult";
+
+		}
 	}
 
 	@RequestMapping(value = "selectRenew", method = RequestMethod.GET)
-	public String selectRenew(HttpServletRequest request, Model model) {		
-			return verifyRenew(model);
+	public String selectRenew(HttpServletRequest request, Model model) {
+		return verifyRenew(request, model);
 	}
 
-	private String verifyRenew(Model model) {
-		VerifyRenewContractDto verifyRenewContract = this.underwritingService.verifyRenew();
+	private String verifyRenew(HttpServletRequest request, Model model) {
+		VerifyRenewContractDto verifyRenewContract = this.underwritingService.verifyRenew(request);
 		if (verifyRenewContract == null) {
-			ReasonDto reasonDto = this.underwritingService.getReason();
-			model.addAttribute("JudgeResult",
-					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			return "menu//showResult";
+			return notPermitRenew(model);
 		}
 		model.addAttribute("RenewContract", verifyRenewContract);
 		model.addAttribute("PreviousRank", verifyRenewContract.getPreviousRank());
 		model.addAttribute("newRank", verifyRenewContract.getNewRank());
-
 		return "contractTeam//renewVerify//selectRenewPermit";
 	}
 
@@ -148,6 +160,7 @@ public class UnderwritingController {
 		if (request.getParameter("selectPerit").equals("permit")) {
 			return permitRenew(model);
 		} else if (request.getParameter("selectPerit").equals("notPermit")) {
+			this.underwritingService.setReason(request);
 			return notPermitRenew(model);
 		} else if (request.getParameter("selectPerit").equals("cancel")) {
 			model.addAttribute("JudgeResult", "취소되었습니다.");
@@ -160,8 +173,7 @@ public class UnderwritingController {
 
 	private String permitRenew(Model model) {
 		if (this.underwritingService.permitRenew()) {
-			model.addAttribute("JudgeResult", "계약되었습니다.");
-			return "menu//showResult";
+			return "contractTeam//applyResult//selectContinue";
 		} else {
 			return "error";
 		}
@@ -169,7 +181,10 @@ public class UnderwritingController {
 
 	private String notPermitRenew(Model model) {
 		if (this.underwritingService.notPermitRenew()) {
-			model.addAttribute("JudgeResult", "반려되었습니다.");
+			ReasonDto reasonDto = this.underwritingService.getReason();
+			//System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			String reason ="계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
+			model.addAttribute("JudgeResult", reason);
 			return "menu//showResult";
 		} else {
 			return "error";
@@ -178,7 +193,6 @@ public class UnderwritingController {
 
 	@RequestMapping(value = "underwriteCancel", method = RequestMethod.GET)
 	public String cancelUnderwrite() {
-
 		return "menu//menu";
 
 	}

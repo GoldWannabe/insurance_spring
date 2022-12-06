@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.dto.InsuranceDto;
-import com.mju.spring.service.InsuranceSalesService;
+import com.mju.spring.service.salesTeam.InsuranceSalesService;
 
 @Controller
 public class InsuranceSalesController {

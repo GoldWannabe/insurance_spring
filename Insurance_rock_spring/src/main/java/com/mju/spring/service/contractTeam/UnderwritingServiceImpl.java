@@ -12,6 +12,7 @@ import com.mju.spring.dao.ApplyContractDao;
 import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.CustomerRankDao;
+import com.mju.spring.dao.FailContractDao;
 import com.mju.spring.dao.GeneralRateDao;
 import com.mju.spring.dao.HouseRateDao;
 import com.mju.spring.dao.InsuranceDao;
@@ -48,6 +49,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	CustomerRankDao customerRankDao;
 	@Autowired
 	RankDao rankDao;
+	@Autowired
+	FailContractDao failContractDao;
 
 	private Contract contract;
 	private Insurance insurance;
@@ -57,6 +60,8 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	private List<RenewContractDto> renewContractDtoList;
 	private int total = -1;
 	private int standardFee =0;
+	private int previousInsuranceFee = 0;
+	private int previousSecurityFee = 0;
 
 	@Override
 	public List<ApplyContractDto> getApply() {
@@ -377,8 +382,74 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 	
 	@Override
-	public VerifyRenewContractDto verifyRenew() {
-		return null;
+	public VerifyRenewContractDto verifyRenew(HttpServletRequest request) {
+		setRenewToContract(Integer.parseInt(request.getParameter("num")));
+		if (!getInsurance() || !getRenewCustomer()) {
+			return null; //오류 던져야함
+		}
+		if (!verifyPeriod() || !verifyPremium() || !checkRiseFee()) {
+			return null;
+		}
+		return setResultRenew();
+	}
+	
+	private VerifyRenewContractDto setResultRenew() {
+		VerifyRenewContractDto verifyRenewContractDto = new VerifyRenewContractDto();
+		verifyRenewContractDto.setPreviousInsuranceFee(this.previousInsuranceFee);
+		verifyRenewContractDto.setNewInsuranceFee(this.contract.getInsuranceFee());
+		verifyRenewContractDto.setPreviousSecurityFee(this.previousSecurityFee);
+		verifyRenewContractDto.setNewSecurityFee(this.contract.getSecurityFee());
+		verifyRenewContractDto.setEndDate(this.contract.getEndDate());
+		verifyRenewContractDto.setPeriod(this.contract.getPeriod());
+		verifyRenewContractDto.setPreviousRank(this.customer.getRank());
+		verifyRenewContractDto.setNewRank(this.rank);
+		verifyRenewContractDto.setTotalRank(this.total);
+		return verifyRenewContractDto;
+	}
+
+	private void setRenewToContract(int index) {
+		RenewContractDto renewContractDto = this.renewContractDtoList.get(index);
+		this.contract = contractDao.retriveContractById(renewContractDto.getContractID());
+		
+		this.previousInsuranceFee = this.contract.getInsuranceFee();
+		this.previousSecurityFee = this.contract.getSecurityFee();
+
+		this.contract.setPaymentCycle(renewContractDto.getPaymentCycle());
+		this.contract.setInsuranceFee(renewContractDto.getInsuranceFee());
+		this.contract.setSecurityFee(renewContractDto.getSecurityFee());	
+		this.contract.setPeriod(renewContractDto.getPeriod());
+		
+	}
+	
+	private boolean getRenewCustomer() {
+		this.customer = this.customerDao.retriveCustomerById(this.contract.getCustomerID());
+		
+		ArrayList<String> rankIDList = new ArrayList<String>(this.customerRankDao.retriveRankIDList(this.contract.getContractID()));
+		this.customer.setRankID(rankIDList);
+		if(rankIDList.get(0).charAt(0) == '*') {
+			this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(1)));
+			this.rank = this.rankDao.retriveRankById(this.customer.getRankID().get(0));
+		} else if(rankIDList.get(1).charAt(0) == '*') {
+			this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(0)));
+			this.rank = this.rankDao.retriveRankById(this.customer.getRankID().get(1));
+		} else {
+			return false;
+		}
+		return true;		
+	}
+ 
+
+
+	private boolean checkRiseFee() {
+		
+		int minFee = (int) (this.previousInsuranceFee * (1.1 + 0.1 * this.contract.getAccidentHistory().size()));
+		if (this.contract.getInsuranceFee() <= minFee) {
+			String reason = "보험금이 인상률이 적습니다. (최소보험료:"+ minFee +"원)";
+			this.contract.setReason(reason);
+			return false;
+		} else {
+			return true;
+		}	
 	}
 
 	@Override
@@ -398,7 +469,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		this.contract.setProvisionFee(0);
 		this.contract.setStartDate(LocalDate.now());
 		this.contract.setEndDate(this.contract.getStartDate().plusMonths(this.contract.getPeriod()));
-		
+		this.customer.setInsuranceNum(this.customer.getInsuranceNum()+0.9);
 		if(this.contractDao.create(this.contract) == 1) {
 			this.contractDao.commit();
 			return deleteApply();
@@ -417,7 +488,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	}
 
 	private boolean updateCustomer() {
-		this.customer.setAccountNum(this.customer.getAccountNum()+0.9);
+		
 		if(this.customerDao.updateInsuranceNum(this.customer) == 1) {
 			this.customerDao.commit();
 			return true;
@@ -427,19 +498,77 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 
 	@Override
 	public boolean notPermitApply() {
+		this.customer.setInsuranceNum(this.customer.getInsuranceNum()-0.1);
+		return addFailContract();
+	}
+
+	private boolean addFailContract() {
+		if(this.failContractDao.create(this.contract) == 1) {
+			this.failContractDao.commit();
+			return deleteApply();
+		}
+		
+		return false;		
+	}
+
+	@Override
+	public boolean permitRenew() {
+		//contractRank도 삭제해야함 + rank 기존꺼 삭제 및 업데이트
+		//renew 삭제 및 업데이트
+		
+		return updateRenew();
+	}
+
+	private boolean updateRenew() {
+		this.contract.setEndDate(this.contract.getEndDate().plusMonths(this.contract.getPeriod()));
+		if(this.contractDao.updateRenew(this.contract) == 1) {
+			this.contractDao.commit();
+			return updateRank();
+		}
+		return false;
+	}
+
+	private boolean updateRank() {
+		this.rank.setRankID(this.rank.getRankID().substring(1));
+		if(this.rankDao.updateRank(this.rank)==1) {
+			this.rankDao.commit();
+			this.rank.setRankID("*"+this.rank.getRankID());
+			return deleteRenew();
+		}
+		
 		
 		return false;
 	}
 
 	@Override
-	public boolean permitRenew() {
-		// TODO Auto-generated method stub
+	public boolean notPermitRenew() {
+		//contractRank 삭제+ rank 삭제
+		//renew 삭제
+		return deleteRenew();
+	}
+
+	private boolean deleteRenew() {
+		if(this.renewContractDao.deleteRenew(this.contract.getContractID())==1) {
+			this.renewContractDao.commit();
+			return deleteContractRank();
+		}
+		
 		return false;
 	}
 
-	@Override
-	public boolean notPermitRenew() {
-		// TODO Auto-generated method stub
+	private boolean deleteContractRank() {
+		if(this.customerRankDao.deleteCustomerRank(this.rank.getRankID())==1) {
+			this.customerRankDao.commit();
+			return deleteRank();
+		}
+		return false;
+	}
+
+	private boolean deleteRank() {
+		if(this.rankDao.deleteRank(this.rank.getRankID())==1) {
+			this.rankDao.commit();
+			return true;
+		}
 		return false;
 	}
 

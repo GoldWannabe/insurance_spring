@@ -13,10 +13,12 @@ public class RenewContractDaoImpl implements RenewContractDao{
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 	
 	private static final String insertRenewContract = "RenewContractMapper.insertRenewContract";
+	private static final String SelectAll = "RenewContractMapper.selectAll";
+	private static final String DeleteRenew = "RenewContractMapper.deleteRenew";
 	
 	@Override
 	public List<RenewContractDto> retriveRenewContractList() {
-		return null;
+		return sqlSession.selectList(SelectAll);
 	}
 
 	@Override
@@ -27,6 +29,11 @@ public class RenewContractDaoImpl implements RenewContractDao{
 	@Override
 	public void commit() {
 		sqlSession.commit();
+	}
+
+	@Override
+	public int deleteRenew(String contractID) {
+		return sqlSession.delete(DeleteRenew, contractID);
 	}
 
 }

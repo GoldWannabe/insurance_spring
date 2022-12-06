@@ -10,8 +10,7 @@
 		SELECT * FROM customer WHERE customerID = #{customerID}
 	</select>
 	<update id="updateInsuranceNum">
-		UPDATE customer SET insuranceNum = #{insuranceNum}
-		WHERE customerID = #{customerID}
+		UPDATE customer SET insuranceNum = #{insuranceNum} WHERE customerID = #{customerID}
 	</update>
 	<select id="selectInsuranceNum" resultType="double">
 		SELECT insuranceNum FROM customer WHERE customerID = #{customerID}

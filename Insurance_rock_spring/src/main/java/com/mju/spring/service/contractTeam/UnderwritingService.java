@@ -20,7 +20,7 @@ public interface UnderwritingService {
 
 	VerifyApplyContractDto verifyApply(HttpServletRequest request);
 
-	VerifyRenewContractDto verifyRenew();
+	VerifyRenewContractDto verifyRenew(HttpServletRequest request);
 
 	ReasonDto getReason();
 

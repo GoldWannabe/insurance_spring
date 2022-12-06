@@ -32,7 +32,7 @@
 						<td><c:out value="${list.insuranceFee}" /></td>
 						<td><c:out value="${list.period}" /></td>
 
-						<td><button type="submit" name="selectVerify" value="${status.index}">검증</button></td>
+						<td><button type="submit" name="num" value="${status.index}">검증</button></td>
 					</tr>
 				</c:forEach>
 			</tbody>

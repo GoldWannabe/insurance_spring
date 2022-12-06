@@ -1,0 +1,9 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="FailContractMapper">
+	
+	<select id="create">
+			INSERT INTO FailContract(contractID, customerID, customerName, customerPhoneNum, insuranceID, insuranceName, paymentCycle, insuranceFee, securityFee, period, reason) VALUES (#{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{insuranceID}, #{insuranceName}, #{paymentCycle}, #{insuranceFee}, #{securityFee}, #{period}, #{reason})
+	</select>
+</mapper>
+
