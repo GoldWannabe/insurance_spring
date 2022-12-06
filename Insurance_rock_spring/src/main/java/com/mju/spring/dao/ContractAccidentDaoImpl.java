@@ -28,9 +28,5 @@ public class ContractAccidentDaoImpl implements ContractAccidentDao{
 		
 	}
 
-	@Override
-	public List<ContractManagementAccidentDto> retriveContractAccident(String contractID) {
-		return sqlSession.selectList(SelectContractManagementAccident, contractID);
-	}
 
 }

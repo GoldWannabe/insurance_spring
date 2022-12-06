@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver;
 
+import com.mju.spring.dao.AccidentDao;
 import com.mju.spring.dao.ContractAccidentDao;
 import com.mju.spring.dao.ContractDao;
 import com.mju.spring.dao.CustomerDao;
@@ -21,6 +23,7 @@ import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewContractManagementDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManagementDto;
+import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Rank;
@@ -39,7 +42,10 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 
 	@Autowired
 	RankDao rankDao;
-
+	
+	@Autowired
+	AccidentDao accidentDao;
+	
 	@Autowired
 	RenewContractDao renewContractDao;
 	
@@ -62,9 +68,8 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 
 		return selectContractList;
 	}
-
 	@Override
-	public List<ContractManagementAccidentDto> searchAccidentHistory(HttpServletRequest request) {
+	public InsuranceDetailsDto searchInsuranceDetails(HttpServletRequest request) {
 		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getContractID();
 		String customerID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerID();
 		String insuranceID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getInsuranceID();
@@ -78,50 +83,67 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 		int paymentCycle =  this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getPaymentCycle();
 		int unpaidFee =  this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getUnpaidFee();
 		
-		RenewCustomerRankDto renewCustomerRankDto = this.customerRankDao.retriveAllId(this.renewContractManagementDto.getContractID());
-		String rankID = renewCustomerRankDto.getRankID();
-//		this.rankDao.retriveAll(rankID);
-		
+		RenewCustomerRankDto renewCustomerRankDto = this.customerRankDao.retriveAllId(contractID);
 		//보험 세부 정보를 위한 Dto
 		this.insuranceDetailsDto = new InsuranceDetailsDto();
-		insuranceDetailsDto.setContractID(contractID);
-		insuranceDetailsDto.setInsuranceName(insuranceName);
-		insuranceDetailsDto.setCustomerName(customerName);
-		insuranceDetailsDto.setCustomerPhoneNum(customerPhoneNum);
-		insuranceDetailsDto.setStartDate(startDate);
-		insuranceDetailsDto.setEndDate(endDate);
-		insuranceDetailsDto.setSecurityFee(securityFee);
-		insuranceDetailsDto.setInsuranceFee(insuranceFee);
-		insuranceDetailsDto.setPaymentCycle(paymentCycle);
-		insuranceDetailsDto.setUnpaidFee(unpaidFee);
+		this.insuranceDetailsDto.setContractID(contractID);
+		this.insuranceDetailsDto.setInsuranceName(insuranceName);
+		this.insuranceDetailsDto.setCustomerName(customerName);
+		this.insuranceDetailsDto.setCustomerPhoneNum(customerPhoneNum);
+		this.insuranceDetailsDto.setStartDate(startDate);
+		this.insuranceDetailsDto.setEndDate(endDate);
+		this.insuranceDetailsDto.setSecurityFee(securityFee);
+		this.insuranceDetailsDto.setInsuranceFee(insuranceFee);
+		this.insuranceDetailsDto.setPaymentCycle(paymentCycle);
+		this.insuranceDetailsDto.setUnpaidFee(unpaidFee);
 		
-//		insuranceDetailsDto.setMaterial(material);
-//		insuranceDetailsDto.setFireFacilities(fireFacilities);
-//		insuranceDetailsDto.setHeight(height);
-//		insuranceDetailsDto.setScale(scale);
-//		insuranceDetailsDto.setSurroundingFacilities(surroundingFacilities);
-//		insuranceDetailsDto.setPurpose(purpose);
+		if (renewCustomerRankDto != null) {
+			String rankID = renewCustomerRankDto.getRankID();
+			
+			Rank rank = new Rank();
+			rank =  this.rankDao.retriveRankById(rankID);
+			this.insuranceDetailsDto.setMaterial(rank.getMaterial());
+			this.insuranceDetailsDto.setFireFacilities(rank.getFireFacilities());
+			this.insuranceDetailsDto.setHeight(rank.isHeight());
+			this.insuranceDetailsDto.setScale(rank.getScale());
+			this.insuranceDetailsDto.setSurroundingFacilities(rank.getSurroundingFacilities());
+			this.insuranceDetailsDto.setPurpose(rank.getPurpose());
+			
 		
-		//갱신을 위한 Dto
+		}else {
+			return null;
+		}
+		
+		//미리 set 갱신을 위한 Dto
 		this.renewContractManagementDto = new RenewContractManagementDto();
 		this.renewContractManagementDto.setContractID(contractID);
 		this.renewContractManagementDto.setCustomerID(customerID);
 		this.renewContractManagementDto.setInsuranceID(insuranceID);
 		
-		//보여주기
+		//미리 set 팝업창에 보여줄것
 		this.customerNameAndInsuranceNameDto = new CustomerNameAndInsuranceNameDto();
 		this.customerNameAndInsuranceNameDto.setCustomerName(customerName);
 		this.customerNameAndInsuranceNameDto.setInsuranceName(insuranceName);
-		List<ContractManagementAccidentDto> contractAccidentList = this.contractAccidentDao.retriveContractAccident(contractID);
 		
 		//계약 1개에 사고 여러개.
 		//계약번호,보험이름, 가입자명, 연락처, 보험가입일,보험 만료일,담보액,보험료,납부방식, 미납액,등급, 사고이력
 		//등급은 따로 테이블 만들어서 출력???(material, fireFacilities, height, scale,  surroundingFacilities, purpose)RankID로 불러오기.
 		//사고이력도 테이블 따로 만들어서 출력(accidentID, contractID),accidentID로 accident관련 정보 다 불러오기.
-		
-		
-		return contractAccidentList;
+		return insuranceDetailsDto;
+	}
 
+	@Override
+	public List<Accident> searchAccidentHistory(HttpServletRequest request) {
+		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getContractID();
+	
+		
+		List<Accident> accidentList = this.accidentDao.retriveAccidentByContractId(contractID);
+		
+		return accidentList;
+	}
+	@Override
+	public InsuranceDetailsDto getRenewInfo() {
+		return insuranceDetailsDto;
 	}
 
 	@Override
@@ -194,5 +216,8 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 			return null;			
 		}
 	}
+	
+
+
 
 }

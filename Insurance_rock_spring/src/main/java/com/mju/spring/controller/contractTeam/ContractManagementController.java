@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
 import com.mju.spring.dto.contractTeam.contractManagement.CustomerNameAndInsuranceNameDto;
+import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewInfoDto;
+import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.service.contractTeam.ContractManagementService;
 
@@ -20,8 +23,6 @@ public class ContractManagementController {
 	
 	@Autowired
 	ContractManagementService contractManagementService;
-	
-
 	
 	@RequestMapping(value = "selectContractSearchAndCancel", method = RequestMethod.GET)
 	public String selectContractSearch(HttpServletRequest request, Model model) {
@@ -50,23 +51,54 @@ public class ContractManagementController {
 	
 	@RequestMapping(value = "selectContract", method = RequestMethod.GET)
 	public String selectContract(HttpServletRequest request, Model model) {
-		List<ContractManagementAccidentDto> contractAccidentList = this.contractManagementService.searchAccidentHistory(request);
-		if( !contractAccidentList.isEmpty()) {
-			model.addAttribute("ContractAccidentList", contractAccidentList);
+		InsuranceDetailsDto insuranceDetailsDto = this.contractManagementService.searchInsuranceDetails(request);
+		List<Accident> accidentList = this.contractManagementService.searchAccidentHistory(request);
+		
+		if( !accidentList.isEmpty() && insuranceDetailsDto !=null) {
+			model.addAttribute("ContractID", insuranceDetailsDto.getContractID());
+			model.addAttribute("InsuranceName", insuranceDetailsDto.getInsuranceName());
+			model.addAttribute("CustomerName", insuranceDetailsDto.getCustomerName());
+			model.addAttribute("CustomerPhoneNum", insuranceDetailsDto.getCustomerPhoneNum());
+			model.addAttribute("StartDate", insuranceDetailsDto.getStartDate());
+			model.addAttribute("EndDate", insuranceDetailsDto.getEndDate());
+			model.addAttribute("SecurityFee", insuranceDetailsDto.getSecurityFee());
+			model.addAttribute("InsuranceFee", insuranceDetailsDto.getInsuranceFee());
+			model.addAttribute("PaymentCycle", insuranceDetailsDto.getPaymentCycle());
+			model.addAttribute("UnpaidFee", insuranceDetailsDto.getUnpaidFee());
+			model.addAttribute("Material", insuranceDetailsDto.getMaterial());
+			model.addAttribute("FireFacilities", insuranceDetailsDto.getFireFacilities());
+			model.addAttribute("Height", insuranceDetailsDto.isHeight());
+			model.addAttribute("Scale", insuranceDetailsDto.getScale());
+			model.addAttribute("SurroundingFacilities", insuranceDetailsDto.getSurroundingFacilities());
+			model.addAttribute("Purpose", insuranceDetailsDto.getPurpose());
+			model.addAttribute("AccidentList", accidentList);
 		}else {
-			model.addAttribute("NotAccidentHistory", "해당 계약은 사고이력이 존재하지 않습니다.");
+			model.addAttribute("JudgeResult", "해당 계약은 이미 갱신 신청 접수가 되어 갱신 혹은  해지할수없습니다. 다른 계약을 선택하시거나 고객센터(010-1234-5678)로 문의주기실 바랍니다.");	
+			return "menu//showResult";	
 		}
-
 		return "contractTeam//contractManagement//selectRenewAndRenewCancel";
+
 	}
 	
 	@RequestMapping(value = "selectRenewAndRenewCancel", method = RequestMethod.GET)
 	public String selectRenewAndRenewCancel(HttpServletRequest request, Model model) {
 		if(request.getParameter("RenewMenu").equals("renew")) {
+			InsuranceDetailsDto insuranceDetailsDto = this.contractManagementService.getRenewInfo();
+			
+			model.addAttribute("FireFacilities", insuranceDetailsDto.getFireFacilities());
+			model.addAttribute("Scale", insuranceDetailsDto.getScale());
+			model.addAttribute("SurroundingFacilities", insuranceDetailsDto.getSurroundingFacilities());
+			model.addAttribute("Height", insuranceDetailsDto.isHeight());
+			model.addAttribute("Material", insuranceDetailsDto.getMaterial());
+			model.addAttribute("Purpose",insuranceDetailsDto.getPurpose());
+			model.addAttribute("SecurityFee",insuranceDetailsDto.getSecurityFee());
+			model.addAttribute("InsuranceFee", insuranceDetailsDto.getInsuranceFee());
+			model.addAttribute("PaymentCycle", insuranceDetailsDto.getPaymentCycle());
+			
 			return "contractTeam//contractManagement//applyRenew";
 		}else if(request.getParameter("RenewMenu").equals("renewCancel")) {
 			CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto = this.contractManagementService.cancelRenew(request);
-			if(customerNameAndInsuranceNameDto != null) {
+			if( customerNameAndInsuranceNameDto != null ) {
 				model.addAttribute("CustomerName", customerNameAndInsuranceNameDto.getCustomerName());
 				model.addAttribute("InsuranceName", customerNameAndInsuranceNameDto.getInsuranceName());
 				return "contractTeam//contractManagement//showCancelRenew";

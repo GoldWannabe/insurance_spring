@@ -11,6 +11,5 @@ public interface ContractAccidentDao {
 
 	public void commit();
 
-	public List<ContractManagementAccidentDto> retriveContractAccident(String parameter);
 
 }

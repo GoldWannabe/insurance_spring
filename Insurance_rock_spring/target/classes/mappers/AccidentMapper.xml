@@ -16,4 +16,8 @@
 	<update id="updatePayComplation">
 		UPDATE Accident SET insuranceNum = #{insuranceNum} WHERE accidentID = #{ID}
 	</update>
+		<select id="selectAccidentByContractId" resultType="com.mju.spring.entity.Accident">
+		SELECT * FROM
+		Accident WHERE contractID  = #{contractID}
+	</select>
 </mapper>

@@ -13,8 +13,9 @@ public class AccidentDaoImpl implements AccidentDao {
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
 
 	private static final String Create = "AccidentMapper.create";
-	private static final String selectAccident = "AccidentMapper.selectAccident";
-	private static final String updatePayComplation = "AccidentMapper.updatePayComplation";
+	private static final String SelectAccident = "AccidentMapper.selectAccident";
+	private static final String UpdatePayComplation = "AccidentMapper.updatePayComplation";
+	private static final String SelectAccidentByContractId = "AccidentMapper.selectAccidentByContractId";
 
 	@Override
 	public void create(Accident accident) {
@@ -23,18 +24,23 @@ public class AccidentDaoImpl implements AccidentDao {
 
 	@Override
 	public List<Accident> retriveNameAndDate(SelectAccidentDto selectAccidentDto) {
-		return sqlSession.selectList(selectAccident, selectAccidentDto);
+		return sqlSession.selectList(SelectAccident, selectAccidentDto);
 
 	}
 
 	@Override
 	public void updatePaycompleted(Accident accident) {
-		sqlSession.selectList(updatePayComplation, accident);
+		sqlSession.selectList(UpdatePayComplation, accident);
 	}
 
 	@Override
 	public void commit() {
 		sqlSession.commit();
+	}
+
+	@Override
+	public List<Accident> retriveAccidentByContractId(String contractID) {
+		return sqlSession.selectList(SelectAccidentByContractId, contractID);
 	}
 
 }
