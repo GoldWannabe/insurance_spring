@@ -14,7 +14,7 @@
 		accidentDate  = #{accidentDate}
 	</select>
 	<update id="updatePayComplation">
-		UPDATE Accident SET insuranceNum = #{insuranceNum} WHERE accidentID = #{ID}
+		UPDATE Accident SET insuranceNum = #{insuranceNum} WHERE accidentID = #{accidentID}
 	</update>
 		<select id="selectAccidentByContractId" resultType="com.mju.spring.entity.Accident">
 		SELECT * FROM

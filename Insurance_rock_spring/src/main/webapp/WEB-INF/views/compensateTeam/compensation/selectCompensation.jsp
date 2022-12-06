@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +7,12 @@
 </head>
 <body>
 	<form action="selectCompensation">
-		<p>°¡ÀÔÀÚ¸í: ${Accident.customerName }</p>
-		<p>ÀüÈ­¹øÈ£: ${Accident.customerPhoneNum}</p>
-		<p>»ç°í³»¿ë: ${Accident.content}</p>
-		<p>º¸»ó±İ¾×: ${Accident.liablityCost}</p>		
-		<button type="submit" name=select value="compensation">Áö±Ş</button>
-		<button type="submit" name=select value="cancel">Ãë¼Ò</button>
+		<p>ê°€ì…ìëª…: ${CustomerName}</p>
+		<p>ì „í™”ë²ˆí˜¸: ${CustomerPhoneNum}</p>
+		<p>ì‚¬ê³ ë‚´ìš©: ${Content}</p>
+		<p>ë³´ìƒê¸ˆì•¡: ${LiablityCost}</p>		
+		<button type="submit" name=select value="compensation">ì§€ê¸‰</button>
+		<button type="submit" name=select value="cancel">ì·¨ì†Œ</button>
 	</form>
 </body>
 </html>

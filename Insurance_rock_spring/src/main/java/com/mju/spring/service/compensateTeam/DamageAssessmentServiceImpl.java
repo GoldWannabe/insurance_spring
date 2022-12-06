@@ -61,7 +61,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 	
 	private List<Contract> selectContractList;
-	
+	@Override
 	public List<Contract> addcheck(HttpServletRequest request) {
 		SelectContractDto selectContractDto = new SelectContractDto();
 		
@@ -88,7 +88,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	}
 	
 	
-
+	@Override
 	public Accident addAccident(HttpServletRequest request) {
 
 		int liablityRate = Integer.parseInt(request.getParameter("liablityRate"));
@@ -122,10 +122,9 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		
 		return accident;
 	}
-
+	@Override
 	public List<Accident> searchAccident(HttpServletRequest request) {
-		// 가입자명, 연락처, 사고날짜, 사고내용, 총비용, 손해정도, 비용종류, 지급여뷰, 책임비율, 책임비용
-		this.selectAccidentList.clear();
+		// 사고번호, 가입자명, 연락처, 사고날짜, 사고내용, 총비용, 손해정도, 비용종류, 지급여뷰, 책임비율, 책임비용
 		SelectAccidentDto selectAccidentDto = new SelectAccidentDto();
 		selectAccidentDto.setCustomerName(request.getParameter("customerName"));
 		selectAccidentDto.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
@@ -135,17 +134,31 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 		return selectAccidentList;
 	}
-
+	
+	@Override
+	public Accident getCompensationPayment(HttpServletRequest request) {
+		return selectAccident(request);
+		//가입자명, 연락처, 사고번호의 사고의 책임비용원을 지급하시겠습니까?
+		//보상급 지급 여부와 책임비용을  요청한다.
+	}
+	
 	public Accident selectAccident(HttpServletRequest request) {
+		String[] array = request.getParameter("select").split(" ");
+		System.out.println(array[0]);
+		System.out.println(array[1]);
+		String accidentID = this.selectAccidentList.get(Integer.parseInt(array[1])).getAccidentID();
+		
 		for (Accident accident : selectAccidentList) {
-			if (accident.getAccidentID() == request.getParameter("accientID")) {
+			if (accident.getAccidentID() == accidentID) {
 				this.accident = accident;
 				return accident;
 			}
 		}
 		return null;
 	}
+	
 
+	@Override
 	public Provision payCompensation() {
 		// 사고ID
 		// 계좌번호랑 은행이름, 고객ID,
@@ -252,6 +265,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		}
 		return null;
 	}
+
 
 
 }

@@ -4,12 +4,14 @@
 <head>
 <meta charset="EUC-KR">
 <title>checkAccidentInfo</title>
-
+	<script>
+		alert('사고정보가 추가되었습니다');	
+	</script>
 </head>
 <body>
 
-	<p>사고 접수가 완료되었습니다.</p>
-	<form action="checkAccidentInfo">
+	<p>-----사고 접수 내역-------</p>
+	<form action="checkAccidentInfo" >
 		<p>가입자명: ${Accident.customerName }</p>
 		<p>전화번호: ${Accident.customerPhoneNum}</p>
 		<p>사고날짜: ${Accident.accidentDate}</p>

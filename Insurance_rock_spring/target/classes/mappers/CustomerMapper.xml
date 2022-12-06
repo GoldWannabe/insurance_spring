@@ -5,7 +5,7 @@
 		INSERT into Customer(customerID, Name, SSN, Sex, phoneNum, address, bankName, accountNum, insuranceNum) values(#{customerID}, #{name}, #{SSN}, #{sex}, #{phoneNum}, #{address}, #{bankName}, #{accountNum}, #{insuranceNum})
 	</insert>
 	
-	<select id="selectNameAndPhoneNum" resultType="com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto">
+	<select id="selectBankNameAndAccountNum" resultType="com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto">
 		SELECT bankName, accountNum FROM 
 		customer WHERE customerID = #{customerID}
 	</select>
