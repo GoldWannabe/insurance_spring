@@ -16,6 +16,7 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	private static final String SelectRankID = "CustomerRankMapper.selectRankID";
 	private static final String Create = "CustomerRankMapper.create";
 	private static final String CreateRank = "CustomerRankMapper.createRank";
+	private static final String DeleteCustomerRank = "CustomerRankMapper.deleteCustomerRank";
 
 	@Override
 	public void commit() {
@@ -53,4 +54,9 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 		return sqlSession.insert(CreateRank, customerRankDTO);
 	}
 
+	@Override
+	public int deleteCustomerRank(String rankID) {
+		return sqlSession.delete(DeleteCustomerRank, rankID);
+	}
+	
 }

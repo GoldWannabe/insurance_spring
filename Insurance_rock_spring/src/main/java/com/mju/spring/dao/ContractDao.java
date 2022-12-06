@@ -24,4 +24,6 @@ public interface ContractDao {
 	public void deleteContractManagement(String contractID);
 
 	public Contract retriveContractById(String contractID);
+
+	public int updateRenew(Contract contract);
 }

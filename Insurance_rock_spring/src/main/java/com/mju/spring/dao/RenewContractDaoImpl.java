@@ -14,6 +14,7 @@ public class RenewContractDaoImpl implements RenewContractDao{
 	
 	private static final String insertRenewContract = "RenewContractMapper.insertRenewContract";
 	private static final String SelectAll = "RenewContractMapper.selectAll";
+	private static final String DeleteRenew = "RenewContractMapper.deleteRenew";
 	
 	@Override
 	public List<RenewContractDto> retriveRenewContractList() {
@@ -28,6 +29,11 @@ public class RenewContractDaoImpl implements RenewContractDao{
 	@Override
 	public void commit() {
 		sqlSession.commit();
+	}
+
+	@Override
+	public int deleteRenew(String contractID) {
+		return sqlSession.delete(DeleteRenew, contractID);
 	}
 
 }

@@ -13,6 +13,8 @@ public class RankDaoImpl implements RankDao {
 	
 	private static final String Create = "RankMapper.create";
 	private static final String SelectRankById = "RankMapper.selectRankById";
+	private static final String UpdateRank = "RankMapper.updateRank";
+	private static final String DeleteRank = "RankMapper.deleteRank";
 
 	@Override
 	public int create(Rank rank) {
@@ -28,6 +30,16 @@ public class RankDaoImpl implements RankDao {
 	@Override
 	public Rank retriveRankById(String rankID) {
 		return sqlSession.selectOne(SelectRankById, rankID);
+	}
+
+	@Override
+	public int updateRank(Rank rank) {
+		return sqlSession.update(UpdateRank, rank);
+	}
+
+	@Override
+	public int deleteRank(String rankID) {
+		return sqlSession.delete(DeleteRank, rankID);
 	}
 
 }

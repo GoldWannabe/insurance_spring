@@ -30,4 +30,8 @@
 	<select id="selectContractById" resultType="com.mju.spring.entity.Contract">
 		SELECT * FROM Contract WHERE contractID = #{contractID}
 	</select>
+	
+	<update id="updateRenew">
+		UPDATE Contract SET insuranceFee = #{insuranceFee} and securityFee = #{securityFee} and paymentCycle = #{paymentCycle} and endDate = #{endDate} WHERE contractID = #{contractID}
+	</update>
 </mapper>

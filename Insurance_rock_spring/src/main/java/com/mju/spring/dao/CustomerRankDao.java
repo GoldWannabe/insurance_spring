@@ -18,4 +18,6 @@ public interface CustomerRankDao {
 
 	public List<String> retriveRankIDList(String contractID);
 
+	public int deleteCustomerRank(String rankID);
+
 }

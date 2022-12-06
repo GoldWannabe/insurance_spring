@@ -7,6 +7,9 @@
 			(#{contractID}, #{customerID}, #{insuranceID}, #{paymentCycle}, #{insuranceFee}, #{securityFee}, #{period})
 		</insert>
 		<select id="selectAll" resultType="com.mju.spring.dto.contractTeam.Underwriting.RenewContractDto">
-		select * from RenewContract
-	</select>
+			select * from RenewContract
+		</select>
+		<delete id="deleteRenew">
+			DELETE FROM RenewContract WHERE contractID = #{contractID}
+		</delete>
 	</mapper>

@@ -106,9 +106,8 @@ public class UnderwritingController {
 	private String notPermitApply(Model model) {
 		if (this.underwritingService.notPermitApply()) {
 			ReasonDto reasonDto = this.underwritingService.getReason();
-			System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			model.addAttribute("JudgeResult",
-					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			String reason ="계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
+			model.addAttribute("JudgeResult", reason);
 			return "menu//showResult";
 		} else {
 			return "error";
@@ -130,13 +129,18 @@ public class UnderwritingController {
 
 	private String getRenew(Model model) {
 		List<RenewContractDto> renewContractList = this.underwritingService.getRenew();
-		model.addAttribute("RenewContractList", renewContractList);
-		return "contractTeam//underwriting//selectRenew";
+		if (renewContractList.size() > 0) {
+			model.addAttribute("RenewContractList", renewContractList);
+			return "contractTeam//underwriting//selectRenew";
+		} else {
+			model.addAttribute("JudgeResult", "심사할 계약이 없습니다");
+			return "menu//showResult";
+
+		}
 	}
 
 	@RequestMapping(value = "selectRenew", method = RequestMethod.GET)
 	public String selectRenew(HttpServletRequest request, Model model) {
-		System.out.println("1");
 		return verifyRenew(request, model);
 	}
 
@@ -178,9 +182,9 @@ public class UnderwritingController {
 	private String notPermitRenew(Model model) {
 		if (this.underwritingService.notPermitRenew()) {
 			ReasonDto reasonDto = this.underwritingService.getReason();
-			System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			model.addAttribute("JudgeResult",
-					"계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			//System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
+			String reason ="계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
+			model.addAttribute("JudgeResult", reason);
 			return "menu//showResult";
 		} else {
 			return "error";
@@ -189,7 +193,6 @@ public class UnderwritingController {
 
 	@RequestMapping(value = "underwriteCancel", method = RequestMethod.GET)
 	public String cancelUnderwrite() {
-
 		return "menu//menu";
 
 	}
