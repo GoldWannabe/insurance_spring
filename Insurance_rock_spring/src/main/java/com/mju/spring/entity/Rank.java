@@ -63,7 +63,7 @@ public class Rank {
 
 	public void setMaterial(String material) {
 		//jsp에서 1부터 return, 배열은 0부터 시작함
-			this.material = EMaterial.values()[Integer.parseInt(material)-1];
+			this.material = EMaterial.valueOf(material);
 		
 	}
 
@@ -72,7 +72,7 @@ public class Rank {
 	}
 
 	public void setPurpose(String purpose) {
-			this.purpose = EPurpose.values()[Integer.parseInt(purpose)-1];
+			this.purpose = EPurpose.valueOf(purpose);
 	}
 	
 	

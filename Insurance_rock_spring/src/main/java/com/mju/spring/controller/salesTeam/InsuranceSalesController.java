@@ -54,9 +54,11 @@ public class InsuranceSalesController {
 		//보험 가입, 재가입 여부 선택
 		if(request.getParameter("join").equals("join")) {
 			return "salesTeam//insuranceSales//join";
-		} else if(request.getParameter("join").equals("reJoin")) {
-			return "salesTeam//insuranceSales//insuranceReJoin";
-		} else if(request.getParameter("join").equals("cancel")) {
+		}
+//		else if(request.getParameter("join").equals("reJoin")) {
+//			return "salesTeam//insuranceSales//joinRe";
+//		}
+		else if(request.getParameter("join").equals("cancel")) {
 			return "menu";
 		} else {
 			return "error";

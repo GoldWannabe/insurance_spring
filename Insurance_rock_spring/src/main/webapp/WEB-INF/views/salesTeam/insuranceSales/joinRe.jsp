@@ -40,7 +40,7 @@
 				<td><span th:text = "${list.insuranceFee}"></span></td>
 				<td><span th:text = "${list.securityFee}"></span></td>
 				<td><span th:text = "${list.period}"></span></td>
-				<td><span th:text = "${list.faliContract,}"></span></td>
+				<td><span th:text = "${list.faliContract}"></span></td>
 			</tr>
 		</tbody>
 	</table>

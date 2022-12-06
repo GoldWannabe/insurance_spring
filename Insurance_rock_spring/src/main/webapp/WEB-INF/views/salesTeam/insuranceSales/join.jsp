@@ -5,21 +5,10 @@
 <meta charset="EUC-KR">
 <title>JoinCustomer</title>
 
-<script>
-	function CompletionPopup(boolean finishSales) {
-		if (finishSales) {
-				confirm("회원가입이 완료되었습니다.") 
-			//location.replace("design")
-			return true;
-		}
-	}
-		
-	</script>
-
 </head>
 <body>
-<p>신규고객으로 회원가입을 진행합니다.</p>
-<form action ="finishSales" onload="CompletionPopup(${Finish})" onsumbit = "return  confirm("회원가입이 완료되었습니다.");">
+<p>고객 정보 입력</p>
+<form action ="finishSales">
 </form>
 	<form action="join" >
 		고객 이름: <input type="text" name="customerName"> <br>
@@ -44,19 +33,19 @@
 		<input type="radio" name="height" value="true" />예
 		<input type="radio" name="height" value="false" />아니오 <br> <br> 
 		건물 재질(rock, wood etc.)<br>
-		<input type="radio" name="meterial" value="1" />1.wood
-		<input type="radio" name="meterial" value="2"/>2.rock 
-		<input type="radio" name="meterial" value="3" />3.concrete
-		<input type="radio" name="meterial" value="4" />4.iron
-		<input type="radio" name="meterial" value="5" />5.brick <br> <br> 
+		<input type="radio" name="meterial" value="wood" />1.wood
+		<input type="radio" name="meterial" value="rock"/>2.rock 
+		<input type="radio" name="meterial" value="concrete" />3.concrete
+		<input type="radio" name="meterial" value="iron" />4.iron
+		<input type="radio" name="meterial" value="brick" />5.brick <br> <br> 
 		건물 목적(living, factory etc.)<br> 
-		<input type="radio" name="goal" value="1" />1.living
-		<input type="radio" name="goal" value="2"/>2.factory 
-		<input type="radio" name="goal" value="3" />3.culturalAsset
-		<input type="radio" name="goal" value="4" />4.store
-		<input type="radio" name="goal" value="5" />5.office 
-		<input type="radio" name="goal" value="6" />6.corPark
-		<input type="radio" name="goal" value="7" />7.warehouse<br> <br> 
+		<input type="radio" name="goal" value="living" />1.living
+		<input type="radio" name="goal" value="factory"/>2.factory 
+		<input type="radio" name="goal" value="culturalAsset" />3.culturalAsset
+		<input type="radio" name="goal" value="store" />4.store
+		<input type="radio" name="goal" value="office" />5.office 
+		<input type="radio" name="goal" value="corPark" />6.corPark
+		<input type="radio" name="goal" value="warehouse" />7.warehouse<br> <br> 
 		
 		<button type="submit" name = "join" value="join">가입 신청하기</button>
 		<button type="submit" name = "join" value="cancel">취소</button>
