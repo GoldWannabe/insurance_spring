@@ -69,6 +69,7 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 		this.renewContractManagementDto.setContractID(contractID);
 		this.renewContractManagementDto.setCustomerID(customerID);
 		this.renewContractManagementDto.setInsuranceID(insuranceID);
+		//보여주기
 		this.customerNameAndInsuranceNameDto = new CustomerNameAndInsuranceNameDto();
 		String customerName = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerName();
 		String insuranceName = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getInsuranceName();
@@ -139,7 +140,6 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 			
 			//고객 DB 가져와야함.
 			Double insuranceNum =  this.customerDao.selectInsuranceNum(customerID);
-			System.out.println(insuranceNum);
 			CustomerIDAndInsuranceNumDto customerIDAndInsuranceNumDto = new CustomerIDAndInsuranceNumDto();
 			customerIDAndInsuranceNumDto.setCustomerID(customerID);
 			customerIDAndInsuranceNumDto.setInsuranceNum(insuranceNum-1);
