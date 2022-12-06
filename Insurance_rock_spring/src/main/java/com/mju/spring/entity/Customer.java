@@ -17,7 +17,7 @@ public class Customer {
 	private Rank rank;
 	private ArrayList<String> contractID = new ArrayList<String>();
 	private ArrayList<String> rankID = new ArrayList<String>();
-
+	
 	public enum Esex {
 		male, female, none,
 	}

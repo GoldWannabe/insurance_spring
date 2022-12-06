@@ -1,8 +1,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="CustomerMapper">
+	<insert id="create">
+		INSERT into Customer(customerID, Name, SSN, Sex, phoneNum, address, bankName, accountNum, insuranceNum) values(#{customerID}, #{name}, #{SSN}, #{sex}, #{phoneNum}, #{address}, #{bankName}, #{accountNum}, #{insuranceNum})
+	</insert>
+	
 	<select id="selectNameAndPhoneNum" resultType="com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto">
-		SELECT bankName, accountNum FROM
+		SELECT bankName, accountNum FROM 
 		customer WHERE customerID = #{customerID}
 	</select>
 	

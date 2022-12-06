@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,26 +8,26 @@
 </head>
 <body>
 	<form action="rejoin">
-		<p>Àç°¡ÀÔÇÒ È¸¿øÀ» °Ë»öÇØÁÖ¼¼¿ä</p>
+		<p>ìž¬ê°€ìž…í•  íšŒì›ì„ ê²€ìƒ‰í•´ì£¼ì„¸ìš”</p>
 
-		°í°´ ÀÌ¸§: <input type="text" name="customerName"> <br>
-		ÀüÈ­¹øÈ£: <input type="text" name="phoneNum"><br>
+		ê³ ê° ì´ë¦„: <input type="text" name="customerName"> <br>
+		ì „í™”ë²ˆí˜¸: <input type="text" name="phoneNum"><br>
 		<button type="submit" name="search" value="search" >
-		°Ë»ö
+		ê²€ìƒ‰
 		</button>
 	</form>
 
 	<table border="1">
 		<thead>
 			<tr >
-				<th>°¡ÀÔÀÚ ÀÌ¸§</th>
-				<th>¿¬¶ôÃ³</th>
-				<th>º¸ÇèÀÌ¸§</th>
-				<th>³³ºÎ¹æ½Ä</th>
-				<th>º¸Çè·á</th>
-				<th>´ãº¸¾×</th>
-				<th>°¡ÀÔ±â°£</th>
-				<th>Å»¶ô»çÀ¯</th>
+				<th>ê°€ìž…ìž ì´ë¦„</th>
+				<th>ì—°ë½ì²˜</th>
+				<th>ë³´í—˜ì´ë¦„</th>
+				<th>ë‚©ë¶€ë°©ì‹</th>
+				<th>ë³´í—˜ë£Œ</th>
+				<th>ë‹´ë³´ì•¡</th>
+				<th>ê°€ìž…ê¸°ê°„</th>
+				<th>íƒˆë½ì‚¬ìœ </th>
 			</tr>
 		</thead>
 
