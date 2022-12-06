@@ -1,66 +1,54 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>JoinCustomer</title>
 
-<script>
-	function CompletionPopup(boolean finishSales) {
-		if (finishSales) {
-				confirm("È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.") 
-			//location.replace("design")
-			return true;
-		}
-	}
-		
-	</script>
-
 </head>
 <body>
-<p>½Å±Ô°í°´À¸·Î È¸¿ø°¡ÀÔÀ» ÁøÇàÇÕ´Ï´Ù.</p>
-<form action ="finishSales" onload="CompletionPopup(${Finish})" onsumbit = "return  confirm("È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");">
+<p>ê³ ê° ì •ë³´ ì…ë ¥</p>
+<form action ="finishSales">
 </form>
 	<form action="join" >
-		°í°´ ÀÌ¸§: <input type="text" name="customerName"> <br>
-		ÁÖ¹Î/»ç¾÷ÀÚ ¹øÈ£: <input type="text" name="registrationNum"><br>
-		ÀüÈ­¹øÈ£: <input type="text" name="phoneNum"><br>
-		ÁÖ¼Ò: <input type="text" name="address"><br>
-		¼ºº°: [male, female,none]<br>
+		ê³ ê° ì´ë¦„: <input type="text" name="customerName"> <br>
+		ì£¼ë¯¼/ì‚¬ì—…ì ë²ˆí˜¸: <input type="text" name="SSN"><br>
+		ì „í™”ë²ˆí˜¸: <input type="text" name="phoneNum"><br>
+		ì£¼ì†Œ: <input type="text" name="address"><br>
+		ì„±ë³„: [male, female,none]<br>
 		<input type="radio" name="gender" value="male" />male
 		<input type="radio" name="gender" value="female" />female
 		<input type="radio" name="gender" value="none" />none <br><br>
-		ÀºÇà ÀÌ¸§: <input type="text" name="bankName"><br>
-		°èÁÂ¹øÈ£: <input type="text" name="accountNum"><br>
+		ì€í–‰ ì´ë¦„: <input type="text" name="bankName"><br>
+		ê³„ì¢Œë²ˆí˜¸: <input type="text" name="accountNum"><br>
 		
-		´ãº¸¾×: <input type="text" name="securityFee"><br>
-		º¸Çè·á: <input type="text" name="insuranceFee"><br>
-		³³ºÎ¹æ½Ä(paymentCycle): <input type="text" name="paymentCycle"><br>
-		°¡ÀÔ±â°£: <input type="text" name="period"><br>
-		¼ÒÈ­½Ã¼³(Float) : <input type="text" name="fireFedilities"><br>
-		½ºÄÉÀÏ(Int): <input type="text" name="scale"><br>
-		ÁÖº¯½Ã¼³(Float): <input type="text" name="surroundingFedilities"><br>
-		³ôÀÌ°¡ 15Ãş ÀÌ»óÀÔ´Ï±î? <br>
-		<input type="radio" name="height" value="true" />¿¹
-		<input type="radio" name="height" value="false" />¾Æ´Ï¿À <br> <br> 
-		°Ç¹° ÀçÁú(rock, wood etc.)<br>
-		<input type="radio" name="meterial" value="1" />1.wood
-		<input type="radio" name="meterial" value="2"/>2.rock 
-		<input type="radio" name="meterial" value="3" />3.concrete
-		<input type="radio" name="meterial" value="4" />4.iron
-		<input type="radio" name="meterial" value="5" />5.brick <br> <br> 
-		°Ç¹° ¸ñÀû(living, factory etc.)<br> 
-		<input type="radio" name="goal" value="1" />1.living
-		<input type="radio" name="goal" value="2"/>2.factory 
-		<input type="radio" name="goal" value="3" />3.culturalAsset
-		<input type="radio" name="goal" value="4" />4.store
-		<input type="radio" name="goal" value="5" />5.office 
-		<input type="radio" name="goal" value="6" />6.corPark
-		<input type="radio" name="goal" value="7" />7.warehouse<br> <br> 
+		ë‹´ë³´ì•¡: <input type="text" name="securityFee"><br>
+		ë³´í—˜ë£Œ: <input type="text" name="insuranceFee"><br>
+		ë‚©ë¶€ë°©ì‹(paymentCycle): <input type="text" name="paymentCycle"><br>
+		ê°€ì…ê¸°ê°„: <input type="text" name="period"><br>
+		ì†Œí™”ì‹œì„¤(Float) : <input type="text" name="fireFedilities"><br>
+		ìŠ¤ì¼€ì¼(Int): <input type="text" name="scale"><br>
+		ì£¼ë³€ì‹œì„¤(Float): <input type="text" name="surroundingFedilities"><br>
+		ë†’ì´ê°€ 15ì¸µ ì´ìƒì…ë‹ˆê¹Œ? <br>
+		<input type="radio" name="height" value="true" />ì˜ˆ
+		<input type="radio" name="height" value="false" />ì•„ë‹ˆì˜¤ <br> <br> 
+		ê±´ë¬¼ ì¬ì§ˆ(rock, wood etc.)<br>
+		<input type="radio" name="meterial" value="wood" />1.wood
+		<input type="radio" name="meterial" value="rock"/>2.rock 
+		<input type="radio" name="meterial" value="concrete" />3.concrete
+		<input type="radio" name="meterial" value="iron" />4.iron
+		<input type="radio" name="meterial" value="brick" />5.brick <br> <br> 
+		ê±´ë¬¼ ëª©ì (living, factory etc.)<br> 
+		<input type="radio" name="goal" value="living" />1.living
+		<input type="radio" name="goal" value="factory"/>2.factory 
+		<input type="radio" name="goal" value="culturalAsset" />3.culturalAsset
+		<input type="radio" name="goal" value="store" />4.store
+		<input type="radio" name="goal" value="office" />5.office 
+		<input type="radio" name="goal" value="corPark" />6.corPark
+		<input type="radio" name="goal" value="warehouse" />7.warehouse<br> <br> 
 		
-		<button type="submit" name = "join" value="join">°¡ÀÔ ½ÅÃ»ÇÏ±â</button>
-		<button type="submit" name = "join" value="cancel">Ãë¼Ò</button>
+		<button type="submit" name = "join" value="join">ê°€ì… ì‹ ì²­í•˜ê¸°</button>
+		<button type="submit" name = "join" value="cancel">ì·¨ì†Œ</button>
 	</form>
 	
 </body>	

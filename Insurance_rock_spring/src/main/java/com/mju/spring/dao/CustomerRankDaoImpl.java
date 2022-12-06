@@ -8,20 +8,15 @@ import org.springframework.stereotype.Repository;
 import com.mju.spring.dto.CustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 
-
 @Repository
 public class CustomerRankDaoImpl implements CustomerRankDao {
 	private SqlSession sqlSession = MyBatisConnectionFactory.getSqlSessionFactory().openSession();
-	
+
 	private static final String SelectRenewCustomerRank = "CustomerRankMapper.selectRenewCustomerRank";
 	private static final String SelectRankID = "CustomerRankMapper.selectRankID";
 	private static final String Create = "CustomerRankMapper.create";
+	private static final String CreateRank = "CustomerRankMapper.createRank";
 	private static final String DeleteCustomerRank = "CustomerRankMapper.deleteCustomerRank";
-	
-	@Override
-	public int create(CustomerRankDto customerRankDTO) {
-		return 0;
-	}
 
 	@Override
 	public void commit() {
@@ -31,8 +26,8 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	@Override
 	public RenewCustomerRankDto retriveAllId(String contractID) {
 		try {
-			return sqlSession.selectOne(SelectRenewCustomerRank, contractID);			
-		}catch (Exception e) {
+			return sqlSession.selectOne(SelectRenewCustomerRank, contractID);
+		} catch (Exception e) {
 			return null;
 		}
 	}
@@ -45,18 +40,23 @@ public class CustomerRankDaoImpl implements CustomerRankDao {
 	@Override
 	public void insertCustomerRank(RenewCustomerRankDto renewCustomerRankDto) {
 		sqlSession.insert(Create, renewCustomerRankDto);
-		
+
 	}
 
 	@Override
 	public List<String> retriveRankIDList(String contractID) {
-		return sqlSession.selectList(SelectRankID, contractID);	}
+		return sqlSession.selectList(SelectRankID, contractID);
+
+	}
+
+	@Override
+	public int create(CustomerRankDto customerRankDTO) {
+		return sqlSession.insert(CreateRank, customerRankDTO);
+	}
 
 	@Override
 	public int deleteCustomerRank(String rankID) {
 		return sqlSession.delete(DeleteCustomerRank, rankID);
 	}
 	
-	
-
 }

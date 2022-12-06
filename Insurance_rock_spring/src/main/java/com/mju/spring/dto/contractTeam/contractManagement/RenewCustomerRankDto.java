@@ -3,7 +3,7 @@ package com.mju.spring.dto.contractTeam.contractManagement;
 public class RenewCustomerRankDto {
 	private String customerID;
 	private String contractID;
-	private String RankID;
+	private String rankID;
 	
 	public String getCustomerID() {
 		return customerID;
@@ -18,10 +18,10 @@ public class RenewCustomerRankDto {
 		this.contractID = contractID;
 	}
 	public String getRankID() {
-		return RankID;
+		return rankID;
 	}
 	public void setRankID(String rankID) {
-		RankID = rankID;
+		this.rankID = rankID;
 	}
 	
 }

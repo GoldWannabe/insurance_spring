@@ -1,7 +1,7 @@
 package com.mju.spring.service.salesTeam;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,15 +11,13 @@ import org.springframework.stereotype.Service;
 import com.mju.spring.dao.ApplyContractDao;
 import com.mju.spring.dao.ApplyContractDaoImpl;
 import com.mju.spring.dao.CustomerDao;
+import com.mju.spring.dao.CustomerDaoImpl;
 import com.mju.spring.dao.CustomerRankDao;
 import com.mju.spring.dao.GeneralRateDao;
 import com.mju.spring.dao.HouseRateDao;
 import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.RankDao;
-import com.mju.spring.dto.ApplyContractDto;
-import com.mju.spring.dto.CustomerDto;
 import com.mju.spring.dto.CustomerRankDto;
-import com.mju.spring.dto.InsuranceDto;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.GeneralInsurance;
@@ -32,9 +30,6 @@ import com.mju.spring.entity.Rank;
 public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 	private Insurance insurance;
-	private InsuranceDto insuranceDTO;
-	private ApplyContractDto applyContractDTO;
-	private CustomerDto customerDTO;
 	private CustomerRankDto customerRankDTO;
 	
 	private Contract applyContract;
@@ -65,7 +60,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	
 
 	@Override
-	public List<InsuranceDto> getInsuranceList(HttpServletRequest request) {
+	public List<Insurance> getInsuranceList(HttpServletRequest request) {
 		List<Insurance> insuranceList = null;
 		if (request.getParameter("insuranceType").equals(Insurance.EInsurance.general.toString())) {
 			this.insurance = new GeneralInsurance();
@@ -78,23 +73,11 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 			insuranceList = this.insuranceDAO.retriveHouseInsuranceList(request.getParameter("insuranceType"));
 		}
 
-		this.insuranceDTO = new InsuranceDto();
-		this.insuranceDTO.setInsuranceType(this.insurance.getInsuranceType().toString());
-
-		List<InsuranceDto> insuranceDTOList = new ArrayList<InsuranceDto>();
-
-		for (Insurance insurance : insuranceList) {
-			InsuranceDto insuranceDTO = new InsuranceDto();
-			insuranceDTO.setInsuranceName(insurance.getInsuranceName());
-			insuranceDTO.setInsuranceType(insurance.getInsuranceType().toString());
-			insuranceDTOList.add(insuranceDTO);
-		}
-
-		return insuranceDTOList;
+		return insuranceList;
 	}
 
 	@Override
-	public InsuranceDto getInsurance(HttpServletRequest request) {
+	public Insurance getInsurance(HttpServletRequest request) {
 		if (this.insurance.getInsuranceType().equals(EInsurance.general)) {
 			this.insurance = this.insuranceDAO.retriveGeneralName(request.getParameter("insuranceName"));
 
@@ -111,21 +94,15 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 		}
 
-		this.insuranceDTO.setInsuranceName(this.insurance.getInsuranceName());
-		this.insuranceDTO.setLongTerm(this.insurance.isLongTerm());
-		this.insuranceDTO.setApplyCondition(this.insurance.getApplyCondition());
-		this.insuranceDTO.setCompensateCondition(this.insurance.getCompensateCondition());
-		this.insuranceDTO.setPremiumRate(this.insurance.getPremiumRate());
-		this.insuranceDTO.setExplanation(this.insurance.getExplanation());
-		this.insuranceDTO.setStandardFee(this.insurance.getStandardFee());
-		this.insuranceDTO.setSpecialContract(this.insurance.getSpecialContract());
-
-		return this.insuranceDTO;
+		return this.insurance;
 	}
 
 	@Override
 	public boolean createCustomer(HttpServletRequest request) {
 		this.customer = new Customer();
+		
+		String customerID = UUID.randomUUID().toString().substring(0, 5);
+		this.customer.setCustomerID(customerID);
 		
 		this.customer.setName(request.getParameter("customerName"));
 		this.customer.setSSN(request.getParameter("SSN"));
@@ -137,17 +114,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		//applycontract = 0.1 (contract = 1)
 		this.customer.setInsuranceNum(0.1);
 		
-		this.customerDTO = new CustomerDto();
-		this.customerDTO.setName(this.customer.getName());
-		this.customerDTO.setSSN(this.customer.getSSN());
-		this.customerDTO.setPhoneNum(this.customer.getPhoneNum());
-		this.customerDTO.setAddress(this.customer.getAddress());
-		this.customerDTO.setSex(this.customer.getSex().toString());
-		this.customerDTO.setBankName(this.customer.getBankName());
-		this.customerDTO.setAccountNum(this.customer.getAccountNum());
-		this.customerDTO.setInsuranceNum(this.customer.getInsuranceNum());
-		
-		if(this.customerDTO != null) {
+		if(this.customer != null) {
 			return true;
 		}else {
 			return false;
@@ -159,6 +126,8 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		this.applyContract = new Contract();
 		this.rank = new Rank();
 		
+		String applyContractID = UUID.randomUUID().toString().substring(0, 5);
+		this.applyContract.setContractID(applyContractID);
 		this.applyContract.setCustomerID(this.customer.getCustomerID());
 		this.applyContract.setCustomerName(this.customer.getName());
 		this.applyContract.setCustomerPhoneNum(this.customer.getPhoneNum());
@@ -169,9 +138,11 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		this.applyContract.setPaymentCycle(Integer.valueOf(request.getParameter("paymentCycle")));
 		this.applyContract.setPeriod(Integer.valueOf(request.getParameter("period")));
 		
-		this.rank.setFireFacilities(Integer.valueOf(request.getParameter("fireFedilities")));
+		String rankID = UUID.randomUUID().toString().substring(0, 5);
+		this.rank.setRankID(rankID);
+		this.rank.setFireFacilities(Float.valueOf(request.getParameter("fireFedilities")));
 		this.rank.setScale(Integer.valueOf(request.getParameter("scale")));
-		this.rank.setSurroundingFacilities(Double.valueOf(request.getParameter("surroundingFedilities")));
+		this.rank.setSurroundingFacilities(Float.valueOf(request.getParameter("surroundingFedilities")));
 		this.rank.setHeight(Boolean.valueOf(request.getParameter("height")));
 		this.rank.setMaterial(request.getParameter("meterial"));
 		this.rank.setPurpose(request.getParameter("goal"));
@@ -186,10 +157,23 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	@Override
 	public boolean joinApplyContractAndCustomer() {
 		this.applyContractDAO = new ApplyContractDaoImpl();
-		String[] customerRank = new String[]{this.customer.getCustomerID(), this.applyContract.getContractID(), this.rank.getRankID()};
+		this.customerDAO = new CustomerDaoImpl();
+
+		this.customerRankDTO = new CustomerRankDto();
+		this.customerRankDTO.setCustomerID(this.customer.getCustomerID());
+		this.customerRankDTO.setContractID(this.applyContract.getContractID());
+		this.customerRankDTO.setRankID(this.rank.getRankID());
 		
-		if(this.rankDAO.create(this.rank) == 1 && this.applyContractDAO.create(this.applyContract) == 1) {
+		if(this.rankDAO.create(this.rank) == 1 && this.applyContractDAO.create(this.applyContract) == 1 && this.customerDAO.create(this.customer) == 1) {
+			this.rankDAO.commit();
 			this.applyContractDAO.commit();
+			this.customerDAO.commit();
+			
+			if(this.customerRankDAO.create(this.customerRankDTO) == 1) {
+				this.customerRankDAO.commit();
+				System.out.println("insert complete.");
+				return true;
+			}
 		}
 		return false;
 	}

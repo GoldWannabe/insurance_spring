@@ -8,6 +8,7 @@ public class Rank {
 	private int scale;
 	private double surroundingFacilities;
 	private EPurpose purpose;
+	
 	private enum EMaterial {
 		wood, rock, concrete, iron, brick
 	};
@@ -61,6 +62,7 @@ public class Rank {
 	}
 
 	public void setMaterial(String material) {
+		//jsp에서 1부터 return, 배열은 0부터 시작함
 			this.material = EMaterial.valueOf(material);
 		
 	}
@@ -71,7 +73,6 @@ public class Rank {
 
 	public void setPurpose(String purpose) {
 			this.purpose = EPurpose.valueOf(purpose);
-		
 	}
 	
 	

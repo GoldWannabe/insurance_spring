@@ -15,6 +15,13 @@ public class CustomerDaoImpl implements CustomerDao{
 	private static final String SelectCustomerById = "CustomerMapper.selectCustomerById";
 	private static final String SelectInsuranceNum = "CustomerMapper.selectInsuranceNum";
 	private static final String UpdateInsuranceNum = "CustomerMapper.updateInsuranceNum";
+	private static final String Create = "CustomerMapper.create";
+	
+	@Override
+	public int create(Customer customer) {
+		return sqlSession.insert(Create, customer);
+	}
+	
 	@Override
 	public CustomerBankDto retrivecustomerBank(String customerID) {
 		return sqlSession.selectOne(SelectBankNameAndAccountNum, customerID);

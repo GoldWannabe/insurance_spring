@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,14 +7,14 @@
 
 </head>
 <body>
-<p>╟║ютго╫г ╨╦гХю╩ ╪╠ец гьаж╫й╫ц©ю. </p>
+<p>Й╟─Л·┘М∙≤Л▀╓ КЁ╢М≈≤Л²└ Л└═М┐² М∙╢Лё╪Л▀╜Л▀°Л≤╓. </p>
 	
 	<form action="selectInsuranceType">
-		<input type="radio" name="insuranceType" value="general" />юо╧щ╨╦гХ 
-		<input type="radio" name="insuranceType" value="house" />ажец╨╦гХ <br> 
+		<input type="radio" name="insuranceType" value="general" />Л²╪К╟≤КЁ╢М≈≤ 
+		<input type="radio" name="insuranceType" value="house" />Лё╪М┐²КЁ╢М≈≤ <br> 
 		
-		<button type="submit" name ="next" value="next" >╢ыю╫</button>
-		<button type="submit" name="next" value="cancellation">цК╪р </button>
+		<button type="submit" name ="next" value="next" >К▀╓Л²▄</button>
+		<button type="submit" name="next" value="cancellation">Л╥╗Л├▄ </button>
 	</form>
 	
 </body>	

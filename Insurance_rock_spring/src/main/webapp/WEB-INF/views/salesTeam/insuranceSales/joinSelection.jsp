@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,21 +7,20 @@
 
 </head>
 <body>
-<p>Á¶È¸µÈ º¸ÇèÀÔ´Ï´Ù.</p>
+<p>ì¡°íšŒëœ ë³´í—˜ì…ë‹ˆë‹¤.</p>
 	<form action="joinSelection">
-		º¸Çè¸í : ${InsuranceName} <br>
-		º¸Çè Á¾·ù: ${InsuranceType} <br>
-		±âÁØº¸Çè·á : ${StandardFee}<br>
-		Æ¯¾à: ${SpecialContract}<br>
-		Àå±â¿©ºÎ : ${LongTerm}<br>
-		°¡ÀÔÁ¶°Ç: ${ApplyCondition}<br>
-		º¸»óÁ¶°Ç : ${CompensateCondition}<br>
-		¼³¸í: ${Explanation}<br>
-		¿äÀ² : [1µî±Ş, 2µî±Ş, 3µî±Ş] [ ${PremiumRate[0]}, ${PremiumRate[1]}, ${PremiumRate[2]} ]<br>
-		${InsuranceName} º¸Çè¿¡ °¡ÀÔÇÏ½Ã°Ú½À´Ï±î?
-		<button type="submit" name = "join" value="join">°¡ÀÔ</button>
-		<button type="submit" name = "join" value="reJoin">Àç°¡ÀÔ ½ÅÃ»</button>
-		<button type="submit" name = "join" value="cancel">Ãë¼Ò</button>
+		ë³´í—˜ëª… : ${InsuranceName} <br>
+		ë³´í—˜ ì¢…ë¥˜: ${InsuranceType} <br>
+		ê¸°ì¤€ë³´í—˜ë£Œ : ${StandardFee}<br>
+		íŠ¹ì•½: ${SpecialContract}<br>
+		ì¥ê¸°ì—¬ë¶€ : ${LongTerm}<br>
+		ê°€ì…ì¡°ê±´: ${ApplyCondition}<br>
+		ë³´ìƒì¡°ê±´ : ${CompensateCondition}<br>
+		ì„¤ëª…: ${Explanation}<br>
+		ìš”ìœ¨ : [1ë“±ê¸‰, 2ë“±ê¸‰, 3ë“±ê¸‰] [ ${PremiumRate[0]}, ${PremiumRate[1]}, ${PremiumRate[2]} ]<br>
+		${InsuranceName} ë³´í—˜ì— ê°€ì…í•˜ì‹œê² ìŠµë‹ˆê¹Œ?
+		<button type="submit" name = "join" value="join">ê°€ì…</button>
+		<button type="submit" name = "join" value="cancel">ì·¨ì†Œ</button>
 	</form>
 	
 </body>	
