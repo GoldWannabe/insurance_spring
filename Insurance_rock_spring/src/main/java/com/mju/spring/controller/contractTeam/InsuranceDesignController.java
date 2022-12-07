@@ -105,11 +105,17 @@ public class InsuranceDesignController {
 			insuranceDesignService.register();		
 			return "menu//showResult";
 		}else if (request.getParameter("register").equals("cancel")) {
-			model.addAttribute("JudgeResult", "입력된 정보가 임시저장되었습니다.");
-			insuranceDesignService.saveTempInsurance();
-			return "menu//showResult";
+			boolean checkSaveTemp = insuranceDesignService.saveTempInsurance();
+			if(checkSaveTemp) {
+				model.addAttribute("JudgeResult", "입력된 정보가 임시저장되었습니다.");
+				return "menu//showResult";
+			}else {
+				model.addAttribute("JudgeResult", "파일 접근 중 문제가 생겨 보험정보를 불러오지 못했습니다. 잠시후 다시 실행해주십시오. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-4567)에게 문의 주시기 바랍니다");
+				return "menu//showResult";
+			}
+		}else {
+			return "error";
 		}
-		return null;
 	}
 
 }

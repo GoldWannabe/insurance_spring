@@ -18,14 +18,17 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service
 public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 
 	private Insurance insurance;
-	private InsuranceTypeAndTermDto insuranceTypeAndTermDto;
 
+	@Autowired
+	ResourceLoader resourceLoader;
 	@Autowired
 	InsuranceDao insuranceDAO;
 	@Autowired
@@ -51,8 +54,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	      this.insurance.setInsuranceType(request.getParameter("InsuranceType"));
 	      this.insurance.setLongTerm(Boolean.parseBoolean(request.getParameter("longTerm")));
 	      
-	      this.insuranceTypeAndTermDto.setInsuranceType(insurance.getInsuranceType());
-	      this.insuranceTypeAndTermDto.setLongTerm(insurance.isLongTerm());
+	      insuranceTypeAndTermDto.setInsuranceType(this.insurance.getInsuranceType());
+	      insuranceTypeAndTermDto.setLongTerm(this.insurance.isLongTerm());
 
 	      
 	      return insuranceTypeAndTermDto;
@@ -150,7 +153,10 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Override
 	public boolean saveTempInsurance() {
 		try {
-			File file = new File(".//File//tempInsurance.txt");
+			Resource resourceTempInsurance = resourceLoader.getResource("classpath:File//tempInsurance.txt");
+			String tempInsurance = resourceTempInsurance.getURI().getPath();
+			
+			File file = new File(tempInsurance);
 			FileWriter fileWriter = new FileWriter(file);
 			double[] tempRate = this.insurance.getPremiumRate();
 			fileWriter.write("1" + "\n" + this.insurance.getInsuranceID() + "\n" + this.insurance.getInsuranceName()
@@ -171,8 +177,12 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	@Override
 	public Insurance getTempInsurance(HttpServletRequest request) {
 
-		File file = new File(".//File//tempInsurance.txt");
+		
 		try {
+			Resource resourceTempInsurance = resourceLoader.getResource("classpath:File//tempInsurance.txt");
+			String tempInsurance = resourceTempInsurance.getURI().getPath();
+			File file = new File(tempInsurance);
+
 			@SuppressWarnings("resource")
 			Scanner fileScanner = new Scanner(file);
 
