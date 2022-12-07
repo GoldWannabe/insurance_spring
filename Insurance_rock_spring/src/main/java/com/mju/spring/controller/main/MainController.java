@@ -69,6 +69,7 @@ public class MainController {
 //			임시저장된 내용이 있다면. 가져와서 바로 return register로.
 			Insurance insurance = insuranceDesignService.getTempInsurance(request);
 			if(insurance != null) {
+				model.addAttribute("TempInsurance", "---임시저장된 내용--");
 				model.addAttribute("InsuranceName", insurance.getInsuranceName());
 				model.addAttribute("InsuranceType", insurance.getInsuranceType());
 				model.addAttribute("StandardFee", insurance.getStandardFee());
