@@ -12,6 +12,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 import com.mju.spring.dao.AccidentDao;
@@ -28,6 +30,7 @@ import com.mju.spring.dto.damageAssessment.compansate.SelectContractDto;
 import com.mju.spring.dto.damageAssessment.compansate.UpdateContractDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
+import com.mju.spring.entity.Insurance.EInsurance;
 import com.mju.spring.entity.Provision;
 
 
@@ -40,6 +43,9 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 //	private Contract contract;
 //	private Customer customer;
 	private Provision provision;
+	
+	@Autowired
+	ResourceLoader resourceLoader;
 
 	@Autowired
 	ContractDao contractDao;
@@ -144,8 +150,6 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	
 	public Accident selectAccident(HttpServletRequest request) {
 		String[] array = request.getParameter("select").split(" ");
-		System.out.println(array[0]);
-		System.out.println(array[1]);
 		String accidentID = this.selectAccidentList.get(Integer.parseInt(array[1])).getAccidentID();
 		
 		for (Accident accident : selectAccidentList) {
@@ -170,10 +174,14 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		@SuppressWarnings("resource")
 		Scanner scanner;
 		try {
-			File file = new File(".//File//InsuranceBank.txt");
+			Resource resourceInsurance = resourceLoader.getResource("classpath:File//InsuranceBank.txt");
+			String insuranceBankPath = resourceInsurance.getURI().getPath();
+			
+			File file = new File(insuranceBankPath);
 			scanner = new Scanner(file);
 			insuranceBankCost = scanner.nextInt();
-
+			
+			System.out.println(insuranceBankCost);
 			int result = insuranceBankCost - this.accident.getLiablityCost();
 
 			if (result <= 0) {
@@ -184,8 +192,11 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 				fileWriter.write(resultToString);
 				fileWriter.flush();
 				fileWriter.close();
+				
+				Resource resourceCustomer = resourceLoader.getResource("classpath:File//CustomerBank.txt");
+				String customerBankPath = resourceCustomer.getURI().getPath();
 
-				fileWriter = new FileWriter(".//File//CustomerBank.txt", false);
+				fileWriter = new FileWriter(customerBankPath, false);
 				String resultToString2 = Integer.toString(this.accident.getLiablityCost());
 				fileWriter.write(resultToString2);
 				fileWriter.flush();
@@ -197,6 +208,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			if (!(this.accident.isPayCompleted())) {
 				this.accident.setPayCompleted(true);
 				this.accidentDao.updatePaycompleted(this.accident);
+				this.accidentDao.commit();
 			}
 
 			this.provision = new Provision();
@@ -206,9 +218,9 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			LocalDate endDate = contractProvisionDto.getEndDate();
 			int endYear = endDate.getYear();
 
-//			String insuranceType = this.insuranceDao.retriveInsuranceType(contractProvisionDto.getInsuranceID());
-//			EInsurance einsuranceType = EInsurance.valueOf(insuranceType);
-//			provision.setInsuranceType(einsuranceType);
+			String getInsuranceType = this.insuranceDao.retriveInsuranceType(contractProvisionDto.getInsuranceID());
+			EInsurance insuranceType = EInsurance.valueOf(getInsuranceType);
+			provision.setInsuranceType(insuranceType);
 
 			// 만료일-시작일이 3년이상이면 false 아니면 true 입력.
 			if (endYear - StartYear >= 3) {
@@ -245,13 +257,13 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			provision.setCustomerID(this.accident.getCustomerID());
 			provision.setContractID(this.accident.getContractID());
 			provision.setCustomerName(this.accident.getCustomerName());
-			provision.setPhoneNum(this.accident.getCustomerPhoneNum());
+			provision.setCustomerPhoneNum(this.accident.getCustomerPhoneNum());
 			provision.setInsuranceName(contractProvisionDto.getInsuranceName());
 			provision.setBankName(customerBankDto.getBankName());
 			provision.setAccountNum(customerBankDto.getAccountNum());
 			provision.setCompensationDate(LocalDate.now());
 			// 지급ID, 고객ID, 가입자명, 연락처, 계좌번호,은행명, 보상금액, 지급날짜.보험이름, 장기여부, 보험종류, 계약ID를 저장.
-			provisionDao.inserNeProvision(provision);
+			provisionDao.insertProvision(provision);
 			this.provisionDao.commit();
 			
 			scanner.close();

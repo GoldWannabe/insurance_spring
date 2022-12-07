@@ -2,20 +2,23 @@ package com.mju.spring.entity;
 
 import java.time.LocalDate;
 
+import com.mju.spring.entity.Insurance.EInsurance;
+
 
 public class Provision {
+	//
 	private String provisionID;
 	private String customerID;
+	private String customerName;
+	private String customerPhoneNum;
 	private String accountNum;
-	private String contractID;
-	private String insuranceName;
 	private String bankName;
 	private int compensation;
 	private LocalDate compensationDate;
-	private String customerName;
+	private String insuranceName;
 	private boolean longTerm;
-	private String phoneNum;
-	private com.mju.spring.entity.Insurance.EInsurance insuranceType;
+	private String contractID;
+	private Insurance.EInsurance insuranceType;
 	
 	public String getProvisionID() {
 		return provisionID;
@@ -28,6 +31,12 @@ public class Provision {
 	}
 	public void setCustomerID(String customerID) {
 		this.customerID = customerID;
+	}
+	public String getCustomerPhoneNum() {
+		return customerPhoneNum;
+	}
+	public void setCustomerPhoneNum(String customerPhoneNum) {
+		this.customerPhoneNum = customerPhoneNum;
 	}
 	public String getAccountNum() {
 		return accountNum;
@@ -77,17 +86,11 @@ public class Provision {
 	public void setLongTerm(boolean longTerm) {
 		this.longTerm = longTerm;
 	}
-	public String getPhoneNum() {
-		return phoneNum;
-	}
-	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
-	}
-	public com.mju.spring.entity.Insurance.EInsurance getInsuranceType() {
+	public EInsurance getInsuranceType() {
 		return insuranceType;
 	}
-	public void setInsuranceType(com.mju.spring.entity.Insurance.EInsurance einsuranceType) {
-		this.insuranceType = einsuranceType;
+	public void setInsuranceType(EInsurance insuranceType) {
+		this.insuranceType = insuranceType;
 	}
 	
 

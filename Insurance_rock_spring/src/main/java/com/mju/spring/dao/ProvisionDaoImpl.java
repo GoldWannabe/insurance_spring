@@ -12,7 +12,7 @@ public class ProvisionDaoImpl implements ProvisionDao{
 	private static final String InsertProvision = "ProvisionMapper.insertProvision";
 
 	@Override
-	public void inserNeProvision(Provision provision) {
+	public void insertProvision(Provision provision) {
 		sqlSession.insert(InsertProvision, provision);
 	}
 

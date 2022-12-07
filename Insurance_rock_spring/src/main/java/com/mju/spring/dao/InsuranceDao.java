@@ -21,7 +21,7 @@ public interface InsuranceDao {
 
 	public void commit();
 
-	public String retriveInsuranceType(String insuranceName);
+	public String retriveInsuranceType(String insuranceID);
 
 	public Insurance retriveGeneralById(String insuranceID);
 

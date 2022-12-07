@@ -13,9 +13,11 @@
 		Accident WHERE customerName = #{customerName} and
 		accidentDate  = #{accidentDate}
 	</select>
+	
 	<update id="updatePayComplation">
-		UPDATE Accident SET insuranceNum = #{insuranceNum} WHERE accidentID = #{accidentID}
+		UPDATE Accident SET payCompleted = #{payCompleted} WHERE accidentID = #{accidentID}
 	</update>
+	
 		<select id="selectAccidentByContractId" resultType="com.mju.spring.entity.Accident">
 		SELECT * FROM
 		Accident WHERE contractID  = #{contractID}
