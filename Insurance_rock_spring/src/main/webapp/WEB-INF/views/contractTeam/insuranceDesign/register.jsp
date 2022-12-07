@@ -10,8 +10,8 @@
 <body>
 
 	<form action = "register">
-
-		<p>-----보험 Info-----</p>
+		<p>${TempInsurance}</p>
+		<p>보험 정보 목록</p>
 		<p>보험 이름: ${InsuranceName}</p>
 		<p>보험 종류: ${InsuranceType}</p>
 		<p>기준 보험료: ${StandardFee}</p>		

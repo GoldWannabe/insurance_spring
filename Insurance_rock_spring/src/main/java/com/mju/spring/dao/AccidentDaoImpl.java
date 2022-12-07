@@ -30,7 +30,7 @@ public class AccidentDaoImpl implements AccidentDao {
 
 	@Override
 	public void updatePaycompleted(Accident accident) {
-		sqlSession.selectList(UpdatePayComplation, accident);
+		sqlSession.update(UpdatePayComplation, accident);
 	}
 
 	@Override

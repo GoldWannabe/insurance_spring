@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mju.spring.entity.Insurance;
 import com.mju.spring.service.contractTeam.InsuranceDesignService;
 
 @Controller
@@ -62,15 +63,26 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "contractTeamMenu", method = RequestMethod.GET)
-	public String financialDirectormControl(HttpServletRequest request) {
+	public String financialDirectormControl(HttpServletRequest request, Model model) {
 
 		if (request.getParameter("menu").equals("design")) {
-			//임시저장된 내용이 있다면. 가져와서 바로 return register로.
-//			if(insuranceDesignService.getTempInsurance(request) != null) {
-//				return "contractTeam//insuranceDesign//register";			
-//			}else {
+//			임시저장된 내용이 있다면. 가져와서 바로 return register로.
+			Insurance insurance = insuranceDesignService.getTempInsurance(request);
+			if(insurance != null) {
+				model.addAttribute("TempInsurance", "---임시저장된 내용--");
+				model.addAttribute("InsuranceName", insurance.getInsuranceName());
+				model.addAttribute("InsuranceType", insurance.getInsuranceType());
+				model.addAttribute("StandardFee", insurance.getStandardFee());
+				model.addAttribute("LongTerm", insurance.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+				model.addAttribute("SpecialContract", insurance.getSpecialContract());
+				model.addAttribute("ApplyCondition", insurance.getApplyCondition());
+				model.addAttribute("CompensateCondition", insurance.getCompensateCondition());
+				model.addAttribute("Explanation", insurance.getExplanation());
+				model.addAttribute("PremiumRate", insurance.getPremiumRate());
+				return "contractTeam//insuranceDesign//register";			
+			}else {
 				return "contractTeam//insuranceDesign//inputTypeAndTerm";				
-//			}
+			}
 		} else if (request.getParameter("menu").equals("underwrite")) {
 			return "contractTeam//underwriting//selectUnderwrite";
 		} else if (request.getParameter("menu").equals("contractManagement")) {

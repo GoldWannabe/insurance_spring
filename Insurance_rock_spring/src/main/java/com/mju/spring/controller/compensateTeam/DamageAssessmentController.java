@@ -96,7 +96,6 @@ public class DamageAssessmentController {
 		//가입자명, 연락처, 사고번호의 사고의 책임비용원을 지급하시겠습니까?
 		//보상급 지급 여부와 책임비용을  요청한다.
 		String[] array = request.getParameter("select").split(" ");
-		System.out.println(array[0]);
 		if(array[0].equals("compensation")) {
 			Accident accident = this.damageAssessmentService.getCompensationPayment(request);
 //			accdent가 null인 경우는 앞에서 한번 걸렀으므로 완전한 오류

@@ -12,7 +12,7 @@ public interface AccidentDao {
 
 	public List<Accident> retriveNameAndDate(SelectAccidentDto selectAccidentDto);
 
-	public void updatePaycompleted(Accident accident );
+	public void updatePaycompleted(Accident accident);
 
 	public void commit();
 
