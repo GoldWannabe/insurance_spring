@@ -139,7 +139,7 @@ public class MainController {
 	@RequestMapping(value = "policyholderMenu", method = RequestMethod.GET)
 	public String policyholderControl(HttpServletRequest request) {
 
-		if (request.getParameter("menu").equals("pay")) {
+		if (request.getParameter("menu").equals("payInsuranceFee")) {
 			return "policyholder//checkInsuranceFee//inputPolicyholderInfo";
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";

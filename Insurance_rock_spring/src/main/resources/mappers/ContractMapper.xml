@@ -34,4 +34,9 @@
 	<update id="updateRenew">
 		UPDATE Contract SET insuranceFee = #{insuranceFee} and securityFee = #{securityFee} and paymentCycle = #{paymentCycle} and endDate = #{endDate} WHERE contractID = #{contractID}
 	</update>
+	
+	<select id="selectPayment" resultType="com.mju.spring.dto.policyholder.feePayment.PaymentDto">
+		SELECT contractID, insuranceID, insuranceName, insuranceFee, unpaidFee, customerID from
+		Contract WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum} and unpaidFee != 0
+	</select>
 </mapper>
