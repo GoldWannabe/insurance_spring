@@ -55,7 +55,7 @@ public class MainController {
 		} else if (team.equals("compensateTeam")) {
 			return "menu//compensateTeamMenu";
 		} else if (team.equals("policyholder")) {
-			return "test";
+			return "menu//policyholderMenu";
 		} else {
 			return "error";
 		}
@@ -128,6 +128,19 @@ public class MainController {
 
 		if (request.getParameter("menu").equals("damageAssessment")) {
 			return "compensateTeam//damageAssessment//selectAccidentReportMenu";
+		} else if (request.getParameter("menu").equals("cancel")) {
+			return "menu//menu";
+		} else {
+			return "error";
+		}
+
+	}
+	
+	@RequestMapping(value = "policyholderMenu", method = RequestMethod.GET)
+	public String policyholderControl(HttpServletRequest request) {
+
+		if (request.getParameter("menu").equals("pay")) {
+			return "policyholder//checkInsuranceFee//inputPolicyholderInfo";
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {
