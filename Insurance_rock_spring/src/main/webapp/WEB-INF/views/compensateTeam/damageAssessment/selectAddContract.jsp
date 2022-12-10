@@ -15,10 +15,10 @@
 		<table border="1">
 			<thead>
 				<tr>
-					<th>고객명</th>
-					<th>전화번호</th>
+					<th>가입자명</th>
+					<th>연락처</th>
 					<th>보험명</th>
-					<th>납부방식(주기)</th>
+					<th>납부방식</th>
 					<th>보험료</th>
 					<th>미납액</th>
 					<th>담보액</th>
@@ -49,7 +49,7 @@
 			</tbody>
 
 		</table>
-
+	<p>${NotContract}</p>
 	</form>
 
 </body>

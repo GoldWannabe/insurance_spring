@@ -6,6 +6,7 @@
 <title>selectCompensation</title>
 </head>
 <body>
+<p>아래 정보로 보상금을 지급하시겠습니까?</p>
 	<form action="selectCompensation">
 		<p>가입자명: ${CustomerName}</p>
 		<p>전화번호: ${CustomerPhoneNum}</p>

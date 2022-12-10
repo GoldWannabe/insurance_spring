@@ -33,8 +33,6 @@ import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Insurance.EInsurance;
 import com.mju.spring.entity.Provision;
 
-
-
 @Service
 public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
@@ -43,7 +41,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 //	private Contract contract;
 //	private Customer customer;
 	private Provision provision;
-	
+
 	@Autowired
 	ResourceLoader resourceLoader;
 
@@ -65,42 +63,43 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	@Autowired
 	ProvisionDao provisionDao;
 
-	
 	private List<Contract> selectContractList;
+
 	@Override
 	public List<Contract> addcheck(HttpServletRequest request) {
 		SelectContractDto selectContractDto = new SelectContractDto();
-		
+
 		this.accident = new Accident();
-		
+
 		selectContractDto.setCustomerName(request.getParameter("customerName"));
 		selectContractDto.setCustomerPhoneNum(request.getParameter("customerPhoneNum"));
-		
+
 		// 계약 DB에서 가져옴.
 		this.selectContractList = this.contractDao.retriveNameAndPhoneNum(selectContractDto);
-		
+
 		this.accident.setCustomerName(selectContractDto.getCustomerName());
 		this.accident.setCustomerPhoneNum(selectContractDto.getCustomerPhoneNum());
 
 		return selectContractList;
 	}
-	
+
 	@Override
 	public void setSelectContract(HttpServletRequest request) {
-		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getContractID();
-		String customerID = this.selectContractList.get(Integer.parseInt(request.getParameter("index"))).getCustomerID();
+		String contractID = this.selectContractList.get(Integer.parseInt(request.getParameter("index")))
+				.getContractID();
+		String customerID = this.selectContractList.get(Integer.parseInt(request.getParameter("index")))
+				.getCustomerID();
 		this.accident.setContractID(contractID);
 		this.accident.setCustomerID(customerID);
 	}
-	
-	
+
 	@Override
 	public Accident addAccident(HttpServletRequest request) {
 
 		int liablityRate = Integer.parseInt(request.getParameter("liablityRate"));
 		int totalCost = Integer.parseInt(request.getParameter("totalCost"));
 
-		int liablityCost = totalCost*liablityRate / 100; 
+		int liablityCost = totalCost * liablityRate / 100;
 		this.accident.setAccidentID(UUID.randomUUID().toString());
 		this.accident.setCustomerID(this.accident.getCustomerID());
 		this.accident.setContractID(this.accident.getContractID());
@@ -113,21 +112,20 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		this.accident.setLiablityCost(liablityCost);
 		this.accident.setPayCompleted(false);
 
-
 		// +고객이름, 연락처 , 책임비용, 지급여부(true,false), accidentID, customerID, contractID
 		this.accidentDao.create(this.accident);
 		this.accidentDao.commit();
-		
+
 		ContractAccidentDto contractAccidentDto = new ContractAccidentDto();
 		contractAccidentDto.setAccidentID(this.accident.getAccidentID());
 		contractAccidentDto.setContractID(this.accident.getContractID());
-		
+
 		contractAccidentDao.insertContractProvision(contractAccidentDto);
 		this.contractAccidentDao.commit();
 
-		
 		return accident;
 	}
+
 	@Override
 	public List<Accident> searchAccident(HttpServletRequest request) {
 		// 사고번호, 가입자명, 연락처, 사고날짜, 사고내용, 총비용, 손해정도, 비용종류, 지급여뷰, 책임비율, 책임비용
@@ -140,18 +138,18 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 
 		return selectAccidentList;
 	}
-	
+
 	@Override
 	public Accident getSelectAccident(HttpServletRequest request) {
 		return selectAccident(request);
-		//가입자명, 연락처, 사고번호의 사고의 책임비용원을 지급하시겠습니까?
-		//보상급 지급 여부와 책임비용을  요청한다.
+		// 가입자명, 연락처, 사고번호의 사고의 책임비용원을 지급하시겠습니까?
+		// 보상급 지급 여부와 책임비용을 요청한다.
 	}
-	
+
 	public Accident selectAccident(HttpServletRequest request) {
 		String[] array = request.getParameter("select").split(" ");
 		String accidentID = this.selectAccidentList.get(Integer.parseInt(array[1])).getAccidentID();
-		
+
 		for (Accident accident : selectAccidentList) {
 			if (accident.getAccidentID() == accidentID) {
 				this.accident = accident;
@@ -160,8 +158,8 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		}
 		return null;
 	}
-	
 
+	@SuppressWarnings("resource")
 	@Override
 	public Provision payCompensation() {
 		// 사고ID
@@ -170,48 +168,52 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		// 보험id, 보험이름, 담보액, 지급액, 시작일, 만기일
 		ContractProvisionDto contractProvisionDto = this.contractDao.retriveContract(this.accident.getContractID());
 
+		this.provision = new Provision();
 		int insuranceBankCost = 0;
-		@SuppressWarnings("resource")
 		Scanner scanner;
 		try {
 			Resource resourceInsurance = resourceLoader.getResource("classpath:File//InsuranceBank.txt");
 			String insuranceBankPath = resourceInsurance.getURI().getPath();
-			
+
 			File file = new File(insuranceBankPath);
 			scanner = new Scanner(file);
 			insuranceBankCost = scanner.nextInt();
-			
+
 			System.out.println(insuranceBankCost);
 			int result = insuranceBankCost - this.accident.getLiablityCost();
 
 			if (result <= 0) {
-				System.out.println("보험통장의 잔액이 부족합니다.");
-			} else {
-				FileWriter fileWriter = new FileWriter(file, false);
-				String resultToString = Integer.toString(result);
-				fileWriter.write(resultToString);
-				fileWriter.flush();
-				fileWriter.close();
-				
-				Resource resourceCustomer = resourceLoader.getResource("classpath:File//CustomerBank.txt");
-				String customerBankPath = resourceCustomer.getURI().getPath();
-
-				fileWriter = new FileWriter(customerBankPath, false);
-				String resultToString2 = Integer.toString(this.accident.getLiablityCost());
-				fileWriter.write(resultToString2);
-				fileWriter.flush();
-				fileWriter.close();
-				if (resultToString2 == null) {
-					System.out.println("통장에 문제가 생겼습니다. 관련팀(1234-5678)에 최대한 빠르게 연락바랍니다.");
-				}
+				provision.setBankName("잔고부족");
+				return provision;
 			}
+
+			FileWriter fileWriter = new FileWriter(file, false);
+			String resultToString = Integer.toString(result);
+			fileWriter.write(resultToString);
+			fileWriter.flush();
+			fileWriter.close();
+
+			Resource resourceCustomer = resourceLoader.getResource("classpath:File//CustomerBank.txt");
+			String customerBankPath = resourceCustomer.getURI().getPath();
+
+			fileWriter = new FileWriter(customerBankPath, false);
+			String resultToString2 = Integer.toString(this.accident.getLiablityCost());
+			fileWriter.write(resultToString2);
+			fileWriter.flush();
+			fileWriter.close();
+			if (resultToString2 == null) {
+				provision.setBankName("통장문제");
+				return provision;
+			}
+
 			if (!(this.accident.isPayCompleted())) {
 				this.accident.setPayCompleted(true);
 				this.accidentDao.updatePaycompleted(this.accident);
 				this.accidentDao.commit();
+			} else {
+				provision.setBankName("이미보상완료");
+				return provision;
 			}
-
-			this.provision = new Provision();
 
 			LocalDate startDate = contractProvisionDto.getStartDate();
 			int StartYear = startDate.getYear();
@@ -232,23 +234,24 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			// A2. 담보액을 넘는 비용을 보상해 줘야 하는 경우
 			int overCost = contractProvisionDto.getSecurityFee() - contractProvisionDto.getProvisionFee();
 			if (overCost <= 0) {
-				System.out.println("<<담보액을 넘는 금액입니다. 담보액까지만 지급합니다.>>");
 				provision.setCompensation(contractProvisionDto.getSecurityFee());
 			} else {
 				provision.setCompensation(this.accident.getLiablityCost());
 			}
 
 			// A3. 장기 가입자이고 책임 비용이 담보액의 20% 미만인 경우
-			if (!provision.isLongTerm() && this.accident.getLiablityCost() < contractProvisionDto.getSecurityFee() * 0.2) {
-				System.out.println(this.accident.getCustomerName() + "님은 장기가입자이며 현재 보상금액이 담보액의 20%미만이므로 무료 대상자이십니다.");
+			if (!provision.isLongTerm()
+					&& this.accident.getLiablityCost() < contractProvisionDto.getSecurityFee() * 0.2) {
+//				System.out.println(this.accident.getCustomerName() + "님은 장기가입자이며 현재 보상금액이 담보액의 20%미만이므로 무료 대상자이십니다.");
+				//그냥 보상해주고 지급내역에서 깍지않음.
 			} else {
-				//얘는 Dto만드는게 나을듯,,,타입맞춰야해서.. 계약ID, provisionFee, liablityCost
+				// 얘는 Dto만드는게 나을듯,,,타입맞춰야해서.. 계약ID, provisionFee, liablityCost
 				UpdateContractDto updateContractDto = new UpdateContractDto();
-						
+
 				updateContractDto.setContractID(this.accident.getContractID());
 				updateContractDto.setProvisionFee(contractProvisionDto.getProvisionFee());
 				updateContractDto.setLiablityCost(this.accident.getLiablityCost());
-				
+
 				contractDao.updateContractProvisionFee(updateContractDto);
 				this.contractDao.commit();
 			}
@@ -265,7 +268,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			// 지급ID, 고객ID, 가입자명, 연락처, 계좌번호,은행명, 보상금액, 지급날짜.보험이름, 장기여부, 보험종류, 계약ID를 저장.
 			provisionDao.insertProvision(provision);
 			this.provisionDao.commit();
-			
+
 			scanner.close();
 			return provision;
 		} catch (FileNotFoundException e) {
@@ -288,16 +291,14 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 		this.accident.setTotalCost(Integer.parseInt(request.getParameter("totalCost")));
 		this.accident.setLiablityCost(Integer.parseInt(request.getParameter("liablityCost")));
 		this.accident.setLiablityRate(Integer.parseInt(request.getParameter("liablityRate")));
-		
+
 		boolean checkModification = this.accidentDao.updateAccidentInfo(this.accident);
 		this.accidentDao.commit();
-		if (checkModification){
+		if (checkModification) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-
-
 
 }

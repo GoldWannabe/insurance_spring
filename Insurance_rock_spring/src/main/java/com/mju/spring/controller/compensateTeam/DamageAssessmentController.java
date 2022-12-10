@@ -45,8 +45,8 @@ public class DamageAssessmentController {
 			return "compensateTeam//damageAssessment//selectAddContract";			
 		}else {
 			//E2. 고객에 해당하는 계약이 존재하지 않는 경우
-			model.addAttribute("JudgeResult", "해당 고객이 가입한 계약이 존재하지 않습니다. 다시 입력해주세요.");
-			return "menu//showResult";
+			model.addAttribute("NotContract", "해당 고객이 가입한 계약이 존재하지 않습니다. 다시 입력해주세요.");
+			return "compensateTeam//damageAssessment//selectAddContract";		
 		}
 
 	}
@@ -85,8 +85,8 @@ public class DamageAssessmentController {
 			return "compensateTeam//damageAssessment//selectAccident";			
 		}else {
 			//E5. 검색된 결과가 없는 경우
-			model.addAttribute("JudgeResult", "사고 정보를 찾지 못했습니다. 사고날짜와 가입자명을 오탈자없이 적어주세요.");
-			return "menu//showResult";
+			model.addAttribute("NotAccident", "사고 정보를 찾지 못했습니다. 사고날짜와 가입자명을 오탈자 없이 적어주세요.");
+			return  "compensateTeam//damageAssessment//selectAccident";
 		}
 	}
 	
@@ -127,15 +127,31 @@ public class DamageAssessmentController {
 		}
 		
 	}
+	@SuppressWarnings("unused")
 	@RequestMapping(value = "selectCompensation", method = RequestMethod.GET)
 	public String selectCompensation(HttpServletRequest request, Model model) {
 		Provision provision = this.damageAssessmentService.payCompensation();
-		if(provision != null) {
-			model.addAttribute("JudgeResult", "보상금지급이 완료되었습니다.");
-			return "menu//showResult";
+		if(request.getParameter("select").equals("compensation")) {
+			if(provision.getBankName().equals("잔고부족")) {
+				model.addAttribute("JudgeResult", "보험 통장의 잔액이 부족합니다. 확인후 다시 진행해 주세요.");
+				return "menu//showResult";
+			}else if (provision.getBankName().equals("통장문제")) {
+				model.addAttribute("JudgeResult", "통장에 문제가 생겼습니다. 관련 팀(1234-5678)에 최대한 빠르게 연락바랍니다.");
+				return "menu//showResult";
+			}else if (provision.getBankName().equals("이미보상완료")) {
+				model.addAttribute("JudgeResult", "이미 보상금이 지급 완료되었습니다.");
+				return "menu//showResult";
+			}else  if(provision != null) {
+				model.addAttribute("JudgeResult", "보험금지급이 완료되었습니다.");
+				return "menu//showResult";
+			}else {
+				model.addAttribute("JudgeResult", "지급 내역 업데이트 중 오류가 생겼습니다. 고객센터(010-1234-5678)에 문의 주시길 바랍니다.");
+				return "menu//showResult";
+			}
+		}else if(request.getParameter("select").equals("cancel")) {
+			return "menu//menu";
 		}else {
-			model.addAttribute("JudgeResult", "지급 내역 업데이트 중 오류가 생겼습니다. 고객센터(010-1234-5678)에 문의 주시길 바랍니다.");
-			return "menu//showResult";
+			return "error";
 		}
 		
 	}

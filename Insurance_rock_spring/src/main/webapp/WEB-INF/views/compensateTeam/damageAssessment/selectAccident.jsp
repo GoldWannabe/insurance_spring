@@ -21,11 +21,11 @@
 					<th>사고날짜</th>
 					<th>사고내용</th>
 					<th>총비용</th>
-					<th>손해율</th>
+					<th>손해정도</th>
 					<th>보상종류</th>
 					<th>지급여부</th>
 					<th>책임비율</th>
-					<th>보상금액</th>
+					<th>책임비용</th>
 				</tr>
 			</thead>
 			<tbody> 
@@ -50,7 +50,7 @@
 			</tbody>
 
 		</table>
-
+	<p>${NotAccident}</p>
 	</form>
 
 </body>
