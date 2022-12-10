@@ -97,7 +97,7 @@ public class DamageAssessmentController {
 		//보상급 지급 여부와 책임비용을  요청한다.
 		String[] array = request.getParameter("select").split(" ");
 		if(array[0].equals("compensation")) {
-			Accident accident = this.damageAssessmentService.getCompensationPayment(request);
+			Accident accident = this.damageAssessmentService.getSelectAccident(request);
 //			accdent가 null인 경우는 앞에서 한번 걸렀으므로 완전한 오류
 			model.addAttribute("CustomerName", accident.getCustomerName());
 			model.addAttribute("CustomerPhoneNum", accident.getCustomerPhoneNum());
@@ -106,6 +106,20 @@ public class DamageAssessmentController {
 			return "compensateTeam//compensation//selectCompensation";
 			
 		}else if(array[0].equals("modification")) {
+			Accident accident = this.damageAssessmentService.getSelectAccident(request);
+			model.addAttribute("AccidentID", accident.getAccidentID());
+			model.addAttribute("CustomerName", accident.getCustomerName());
+			model.addAttribute("CustomerPhoneNum", accident.getCustomerPhoneNum());
+			model.addAttribute("PayCompleted", accident.isPayCompleted());
+			model.addAttribute("ContractID", accident.getContractID());
+
+			model.addAttribute("AccidentDate", accident.getAccidentDate());
+			model.addAttribute("Content", accident.getContent());
+			model.addAttribute("KindOfCost", accident.getKindOfCost());
+			model.addAttribute("DamagePer", accident.getDamagePer());
+			model.addAttribute("TotalCost", accident.getTotalCost());
+			model.addAttribute("LiablityCost", accident.getLiablityCost());
+			model.addAttribute("LiablityRate", accident.getLiablityRate());
 			
 			return "compensateTeam//damageAssessment//selectModification";
 		}else {
@@ -124,6 +138,19 @@ public class DamageAssessmentController {
 			return "menu//showResult";
 		}
 		
+	}
+	@RequestMapping(value = "selectModification", method = RequestMethod.GET)
+	public String selectModification(HttpServletRequest request, Model model) {
+		//수정된 내용들을 받아서 업데이트
+		boolean checkModification = this.damageAssessmentService.modify(request);
+		if(checkModification) {
+			model.addAttribute("JudgeResult", "사고정보가 변경되었습니다.");
+			return "menu//showResult";
+		}else {
+			model.addAttribute("JudgeResult", "DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내\r\n" + 
+					"시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
+			return "menu//showResult";
+		}
 	}
 	
 

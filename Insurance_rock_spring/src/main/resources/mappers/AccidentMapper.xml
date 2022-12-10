@@ -22,4 +22,9 @@
 		SELECT * FROM
 		Accident WHERE contractID  = #{contractID}
 	</select>
+	<update id="updateAccidentInfo">
+		UPDATE Accident SET accidentDate = #{accidentDate}, content = #{content}, kindOfCost = #{kindOfCost},
+		damagePer = #{damagePer}, totalCost = #{totalCost}, liablityCost = #{liablityCost}, liablityRate = #{liablityRate} WHERE 
+		accidentID = #{accidentID}
+	</update>
 </mapper>

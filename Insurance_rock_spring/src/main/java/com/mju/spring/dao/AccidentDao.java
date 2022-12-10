@@ -17,5 +17,7 @@ public interface AccidentDao {
 	public void commit();
 
 	public List<Accident> retriveAccidentByContractId(String contractID);
+
+	public boolean updateAccidentInfo(Accident accident);
 	
 }

@@ -16,6 +16,7 @@ public class AccidentDaoImpl implements AccidentDao {
 	private static final String SelectAccident = "AccidentMapper.selectAccident";
 	private static final String UpdatePayComplation = "AccidentMapper.updatePayComplation";
 	private static final String SelectAccidentByContractId = "AccidentMapper.selectAccidentByContractId";
+	private static final String UpdateAccidentInfo = "AccidentMapper.updateAccidentInfo";
 
 	@Override
 	public void create(Accident accident) {
@@ -41,6 +42,17 @@ public class AccidentDaoImpl implements AccidentDao {
 	@Override
 	public List<Accident> retriveAccidentByContractId(String contractID) {
 		return sqlSession.selectList(SelectAccidentByContractId, contractID);
+	}
+
+	@Override
+	public boolean updateAccidentInfo(Accident accident) {
+		try {			
+			sqlSession.update(UpdateAccidentInfo, accident);
+			return true;
+		}catch (Exception e) {
+			return false;
+		}
+		
 	}
 
 }

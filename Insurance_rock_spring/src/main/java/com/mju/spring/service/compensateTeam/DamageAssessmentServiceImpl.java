@@ -142,7 +142,7 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 	}
 	
 	@Override
-	public Accident getCompensationPayment(HttpServletRequest request) {
+	public Accident getSelectAccident(HttpServletRequest request) {
 		return selectAccident(request);
 		//가입자명, 연락처, 사고번호의 사고의 책임비용원을 지급하시겠습니까?
 		//보상급 지급 여부와 책임비용을  요청한다.
@@ -276,6 +276,26 @@ public class DamageAssessmentServiceImpl implements DamageAssessmentService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public boolean modify(HttpServletRequest request) {
+		this.accident.setAccidentID(this.accident.getAccidentID());
+		this.accident.setAccidentDate(LocalDate.parse(request.getParameter("accidentDate")));
+		this.accident.setContent(request.getParameter("content"));
+		this.accident.setKindOfCost(request.getParameter("kindOfCost"));
+		this.accident.setDamagePer(Integer.parseInt(request.getParameter("damagePer")));
+		this.accident.setTotalCost(Integer.parseInt(request.getParameter("totalCost")));
+		this.accident.setLiablityCost(Integer.parseInt(request.getParameter("liablityCost")));
+		this.accident.setLiablityRate(Integer.parseInt(request.getParameter("liablityRate")));
+		
+		boolean checkModification = this.accidentDao.updateAccidentInfo(this.accident);
+		this.accidentDao.commit();
+		if (checkModification){
+			return true;
+		}else {
+			return false;
+		}
 	}
 
 
