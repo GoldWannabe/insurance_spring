@@ -1,21 +1,31 @@
 package com.mju.spring.dto.policyholder.feePayment;
 
+import java.time.LocalDate;
+
+import com.mju.spring.entity.Insurance.EInsurance;
+
 public class PaymentDto {
-	//보험 이름, 분납/일시불 여부, 보험료, 납부 한 금액,미납액, 보험ID, 고객 ID, 계약ID	
-	
-	private String insuranceID;
+//납부 기록(가입자명, 연락처, 보험이름, 보험종류, 카드사/은행명, 카드/계좌번호, 납부금액, 납부일)을 출력한다
+	private String customerName;
+	private String customerPhoneNum;
 	private String insuranceName;
-	private boolean fullPayment;
-	private String customerID;
+	private EInsurance insuranceType;
+	private String cardOrBankName;
+	private String accountNum;
 	private int insuranceFee;
-	private int unpaidFee;
-	private String contractID;
+	private LocalDate paidDate;
 	
-	public String getInsuranceID() {
-		return insuranceID;
+	public String getCustomerName() {
+		return customerName;
 	}
-	public void setInsuranceID(String insuranceID) {
-		this.insuranceID = insuranceID;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	public String getCustomerPhoneNum() {
+		return customerPhoneNum;
+	}
+	public void setCustomerPhoneNum(String customerPhoneNum) {
+		this.customerPhoneNum = customerPhoneNum;
 	}
 	public String getInsuranceName() {
 		return insuranceName;
@@ -23,17 +33,23 @@ public class PaymentDto {
 	public void setInsuranceName(String insuranceName) {
 		this.insuranceName = insuranceName;
 	}
-	public boolean isFullPayment() {
-		return fullPayment;
+	public EInsurance getInsuranceType() {
+		return insuranceType;
 	}
-	public void setFullPayment(boolean fullPayment) {
-		this.fullPayment = fullPayment;
+	public void setInsuranceType(String insuranceType) {
+		this.insuranceType = EInsurance.valueOf(insuranceType);
 	}
-	public String getCustomerID() {
-		return customerID;
+	public String getCardOrBankName() {
+		return cardOrBankName;
 	}
-	public void setCustomerID(String customerID) {
-		this.customerID = customerID;
+	public void setCardOrBankName(String cardOrBankName) {
+		this.cardOrBankName = cardOrBankName;
+	}
+	public String getAccountNum() {
+		return accountNum;
+	}
+	public void setAccountNum(String accountNum) {
+		this.accountNum = accountNum;
 	}
 	public int getInsuranceFee() {
 		return insuranceFee;
@@ -41,17 +57,11 @@ public class PaymentDto {
 	public void setInsuranceFee(int insuranceFee) {
 		this.insuranceFee = insuranceFee;
 	}
-	public int getUnpaidFee() {
-		return unpaidFee;
+	public LocalDate getPaidDate() {
+		return paidDate;
 	}
-	public void setUnpaidFee(int unpaidFee) {
-		this.unpaidFee = unpaidFee;
-	}
-	public String getContractID() {
-		return contractID;
-	}
-	public void setContractID(String contractID) {
-		this.contractID = contractID;
+	public void setPaidDate(LocalDate paidDate) {
+		this.paidDate = paidDate;
 	}
 	
 	

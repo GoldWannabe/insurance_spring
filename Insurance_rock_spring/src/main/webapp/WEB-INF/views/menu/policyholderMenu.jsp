@@ -11,7 +11,7 @@
 	<p>원하시는 메뉴에 해당하는 버튼을 눌러주세요.</p>  <br>
 	<div>
 		<form action = "policyholderMenu">
-			<button type="submit" name = "menu" value="payInsuranceFee">보험판매</button>
+			<button type="submit" name = "menu" value="payInsuranceFee">보험료 납부 및 내역 확인</button>
 			<button type="submit" name = "menu" value="cancel">취소</button>
 		</form>
 	</div>

@@ -32,6 +32,7 @@
 		<mapper resource="mappers/CustomerMapper.xml" />
 		<mapper resource="mappers/ContractAccidentMapper.xml" />
 		<mapper resource="mappers/ProvisionMapper.xml" />
+		<mapper resource="mappers/PaymentMapper.xml" />
 		<mapper resource="mappers/ApplyContractMapper.xml" />
 		<mapper resource="mappers/FailContractMapper.xml" />
 		<mapper resource="mappers/CustomerRankMapper.xml" />
