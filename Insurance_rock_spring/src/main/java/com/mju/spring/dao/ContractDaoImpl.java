@@ -9,6 +9,8 @@ import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManageme
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
 import com.mju.spring.dto.damageAssessment.compansate.SelectContractDto;
 import com.mju.spring.dto.damageAssessment.compansate.UpdateContractDto;
+import com.mju.spring.dto.policyholder.feePayment.DuePaymentDto;
+import com.mju.spring.dto.policyholder.feePayment.PolicyholderDto;
 import com.mju.spring.entity.Contract;
 
 @Repository
@@ -24,7 +26,8 @@ public class ContractDaoImpl implements ContractDao{
 	private static final String Create = "ContractMapper.create";
 	private static final String SelectContractById = "ContractMapper.selectContractById";
 	private static final String UpdateRenew = "ContractMapper.updateRenew";
-
+	private static final String SelectPayment = "ContractMapper.selectPayment";
+	
 	@Override
 	public List<Contract> retriveNameAndPhoneNum(SelectContractDto selectContractDto) {
 		return sqlSession.selectList(SelectNameAndPhoneNum, selectContractDto);
@@ -69,6 +72,11 @@ public class ContractDaoImpl implements ContractDao{
 	public int updateRenew(Contract contract) {
 		return sqlSession.update(UpdateRenew, contract);
 
+	}
+
+	@Override
+	public List<DuePaymentDto> retrivePayment(PolicyholderDto policyholderDto) {
+		return sqlSession.selectList(SelectPayment, policyholderDto);
 	}
 	
 

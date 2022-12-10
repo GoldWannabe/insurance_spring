@@ -6,6 +6,8 @@ import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManageme
 import com.mju.spring.dto.damageAssessment.compansate.ContractProvisionDto;
 import com.mju.spring.dto.damageAssessment.compansate.SelectContractDto;
 import com.mju.spring.dto.damageAssessment.compansate.UpdateContractDto;
+import com.mju.spring.dto.policyholder.feePayment.DuePaymentDto;
+import com.mju.spring.dto.policyholder.feePayment.PolicyholderDto;
 import com.mju.spring.entity.Contract;
 
 public interface ContractDao {
@@ -26,4 +28,6 @@ public interface ContractDao {
 	public Contract retriveContractById(String contractID);
 
 	public int updateRenew(Contract contract);
+
+	public List<DuePaymentDto> retrivePayment(PolicyholderDto policyholderDto);
 }

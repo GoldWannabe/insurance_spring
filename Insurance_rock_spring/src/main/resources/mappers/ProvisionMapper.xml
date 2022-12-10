@@ -7,4 +7,8 @@
 		#{bankName}, #{compensation}, #{compensationDate}, #{insuranceName},
 		#{longTerm}, #{insuranceType}, #{contractID})
 	</insert>
+	
+	<select id="selectProvision" resultType="com.mju.spring.dto.policyholder.feePayment.ProvisionDto">
+		SELECT insuranceName, insuranceType, longTerm, bankName, accountNum, compensation, compensationDate FROM Provision WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum}
+	</select>
 </mapper>

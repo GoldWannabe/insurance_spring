@@ -1,0 +1,8 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="PaymentMapper">
+	
+	<select id="selectPayment" resultType="com.mju.spring.dto.policyholder.feePayment.PaymentDto">
+		SELECT customerName, customerPhoneNum, insuranceName, insuranceType, cardOrBankName, accountNum, insuranceFee, paidDate FROM Payment WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum}
+	</select>
+</mapper>
