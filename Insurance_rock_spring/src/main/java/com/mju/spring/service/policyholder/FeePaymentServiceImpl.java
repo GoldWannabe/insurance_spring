@@ -31,10 +31,11 @@ import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PolicyholderDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
 import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
-import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Payment;
+import com.mju.spring.exception.ChangeDateException;
 import com.mju.spring.exception.FileAcceptException;
+import com.mju.spring.exception.NotFindPolicyholderException;
 
 @Service
 public class FeePaymentServiceImpl implements FeePaymentService {
@@ -61,6 +62,12 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
 	@Override
 	public List<DuePaymentDto> getDuePaymentList(HttpServletRequest request) {
+		LocalDate today = LocalDate.parse(request.getParameter("today"));
+		LocalDate nowDate = LocalDate.now();
+		if((today.getMonthValue()-nowDate.getMonthValue()) != 0) {
+			throw new ChangeDateException();
+		}
+		
 		policyholderDto = new PolicyholderDto();
 		policyholderDto.setCustomerName(request.getParameter("customerName"));
 		policyholderDto.setCustomerPhoneNum(request.getParameter("customerPhoneNum"));
@@ -72,6 +79,10 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
 	private void checkFullPayment() {
 		// 일시불 여부
+		if(this.duePaymentList == null) {
+			throw new NotFindPolicyholderException();
+		}
+		
 		for (DuePaymentDto duePaymentDto : this.duePaymentList) {
 			if (duePaymentDto.getInsuranceFee() <= duePaymentDto.getUnpaidFee()) {
 				duePaymentDto.setFullPayment(true);
@@ -285,7 +296,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			// 파일 접근에 대한 실패로 에러를 내야함
 			e.printStackTrace();
 		}
-
+		this.tempPaymentList = new ArrayList<Payment>();
 		Payment payment = new Payment();
 		payment.setPaymentID(UUID.randomUUID().toString());
 		payment.setCustomerID(this.customer.getCustomerID());
@@ -298,7 +309,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 		payment.setPaidDate(LocalDate.now());
 		payment.setContractID(duePaymentDto.getContractID());
 		payment.setInsuranceType(this.insuranceDao.retriveInsuranceType(duePaymentDto.getInsuranceID()));
-
+		this.tempPaymentList.add(payment);
 		if (this.paymentDao.insertPayment(payment) == 1) {
 			this.paymentDao.commit();
 		} else {

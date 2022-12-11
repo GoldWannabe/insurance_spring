@@ -1,6 +1,7 @@
 package com.mju.spring.controller.main;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
@@ -138,9 +139,11 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "policyholderMenu", method = RequestMethod.GET)
-	public String policyholderControl(HttpServletRequest request) {
+	public String policyholderControl(HttpServletRequest request, Model model) {
 
 		if (request.getParameter("menu").equals("payInsuranceFee")) {
+			
+			model.addAttribute("Today", LocalDate.now());
 			return "policyholder//checkInsuranceFee//inputPolicyholderInfo";
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
