@@ -20,8 +20,8 @@
 <body>
 <p>고객님의 계약 중 사고를 추가할 계약을 검색합니다.</p>
 	<form action="inputCustomerNameAndNum">
-		가입자명: <input type="text" name="customerName"  placeholder="이름을 적어주세요" onkeyup="noSpaceForm(this);" required  oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"><br>
-		연락처: <input type="number" name="customerPhoneNum" maxlength="11" placeholder="ex)000-0000-0000" onkeyup="noSpaceForm(this);"  required  ><br>
+		가입자명: <input type="text" name="customerName"  placeholder="이름을 적어주세요" onkeyup="noSpaceForm(this);" required /><br>
+		연락처: <input type="number" name="customerPhoneNum" maxlength="11" placeholder="ex)000-0000-0000" onkeyup="noSpaceForm(this);"  required  /><br>
 		<button type="submit">계약 검색</button>
 	</form>
 </body>
