@@ -2,14 +2,19 @@ package com.mju.spring.controller.contractTeam;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mju.spring.dto.contractTeam.insuranceDesign.InsuranceTypeAndTermDto;
 import com.mju.spring.entity.Insurance;
+import com.mju.spring.exception.OverlapInsuranceNameException;
+import com.mju.spring.exception.TextFileAcceptException;
 import com.mju.spring.service.contractTeam.InsuranceDesignService;
 
 @Controller
@@ -41,27 +46,29 @@ public class InsuranceDesignController {
 		// error
 		// null이면 중복
 		if (this.insurance == null) {
-			model.addAttribute("OverlapError", "기존의 보험이름과 중복 됩니다. 다른 이름을 입력해주세요.");
-		}
-		if (request.getParameter("check").equals("confirm")) {
+			throw new OverlapInsuranceNameException();
+		}else
+			if (request.getParameter("check").equals("confirm")) {
 //			보험이름,보험 타입, 기준보험료, 장기여부, 특약,가입조건,보상조건,설명, 요율
-			model.addAttribute("InsuranceName", this.insurance.getInsuranceName());
-			model.addAttribute("InsuranceType", this.insurance.getInsuranceType());
-			model.addAttribute("StandardFee", this.insurance.getStandardFee());
-			model.addAttribute("LongTerm", this.insurance.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
-			model.addAttribute("SpecialContract", this.insurance.getSpecialContract());
-			model.addAttribute("ApplyCondition", this.insurance.getApplyCondition());
-			model.addAttribute("CompensateCondition", this.insurance.getCompensateCondition());
-			model.addAttribute("Explanation", this.insurance.getExplanation());
-			model.addAttribute("PremiumRate", this.insurance.getPremiumRate());
-			return "contractTeam//measureStandardFee//register";
-		} else if (request.getParameter("check").equals("cancel")) {
-			return "contractTeam//insuranceDesign//inputRate";
-		} else {
-			return "error";
+				model.addAttribute("InsuranceName", this.insurance.getInsuranceName());
+				model.addAttribute("InsuranceType", this.insurance.getInsuranceType());
+				model.addAttribute("StandardFee", this.insurance.getStandardFee());
+				model.addAttribute("LongTerm", this.insurance.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+				model.addAttribute("SpecialContract", this.insurance.getSpecialContract());
+				model.addAttribute("ApplyCondition", this.insurance.getApplyCondition());
+				model.addAttribute("CompensateCondition", this.insurance.getCompensateCondition());
+				model.addAttribute("Explanation", this.insurance.getExplanation());
+				model.addAttribute("PremiumRate", this.insurance.getPremiumRate());
+				return "contractTeam//measureStandardFee//register";
+			} else if (request.getParameter("check").equals("cancel")) {
+				return "contractTeam//insuranceDesign//inputRate";
+			} else {
+				return "menu//error";
+			}
+			
 		}
 
-	}
+	
 
 	@RequestMapping(value = "inputRate", method = RequestMethod.GET)
 	public String inputRate(HttpServletRequest request, Model model) {
@@ -98,13 +105,40 @@ public class InsuranceDesignController {
 				model.addAttribute("JudgeResult", "입력된 정보가 임시저장되었습니다.");
 				return "menu//showResult";
 			} else {
-				model.addAttribute("JudgeResult",
-						"파일 접근 중 문제가 생겨 보험정보를 불러오지 못했습니다. 잠시후 다시 실행해주십시오. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-4567)에게 문의 주시기 바랍니다");
-				return "menu//showResult";
+				throw new TextFileAcceptException();
 			}
 		} else {
-			return "error";
+			return "menu//error";
 		}
+	}
+	///////////////(공통)보험을 설계한다. 기준보험료를 특정한다////////////
+//	E2. 텍스트 파일 접근에 실패한 경우  E4. 텍스트 파일 접근에 실패한 경우
+	@ExceptionHandler(TextFileAcceptException.class)
+	private ModelAndView textFileAcceptException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+	}
+	////////////기준보험료를 측정한다.////////////
+//	E1.보험 DB의 이름이 중복될 경우  E2.심사 대기 중인 보험과 이름이 중복될 경우
+	@ExceptionHandler(OverlapInsuranceNameException.class)
+	private ModelAndView overlapInsurnaceNameException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("contractTeam//insuranceDesign//inputInsuranceInfo");
+		modelAndView.addObject("OverlapError", e.getMessage());
+		return modelAndView;
+	}
+//	E3. DB 접근에 실패한 경우
+	@ExceptionHandler(PersistenceException.class)
+	private ModelAndView persistenceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
 	}
 
 }

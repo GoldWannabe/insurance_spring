@@ -91,6 +91,7 @@ public class InsuranceJudgeController {
 
 	}
 
+//	E2. DB 접근에 실패한 경우
 	@ExceptionHandler(PersistenceException.class)
 	private ModelAndView handlerPersistenceException(Exception e) {
 		System.err.println(e.getMessage());

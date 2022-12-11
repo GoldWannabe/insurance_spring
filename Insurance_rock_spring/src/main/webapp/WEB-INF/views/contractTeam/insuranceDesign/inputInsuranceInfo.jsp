@@ -31,7 +31,7 @@
 	<form action = inputInsuranceInfo>
 		<p>보험 종류: ${InsuranceType}</p>
 		<p>장기 여부: ${LongTerm}</p>
-		<br> 이름: <input type="text" name="insuranceName"  onkeyup="noSpaceForm(this);" required/> <br>
+		<br> 보험이름: <input type="text" name="insuranceName"  onkeyup="noSpaceForm(this);" required/> <span style="color:red">${OverlapError}</span> <br>
 		특약: <input type="text" name="specialContract"  onkeyup="noSpaceForm(this);" required/> <br>
 		가입조건: <input type="text" name="applyCondition"  onkeyup="noSpaceForm(this);" required/> <br>
 		보상 조건: <input type="text" name="compensateCondition"  onkeyup="noSpaceForm(this);" required/> <br>
