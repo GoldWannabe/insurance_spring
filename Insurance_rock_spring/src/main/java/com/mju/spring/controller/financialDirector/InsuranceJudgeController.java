@@ -11,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mju.spring.dto.financialDirector.insuranceJudge.RegisterInsuranceDto;
 import com.mju.spring.entity.Insurance;
+import com.mju.spring.exception.NotFindJudgedInsuranceException;
 import com.mju.spring.service.financialDirector.InsuranceJudgeService;
 
 @Controller
@@ -24,7 +26,7 @@ public class InsuranceJudgeController {
 
 	@RequestMapping(value = "startJudge", method = RequestMethod.GET)
 	public String startJudge(HttpServletRequest request, Model model) {
-		// 모든 보험 가져와서 리턴 dd
+		// 모든 보험 가져와서 리턴 
 		if (request.getParameter("menu").equals("start")) {
 			List<RegisterInsuranceDto> registerInsuranceDaoList = this.insuranceJudgeService.getRegisterInsurance();
 			
@@ -32,8 +34,8 @@ public class InsuranceJudgeController {
 			model.addAttribute("RegisterInsuranceList", registerInsuranceDaoList);
 			return "financialDirector//insuranceJudge//selectJudgeInsurance";
 			} else {
-				model.addAttribute("JudgeResult", "심사할 보험이 업습니다.");
-				return "financialDirector//insuranceJudge//showJudgeResult";
+
+				throw new NotFindJudgedInsuranceException();
 			}
 			
 		} else if (request.getParameter("menu").equals("cancel")) {
@@ -91,11 +93,22 @@ public class InsuranceJudgeController {
 	}
 
 	@ExceptionHandler(PersistenceException.class)
-	private String aa(Exception e) {
-		System.err.println("2345678987654328987543");
-		
-		return "menu//showResult";
-		//throw new ExceptionControllar();
+	private ModelAndView handlerPersistenceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
+		return modelAndView;
+
+	}
+	
+	@ExceptionHandler(NotFindJudgedInsuranceException.class)
+	private ModelAndView handlerNotFindJudgedInsuranceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
 
 	}
 }

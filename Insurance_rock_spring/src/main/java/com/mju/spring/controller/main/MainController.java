@@ -19,28 +19,29 @@ import com.mju.spring.service.contractTeam.InsuranceDesignService;
 
 @Controller
 public class MainController {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
-	
+
 	@Autowired
 	InsuranceDesignService insuranceDesignService;
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
+
 		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
+
+		model.addAttribute("serverTime", formattedDate);
+
 		return "menu//menu";
 	}
-	
+
 	@RequestMapping(value = "menu", method = RequestMethod.GET)
 	public String teamControl(HttpServletRequest request) {
 
@@ -57,7 +58,7 @@ public class MainController {
 		} else if (team.equals("policyholder")) {
 			return "menu//policyholderMenu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
@@ -68,7 +69,7 @@ public class MainController {
 		if (request.getParameter("menu").equals("design")) {
 //			임시저장된 내용이 있다면. 가져와서 바로 return register로.
 			Insurance insurance = insuranceDesignService.getTempInsurance(request);
-			if(insurance != null) {
+			if (insurance != null) {
 				model.addAttribute("TempInsurance", "---임시저장된 내용--");
 				model.addAttribute("InsuranceName", insurance.getInsuranceName());
 				model.addAttribute("InsuranceType", insurance.getInsuranceType());
@@ -79,16 +80,16 @@ public class MainController {
 				model.addAttribute("CompensateCondition", insurance.getCompensateCondition());
 				model.addAttribute("Explanation", insurance.getExplanation());
 				model.addAttribute("PremiumRate", insurance.getPremiumRate());
-				return "contractTeam//insuranceDesign//register";			
-			}else {
-				return "contractTeam//insuranceDesign//inputTypeAndTerm";				
+				return "contractTeam//insuranceDesign//register";
+			} else {
+				return "contractTeam//insuranceDesign//inputTypeAndTerm";
 			}
 		} else if (request.getParameter("menu").equals("underwrite")) {
 			return "contractTeam//underwriting//selectUnderwrite";
 		} else if (request.getParameter("menu").equals("contractManagement")) {
 			return "contractTeam//contractManagement//selectContractSearchAndCancel";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
@@ -101,7 +102,7 @@ public class MainController {
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
@@ -118,11 +119,11 @@ public class MainController {
 		} else if (request.getParameter("menu").equals("cancellation")) {
 			return "menu//menu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
-	
+
 	@RequestMapping(value = "compensateTeamMenu", method = RequestMethod.GET)
 	public String compensateTeamControl(HttpServletRequest request) {
 
@@ -131,11 +132,11 @@ public class MainController {
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
-	
+
 	@RequestMapping(value = "policyholderMenu", method = RequestMethod.GET)
 	public String policyholderControl(HttpServletRequest request) {
 
@@ -144,15 +145,22 @@ public class MainController {
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
+
 	@RequestMapping(value = "showResult", method = RequestMethod.GET)
 	public String showResult(HttpServletRequest request) {
 
-		
-			return "menu//menu";
+		return "menu//menu";
+
+	}
+
+	@RequestMapping(value = "errorMenu", method = RequestMethod.GET)
+	public String showerrorMenu(HttpServletRequest request) {
+
+		return "menu//menu";
 
 	}
 }

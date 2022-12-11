@@ -4,14 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mju.spring.dto.policyholder.feePayment.AccountDto;
@@ -175,7 +173,7 @@ public class FeePaymentControllar {
 
 	private String feeFullPayment(Model model) {
 		if (this.feePaymentService.feeFullPayment()) {
-			
+
 			model.addAttribute("CheckPrint", "납부가 완료 되었습니다. 납부확인서를 출력하시겠습니까?");
 			return "policyholder//feePayment//selectPrint";
 		} else {
@@ -191,20 +189,22 @@ public class FeePaymentControllar {
 			return "policyholder//feePayment//selectPayment";
 		} else {
 			return "error";
-		}		
+		}
 	}
+
 	@RequestMapping(value = "selectPayment", method = RequestMethod.GET)
 	public String selectPayment(HttpServletRequest request, Model model) {
-		
+
 		if (this.feePaymentService.feePartPayment(request)) {
 			UnpaideFeeDto unpaideFeeDto = this.feePaymentService.getUnpaideFeeDto();
-			model.addAttribute("CheckPrint", "납부가 완료 되었습니다. 납부확인서를 출력하시겠습니까? 미납금: "+ unpaideFeeDto.getUnpaidFee());
+			model.addAttribute("CheckPrint", "납부가 완료 되었습니다. 납부확인서를 출력하시겠습니까? 미납금: " + unpaideFeeDto.getUnpaidFee());
 			return "policyholder//feePayment//selectPrint";
 		} else {
 
 			return "error";
 		}
 	}
+
 	@RequestMapping(value = "selectPrint", method = RequestMethod.GET)
 	public String selectPrint(HttpServletRequest request, Model model) {
 		if (request.getParameter("printPayment").equals("print")) {
@@ -222,7 +222,7 @@ public class FeePaymentControllar {
 		}
 		return "error";
 	}
-	
+
 	@ExceptionHandler(FileAcceptException.class)
 	private ModelAndView handleFileAcceptException(Exception e) {
 		System.out.println("12458790-85432");
@@ -230,7 +230,7 @@ public class FeePaymentControllar {
 		modelAndView.setViewName("menu//showResult");
 		modelAndView.addObject("JudgeResult", "지급 내역 확인이 완료되었습니다.");
 		return modelAndView;
-		//throw new ExceptionControllar();
+		// throw new ExceptionControllar();
 
 	}
 }
