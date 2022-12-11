@@ -36,7 +36,6 @@ import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Payment;
 import com.mju.spring.exception.ChangeDateException;
 import com.mju.spring.exception.FailPaymentExcaption;
-import com.mju.spring.exception.FileAcceptException;
 import com.mju.spring.exception.LackMoneyException;
 import com.mju.spring.exception.NotFindBank;
 import com.mju.spring.exception.NotFindPolicyholderException;
