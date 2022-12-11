@@ -4,18 +4,21 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
-import com.mju.spring.dto.contractTeam.contractManagement.CustomerNameAndInsuranceNameDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
-import com.mju.spring.dto.contractTeam.contractManagement.RenewInfoDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
+import com.mju.spring.exception.NonCustomerContractException;
+import com.mju.spring.exception.NonExistContractException;
 import com.mju.spring.service.contractTeam.ContractManagementService;
 
 @Controller
@@ -43,7 +46,7 @@ public class ContractManagementController {
 		if( !contractList.isEmpty()) {
 			model.addAttribute("ContractList", contractList);
 		}else {
-			model.addAttribute("NotContract", "해당 고객님의 계약이 존재하지 않습니다.");
+			throw new NonExistContractException();
 		}
 
 		return "contractTeam//contractManagement//selectContract";
@@ -97,11 +100,17 @@ public class ContractManagementController {
 			
 			return "contractTeam//contractManagement//applyRenew";
 		}else if(request.getParameter("RenewMenu").equals("renewCancel")) {
-			CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto = this.contractManagementService.cancelRenew(request);
-			if( customerNameAndInsuranceNameDto != null ) {
-				model.addAttribute("CustomerName", customerNameAndInsuranceNameDto.getCustomerName());
-				model.addAttribute("InsuranceName", customerNameAndInsuranceNameDto.getInsuranceName());
-				return "contractTeam//contractManagement//showCancelRenew";
+			RenewCustomerPopupDto renewCustomerPopupDto = this.contractManagementService.cancelRenew(request);
+			if( renewCustomerPopupDto != null ) {
+				if(renewCustomerPopupDto.getCustomerName().equals("고객이가입한보험없음")) {
+					throw new NonCustomerContractException();
+				
+				}else {
+					model.addAttribute("CustomerName", renewCustomerPopupDto.getCustomerName());
+					model.addAttribute("InsuranceName", renewCustomerPopupDto.getInsuranceName());
+					model.addAttribute("CustomerPhoneNum", renewCustomerPopupDto.getCustomerPhoneNum());
+					return "contractTeam//contractManagement//showCancelRenew";
+				}
 			}else {
 				model.addAttribute("JudgeResult", "해당 계약은 이미 갱신 신청 접수가 되어 해지할수없습니다. 다른 계약을 선택하시거나 고객센터(010-1234-5678)로 문의주기실 바랍니다.");	
 				return "menu//showResult";	
@@ -129,6 +138,36 @@ public class ContractManagementController {
 		
 		
 	}
+	
+//	E2. DB 접근에 실패한 경우
+	@ExceptionHandler(PersistenceException.class)
+	private ModelAndView persistenceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
+		return modelAndView;
+	}
+	/////////////////계약관리를하다////////////////////////
+	//E1.해당 계약이 없을 경우
+	@ExceptionHandler(NonExistContractException.class)
+	private ModelAndView NonExistContractException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("contractTeam//contractManagement//selectContract");
+		modelAndView.addObject("NotContract", "해당 고객이 가입한 보험이 존재하지 않습니다. 다시 입력해주세요.");
+		return modelAndView;
+	}
+	//E4.고객이 없는 경우
+		@ExceptionHandler(NonCustomerContractException.class)
+		private ModelAndView NonCustomerContractException(Exception e) {
+			System.err.println(e.getMessage());
+			ModelAndView modelAndView= new ModelAndView();
+			modelAndView.setViewName("menu//showResult");
+			modelAndView.addObject("JudgeResult",  "이 보험에 계약된 고객이 조회되지 않습니다.");
+			return modelAndView;
+		}
+		
 	
 	
 }

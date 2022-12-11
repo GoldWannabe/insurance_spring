@@ -18,7 +18,7 @@ import com.mju.spring.dao.RankDao;
 import com.mju.spring.dao.RenewContractDao;
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
 import com.mju.spring.dto.contractTeam.contractManagement.CustomerIDAndInsuranceNumDto;
-import com.mju.spring.dto.contractTeam.contractManagement.CustomerNameAndInsuranceNameDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewContractManagementDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
@@ -55,7 +55,7 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 
 	private List<Contract> selectContractList;
 	private RenewContractManagementDto renewContractManagementDto;
-	private CustomerNameAndInsuranceNameDto customerNameAndInsuranceNameDto;
+	private RenewCustomerPopupDto renewCustomerPopupDto;
 	private InsuranceDetailsDto insuranceDetailsDto;
 	@Override
 	public List<Contract> contractSearch(HttpServletRequest request) {
@@ -121,9 +121,10 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 		this.renewContractManagementDto.setInsuranceID(insuranceID);
 		
 		//미리 set 팝업창에 보여줄것
-		this.customerNameAndInsuranceNameDto = new CustomerNameAndInsuranceNameDto();
-		this.customerNameAndInsuranceNameDto.setCustomerName(customerName);
-		this.customerNameAndInsuranceNameDto.setInsuranceName(insuranceName);
+		this.renewCustomerPopupDto = new RenewCustomerPopupDto();
+		this.renewCustomerPopupDto.setCustomerName(customerName);
+		this.renewCustomerPopupDto.setInsuranceName(insuranceName);
+		this.renewCustomerPopupDto.setCustomerPhoneNum(customerPhoneNum);
 		
 		//계약 1개에 사고 여러개.
 		//계약번호,보험이름, 가입자명, 연락처, 보험가입일,보험 만료일,담보액,보험료,납부방식, 미납액,등급, 사고이력
@@ -155,7 +156,7 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 			Rank rank = new Rank();
 			rank.setRankID("*" + renewCustomerRankDto.getRankID());
 			rank.setMaterial(request.getParameter("material"));
-			rank.setFireFacilities(Integer.parseInt(request.getParameter("fireFacilities")));
+			rank.setFireFacilities(Double.valueOf(request.getParameter("fireFacilities")));
 			rank.setHeight(Boolean.valueOf(request.getParameter("height")));
 			rank.setScale(Integer.parseInt(request.getParameter("scale")));
 			rank.setSurroundingFacilities(Double.valueOf(request.getParameter("surroundingFacilities")));
@@ -189,7 +190,7 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 	}
 
 	@Override
-	public CustomerNameAndInsuranceNameDto cancelRenew(HttpServletRequest request) {
+	public RenewCustomerPopupDto cancelRenew(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		// 1. 갱신 신청을 한것은 삭제할수없도록 하기
 		// 2. 계약 해지는 계약DB에서 완전히 계약을 삭제하고 고객의 가입 보험 개수 를 -1로 수정한다.
@@ -204,14 +205,25 @@ public class ContractManagementServiceImpl implements ContractManagementService 
 			
 			//고객 DB 가져와야함.
 			Double insuranceNum =  this.customerDao.selectInsuranceNum(customerID);
-			CustomerIDAndInsuranceNumDto customerIDAndInsuranceNumDto = new CustomerIDAndInsuranceNumDto();
-			customerIDAndInsuranceNumDto.setCustomerID(customerID);
-			customerIDAndInsuranceNumDto.setInsuranceNum(insuranceNum-1);
-			
-			this.customerDao.updateInsuranceNum(customerIDAndInsuranceNumDto);
-			this.customerDao.commit();
-			
-			return customerNameAndInsuranceNameDto;
+			if(insuranceNum == null) {
+				renewCustomerPopupDto.setCustomerName("고객이가입한보험없음");
+				return renewCustomerPopupDto;
+			}else if(insuranceNum < 1){
+				this.customerDao.deleteInsuranceNum(customerID);
+				this.customerDao.commit();
+				
+				return renewCustomerPopupDto;
+			}else {
+				CustomerIDAndInsuranceNumDto customerIDAndInsuranceNumDto = new CustomerIDAndInsuranceNumDto();
+				customerIDAndInsuranceNumDto.setCustomerID(customerID);
+				customerIDAndInsuranceNumDto.setInsuranceNum(insuranceNum-1);
+				
+				this.customerDao.updateInsuranceNum(customerIDAndInsuranceNumDto);
+				this.customerDao.commit();
+				
+				return renewCustomerPopupDto;
+				
+			}
 		}else {
 			return null;			
 		}

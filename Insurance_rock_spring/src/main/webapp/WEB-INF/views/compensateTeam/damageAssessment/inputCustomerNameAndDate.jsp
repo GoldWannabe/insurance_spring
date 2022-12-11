@@ -19,7 +19,7 @@
 <body>
 	<form action="inputCustomerNameAndDate">
 		가입자명: <input type="text" name="customerName" placeholder="이름을 적어주세요"   onkeyup="noSpaceForm(this);" required  oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"><br>
-		사고날짜: <input type="date" name="accidentDate" placeholder="ex)0000-00-00"  onkeyup="noSpaceForm(this);" required  oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"><br>
+		사고날짜: <input type="date" name="accidentDate" placeholder="ex)0000-00-00"  onkeyup="noSpaceForm(this);" required><br>
 		<button type="submit">사고 검색</button>
 	</form>
 </body>

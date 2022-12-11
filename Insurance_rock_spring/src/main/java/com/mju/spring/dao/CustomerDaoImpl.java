@@ -16,6 +16,7 @@ public class CustomerDaoImpl implements CustomerDao{
 	private static final String SelectInsuranceNum = "CustomerMapper.selectInsuranceNum";
 	private static final String UpdateInsuranceNum = "CustomerMapper.updateInsuranceNum";
 	private static final String Create = "CustomerMapper.create";
+	private static final String DeleteInsuranceNum = "CustomerMapper.deleteInsuranceNum";
 	
 	@Override
 	public int create(Customer customer) {
@@ -39,7 +40,12 @@ public class CustomerDaoImpl implements CustomerDao{
 
 	@Override
 	public Double selectInsuranceNum(String customerID) {
-		return sqlSession.selectOne(SelectInsuranceNum, customerID);
+		try {
+			return sqlSession.selectOne(SelectInsuranceNum, customerID);
+			
+		}catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -50,6 +56,12 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	public void commit() {
 		sqlSession.commit();
+	}
+
+	@Override
+	public void deleteInsuranceNum(String customerID) {
+		sqlSession.delete(DeleteInsuranceNum, customerID);
+		
 	}
 	
 }

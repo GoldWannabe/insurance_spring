@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
-import com.mju.spring.dto.contractTeam.contractManagement.CustomerNameAndInsuranceNameDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
@@ -18,7 +18,7 @@ public interface ContractManagementService {
 
 	public boolean applyRenew(HttpServletRequest request);
 
-	public CustomerNameAndInsuranceNameDto cancelRenew(HttpServletRequest request);
+	public RenewCustomerPopupDto cancelRenew(HttpServletRequest request);
 
 	public InsuranceDetailsDto searchInsuranceDetails(HttpServletRequest request);
 

@@ -19,4 +19,8 @@
 	<select id="selectInsuranceNum" resultType="double">
 		SELECT insuranceNum FROM customer WHERE customerID = #{customerID}
 	</select>
+	
+	<delete id="deleteInsuranceNum">
+		DELETE FROM customer WHERE customerID = #{customerID}
+	</delete>
 </mapper>

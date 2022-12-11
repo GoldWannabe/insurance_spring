@@ -4,15 +4,24 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Provision;
+import com.mju.spring.exception.NonExistAccidentException;
+import com.mju.spring.exception.NonExistContractException;
+import com.mju.spring.exception.NotDamageAssessmentException;
+import com.mju.spring.exception.AlreadyPayCompletedException;
+import com.mju.spring.exception.LackInsuranceBankException;
+import com.mju.spring.exception.FileAcceptException;
 import com.mju.spring.service.compensateTeam.DamageAssessmentService;
 
 @Controller
@@ -38,15 +47,14 @@ public class DamageAssessmentController {
 	// inputNameAndPhoneNum
 	// 뷰에서 이름과 폰번호 입력 후 서비스에서 계약들 리턴 / customerID
 	@RequestMapping(value = "inputCustomerNameAndNum", method = RequestMethod.GET)
-	public String inputNameAndPhoneNum(HttpServletRequest request, Model model) {
+	public String inputNameAndPhoneNum(HttpServletRequest request, Model model){
 		List<Contract> contractList = this.damageAssessmentService.addcheck(request);
 		if(!contractList.isEmpty()) {
 			model.addAttribute("ContractList", contractList);
 			return "compensateTeam//damageAssessment//selectAddContract";			
 		}else {
 			//E2. 고객에 해당하는 계약이 존재하지 않는 경우
-			model.addAttribute("NotContract", "해당 고객이 가입한 계약이 존재하지 않습니다. 다시 입력해주세요.");
-			return "compensateTeam//damageAssessment//selectAddContract";		
+			throw new NonExistContractException();
 		}
 
 	}
@@ -60,12 +68,16 @@ public class DamageAssessmentController {
 	}
 
 	// inputAccidentInfo
-	// 뷰에서 사고날짜 입력 서비스에서 내용을 받아서 사고 엔티티 리턴
+	// 사고 접수 버튼을 클릭하면 사고 접수.
 	@RequestMapping(value = "inputAccidentInfo", method = RequestMethod.GET)
 	public String inputAccidentInfo(HttpServletRequest request, Model model) {
 		Accident accident = this.damageAssessmentService.addAccident(request);
-		model.addAttribute("Accident", accident);
-		return "compensateTeam//damageAssessment//checkAccidentInfo";
+		if(accident != null) {
+			model.addAttribute("Accident", accident);
+			return "compensateTeam//damageAssessment//checkAccidentInfo";
+		}else {
+			throw new NotDamageAssessmentException();
+		}
 	}
 	
 	@RequestMapping(value = "checkAccidentInfo", method = RequestMethod.GET)
@@ -85,8 +97,8 @@ public class DamageAssessmentController {
 			return "compensateTeam//damageAssessment//selectAccident";			
 		}else {
 			//E5. 검색된 결과가 없는 경우
-			model.addAttribute("NotAccident", "사고 정보를 찾지 못했습니다. 사고날짜와 가입자명을 오탈자 없이 적어주세요.");
-			return  "compensateTeam//damageAssessment//selectAccident";
+			throw new NonExistAccidentException();
+			
 		}
 	}
 	
@@ -130,23 +142,22 @@ public class DamageAssessmentController {
 	@SuppressWarnings("unused")
 	@RequestMapping(value = "selectCompensation", method = RequestMethod.GET)
 	public String selectCompensation(HttpServletRequest request, Model model) {
-		Provision provision = this.damageAssessmentService.payCompensation();
 		if(request.getParameter("select").equals("compensation")) {
+			Provision provision = this.damageAssessmentService.payCompensation();
 			if(provision.getBankName().equals("잔고부족")) {
-				model.addAttribute("JudgeResult", "보험 통장의 잔액이 부족합니다. 확인후 다시 진행해 주세요.");
-				return "menu//showResult";
+				throw new LackInsuranceBankException();
+				
 			}else if (provision.getBankName().equals("통장문제")) {
-				model.addAttribute("JudgeResult", "통장에 문제가 생겼습니다. 관련 팀(1234-5678)에 최대한 빠르게 연락바랍니다.");
-				return "menu//showResult";
+				throw new FileAcceptException();
+				
 			}else if (provision.getBankName().equals("이미보상완료")) {
-				model.addAttribute("JudgeResult", "이미 보상금이 지급 완료되었습니다.");
-				return "menu//showResult";
+				throw new AlreadyPayCompletedException();
+				
 			}else  if(provision != null) {
 				model.addAttribute("JudgeResult", "보험금지급이 완료되었습니다.");
 				return "menu//showResult";
 			}else {
-				model.addAttribute("JudgeResult", "지급 내역 업데이트 중 오류가 생겼습니다. 고객센터(010-1234-5678)에 문의 주시길 바랍니다.");
-				return "menu//showResult";
+				return "error";
 			}
 		}else if(request.getParameter("select").equals("cancel")) {
 			return "menu//menu";
@@ -163,15 +174,77 @@ public class DamageAssessmentController {
 			model.addAttribute("JudgeResult", "사고정보가 변경되었습니다.");
 			return "menu//showResult";
 		}else {
-			model.addAttribute("JudgeResult", "DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내\r\n" + 
-					"시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
-			return "menu//showResult";
+			return "error";
 		}
 	}
+	/////(공통)DB접근 실패///////////
+//	E3. DB 접근에 실패한 경우 E2. DB 접근에 실패한 경우
+	@ExceptionHandler(PersistenceException.class)
+	private ModelAndView persistenceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
+		return modelAndView;
+	}
 	
-
-	// selectCompensation
-	// 뷰에서 보상여부 선택 후 서비스에서 보상
-	// 버튼이름 select provision,edit
+	////////////////////////손해사정을 하다 에러처리/////////////////////////////////////
+//	E2.고객에 해당하는 계약이 존재하지 않는 경우
+	@ExceptionHandler(NonExistContractException.class)
+	private ModelAndView NonExistContractException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("compensateTeam/damageAssessment/selectAddContract");
+		modelAndView.addObject("NotContract", "해당 고객이 가입한 보험이 존재하지 않습니다. 다시 입력해주세요.");
+		return modelAndView;
+	}
+//	E4.검색된 결과가 없는 경우
+	@ExceptionHandler(NonExistAccidentException.class)
+	private ModelAndView NonExistAccidentException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("compensateTeam/damageAssessment/selectAccident");
+		modelAndView.addObject("NotAccident", "사고 정보를 찾지 못했습니다. 사고날짜와 가입자명을 오탈자 없이 적어주세요.");
+		return modelAndView;
+	}
+//	E5.손해사정이 이루어지지 않은 경우
+	@ExceptionHandler(NotDamageAssessmentException.class)
+	private ModelAndView NotDamageAssessmentException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "손해사정이 완료 되지않았습니다.");
+		return modelAndView;
+	}
+	////////////보상금을 지급하다 에러 처리////////////////////////////////
+//	E1.이미 보상금을 지급한 경우
+	@ExceptionHandler(AlreadyPayCompletedException.class)
+	private ModelAndView AlreadyPayCompletedException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "이미 보상금이 지급 완료되었습니다.");
+		return modelAndView;
+	}
+	//E3.잔액이 부족한 경우
+	@ExceptionHandler(LackInsuranceBankException.class)
+	private ModelAndView LackInsuranceBankException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView= new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "보험 통장의 잔액이 부족합니다. 확인후 다시 진행해 주세요");
+		return modelAndView;
+	}
+	
+//	E4.파일 업데이트에 실패한 경우
+		@ExceptionHandler(FileAcceptException.class)
+		private ModelAndView FileAcceptException(Exception e) {
+			System.err.println(e.getMessage());
+			ModelAndView modelAndView= new ModelAndView();
+			modelAndView.setViewName("menu//showResult");
+			modelAndView.addObject("JudgeResult", "통장에 문제가 생겼습니다. 관련 팀(1234-5678)에 최대한 빠르게 연락바랍니다.");
+			return modelAndView;
+		}
+		
 
 }
