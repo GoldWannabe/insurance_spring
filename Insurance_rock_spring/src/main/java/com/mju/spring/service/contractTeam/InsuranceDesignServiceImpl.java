@@ -8,6 +8,7 @@ import com.mju.spring.dto.contractTeam.insuranceDesign.InsuranceTypeAndTermDto;
 import com.mju.spring.entity.GeneralInsurance;
 import com.mju.spring.entity.HouseInsurance;
 import com.mju.spring.entity.Insurance;
+import com.mju.spring.exception.TextFileAcceptException;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -169,9 +170,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 			fileWriter.close();
 			return true;
 		} catch (IOException e) {
-			e.printStackTrace();
+			return false;
 		}
-		return false;
 	}
 
 	@Override
@@ -222,10 +222,8 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 				return null;
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new TextFileAcceptException();
 		}
-		return null;
 
 	}
 }

@@ -36,7 +36,7 @@ public class ContractManagementController {
 			model.addAttribute("JudgeResult", "홈화면으로 돌아갑니다.");
 			return "menu//showResult";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
@@ -112,14 +112,14 @@ public class ContractManagementController {
 					return "contractTeam//contractManagement//showCancelRenew";
 				}
 			} else {
-				return "error";
+				return "menu//error";
 			}
 
 		} else if (request.getParameter("RenewMenu").equals("cancel")) {
 			model.addAttribute("JudgeResult", "홈화면으로 돌아갑니다.");
 			return "menu//showResult";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 	}
 
@@ -132,7 +132,7 @@ public class ContractManagementController {
 			model.addAttribute("JudgeResult", "계약 갱신 신청이 완료되었습니다.");
 			return "menu//showResult";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 
 	}
