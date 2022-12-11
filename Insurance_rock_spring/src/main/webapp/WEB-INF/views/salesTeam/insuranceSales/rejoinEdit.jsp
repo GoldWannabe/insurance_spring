@@ -7,6 +7,16 @@
 <head>
 <meta charset="EUC-KR">
 <title>rejoinEdit</title>
+<script>
+function noSpaceForm(obj) {      
+    var str_space = /\s/;             
+    if(str_space.exec(obj.value)) {    
+        alert("해당 항목에는 공백을 사용할 수 없습니다.\n\n공백이 제거됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(' ',''); 
+    }
+}
+</script>
 </head>
 <body>
 	<p>재가입을 위해 변경된 사항을 입력하여 주십시오.</p>
