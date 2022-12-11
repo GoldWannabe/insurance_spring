@@ -191,7 +191,7 @@ public class DamageAssessmentController {
 	////////////////////////손해사정을 하다 에러처리/////////////////////////////////////
 //	E2.고객에 해당하는 계약이 존재하지 않는 경우
 	@ExceptionHandler(NonExistContractException.class)
-	private ModelAndView NonExistContractException(Exception e) {
+	private ModelAndView nonExistContractException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView= new ModelAndView();
 		modelAndView.setViewName("compensateTeam/damageAssessment/selectAddContract");
@@ -200,7 +200,7 @@ public class DamageAssessmentController {
 	}
 //	E4.검색된 결과가 없는 경우
 	@ExceptionHandler(NonExistAccidentException.class)
-	private ModelAndView NonExistAccidentException(Exception e) {
+	private ModelAndView nonExistAccidentException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView= new ModelAndView();
 		modelAndView.setViewName("compensateTeam/damageAssessment/selectAccident");
@@ -209,7 +209,7 @@ public class DamageAssessmentController {
 	}
 //	E5.손해사정이 이루어지지 않은 경우
 	@ExceptionHandler(NotDamageAssessmentException.class)
-	private ModelAndView NotDamageAssessmentException(Exception e) {
+	private ModelAndView notDamageAssessmentException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView= new ModelAndView();
 		modelAndView.setViewName("menu//showResult");
@@ -219,7 +219,7 @@ public class DamageAssessmentController {
 	////////////보상금을 지급하다 에러 처리////////////////////////////////
 //	E1.이미 보상금을 지급한 경우
 	@ExceptionHandler(AlreadyPayCompletedException.class)
-	private ModelAndView AlreadyPayCompletedException(Exception e) {
+	private ModelAndView alreadyPayCompletedException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView= new ModelAndView();
 		modelAndView.setViewName("menu//showResult");
@@ -228,7 +228,7 @@ public class DamageAssessmentController {
 	}
 	//E3.잔액이 부족한 경우
 	@ExceptionHandler(LackInsuranceBankException.class)
-	private ModelAndView LackInsuranceBankException(Exception e) {
+	private ModelAndView lackInsuranceBankException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView= new ModelAndView();
 		modelAndView.setViewName("menu//showResult");
@@ -238,7 +238,7 @@ public class DamageAssessmentController {
 	
 //	E4.파일 업데이트에 실패한 경우
 		@ExceptionHandler(FileAcceptException.class)
-		private ModelAndView FileAcceptException(Exception e) {
+		private ModelAndView fileAcceptException(Exception e) {
 			System.err.println(e.getMessage());
 			ModelAndView modelAndView= new ModelAndView();
 			modelAndView.setViewName("menu//showResult");

@@ -151,7 +151,7 @@ public class ContractManagementController {
 	///////////////// 계약관리를하다////////////////////////
 	// E1.해당 계약이 없을 경우
 	@ExceptionHandler(NonExistContractException.class)
-	private ModelAndView NonExistContractException(Exception e) {
+	private ModelAndView nonExistContractException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("contractTeam//contractManagement//selectContract");
@@ -161,7 +161,7 @@ public class ContractManagementController {
 
 	// E4.고객이 없는 경우
 	@ExceptionHandler(NonCustomerContractException.class)
-		private ModelAndView NonCustomerContractException(Exception e) {
+		private ModelAndView nonCustomerContractException(Exception e) {
 			System.err.println(e.getMessage());
 			ModelAndView modelAndView= new ModelAndView();
 			modelAndView.setViewName("menu//showResult");
@@ -171,7 +171,7 @@ public class ContractManagementController {
 
 	// E6.이미 갱신 신청중인 계약인 경우
 	@ExceptionHandler(AlreadyApplyRenewException.class)
-	private ModelAndView AlreadyApplyRenewException(Exception e) {
+	private ModelAndView alreadyApplyRenewException(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("menu//showResult");

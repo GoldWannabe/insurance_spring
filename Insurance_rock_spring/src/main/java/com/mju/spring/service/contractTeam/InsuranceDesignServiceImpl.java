@@ -56,7 +56,7 @@ public class InsuranceDesignServiceImpl implements InsuranceDesignService {
 	      
 	      insuranceTypeAndTermDto.setInsuranceType(this.insurance.getInsuranceType());
 	      insuranceTypeAndTermDto.setLongTerm(this.insurance.isLongTerm());
-
+	      insuranceTypeAndTermDto.setPremiumRate(this.insurance.getPremiumRate());
 	      
 	      return insuranceTypeAndTermDto;
 	   }
