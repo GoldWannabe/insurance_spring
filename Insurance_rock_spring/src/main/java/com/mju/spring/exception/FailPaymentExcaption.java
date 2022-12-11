@@ -1,4 +1,4 @@
-package com.mju.spring.exception.a;
+package com.mju.spring.exception;
 
 @SuppressWarnings("serial")
 public class FailPaymentExcaption extends RuntimeException{
