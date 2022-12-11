@@ -1,4 +1,3 @@
-<%@page import="com.mju.spring.dto.InsuranceDto"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -23,8 +22,8 @@
 <body>
 	<form action="inputCustomerBasicInfo">
 		<p>----보험 가입자 기본 정보----</p>
-		이름: <input type="text" name="customerName" onkeyup="noSpaceForm(this);" required >
-		연락처 : <input type="number" name="phoneNum" placeholder="ex) 000 0000 0000" maxlength="11" onkeyup="noSpaceForm(this);" required >
+		이름: <input type="text" name="customerName" onkeyup="noSpaceForm(this);" required > <br>
+		연락처 : <input type="number" name="phoneNum" placeholder="ex) 000 0000 0000" maxlength="11" onkeyup="noSpaceForm(this);" required > <br>
 		<button type="submit" name="search" value="search">조회</button>
 	</form>
 </body>

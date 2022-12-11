@@ -23,4 +23,13 @@
 	<delete id="deleteInsuranceNum">
 		DELETE FROM customer WHERE customerID = #{customerID}
 	</delete>
+	
+	<select id="selectCustomerInfo" resultType="com.mju.spring.entity.Customer">
+		SELECT * FROM customer WHERE name = #{name} AND phoneNum =#{phoneNum}
+	</select>
+	
+	<update id="updateCustomerInfo">
+		UPDATE customer SET name = #{name}, SSN = #{SSN}, sex = #{sex}, phoneNum = #{phoneNum}, address = #{address}, bankName = #{bankName}, accountNum = #{accountNum}, insuranceNum = #{insuranceNum}
+		 WHERE customerID = #{customerID}
+	</update>
 </mapper>

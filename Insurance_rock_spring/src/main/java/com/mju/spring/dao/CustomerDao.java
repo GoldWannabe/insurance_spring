@@ -20,6 +20,10 @@ public interface CustomerDao {
 	public int create(Customer customer);
 
 	public void deleteInsuranceNum(String customerID);
+
+	public Customer retriveCustomerInfo(Customer customer);
+
+	public void updateCustomerInfo(Customer customer);
 	
 	
 }

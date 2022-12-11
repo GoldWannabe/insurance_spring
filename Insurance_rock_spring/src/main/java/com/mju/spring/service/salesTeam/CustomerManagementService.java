@@ -6,7 +6,11 @@ import com.mju.spring.entity.Customer;
 
 public interface CustomerManagementService {
 
-	Customer getCustomerBasicInfo(HttpServletRequest request);
+	public Customer getCustomerBasicInfo(HttpServletRequest request);
+
+	public Customer getUpdateCustomerScrean(HttpServletRequest request);
+
+	public void updateCustomer(HttpServletRequest request);
 	
 
 }

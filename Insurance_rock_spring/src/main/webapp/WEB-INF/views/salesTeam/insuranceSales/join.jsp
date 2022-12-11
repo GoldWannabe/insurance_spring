@@ -36,9 +36,9 @@
 		보험료: <input type="number" name="insuranceFee"onkeyup="noSpaceForm(this);" required><br>
 		납부방식(paymentCycle): <input type="number" name="paymentCycle" placeholder="1~12개월이내" min="1" max="12" onkeyup="noSpaceForm(this);" required><br>
 		가입기간: <input type="number" name="period" onkeyup="noSpaceForm(this);" required><br>
-		소화시설(Float) : <input type="number" name="fireFedilities"placeholder="실수" onkeyup="noSpaceForm(this);" required><br>
+		소화시설(Float) : <input type="text" name="fireFedilities"placeholder="실수" onkeyup="noSpaceForm(this);" required><br>
 		스케일(Int): <input type="number" name="scale"placeholder="정수" onkeyup="noSpaceForm(this);" required><br>
-		주변시설(Float): <input type="number" name="surroundingFedilities" placeholder="실수" onkeyup="noSpaceForm(this);" required><br>
+		주변시설(Float): <input type="text" name="surroundingFedilities" placeholder="실수" onkeyup="noSpaceForm(this);" required><br>
 		높이가 15층 이상입니까? <br>
 		<input type="radio" name="height" value="true"  checked required/>예
 		<input type="radio" name="height" value="false" />아니오 <br> <br> 

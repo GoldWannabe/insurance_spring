@@ -17,6 +17,8 @@ public class CustomerDaoImpl implements CustomerDao{
 	private static final String UpdateInsuranceNum = "CustomerMapper.updateInsuranceNum";
 	private static final String Create = "CustomerMapper.create";
 	private static final String DeleteInsuranceNum = "CustomerMapper.deleteInsuranceNum";
+	private static final String SelectCustomerInfo = "CustomerMapper.selectCustomerInfo";
+	private static final String UpdateCustomerInfo = "CustomerMapper.updateCustomerInfo";
 	
 	@Override
 	public int create(Customer customer) {
@@ -62,6 +64,16 @@ public class CustomerDaoImpl implements CustomerDao{
 	public void deleteInsuranceNum(String customerID) {
 		sqlSession.delete(DeleteInsuranceNum, customerID);
 		
+	}
+
+	@Override
+	public Customer retriveCustomerInfo(Customer customer) {
+		return sqlSession.selectOne(SelectCustomerInfo, customer);
+	}
+
+	@Override
+	public void updateCustomerInfo(Customer customer) {
+		sqlSession.update(UpdateCustomerInfo, customer);
 	}
 	
 }
