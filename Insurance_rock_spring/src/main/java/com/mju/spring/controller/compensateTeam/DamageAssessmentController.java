@@ -39,7 +39,7 @@ public class DamageAssessmentController {
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 	}
 
@@ -135,7 +135,7 @@ public class DamageAssessmentController {
 			
 			return "compensateTeam//damageAssessment//selectModification";
 		}else {
-			return "error";
+			return "menu//error";
 		}
 		
 	}
@@ -157,12 +157,12 @@ public class DamageAssessmentController {
 				model.addAttribute("JudgeResult", "보험금지급이 완료되었습니다.");
 				return "menu//showResult";
 			}else {
-				return "error";
+				return "menu//error";
 			}
 		}else if(request.getParameter("select").equals("cancel")) {
 			return "menu//menu";
 		}else {
-			return "error";
+			return "menu//error";
 		}
 		
 	}
@@ -174,7 +174,7 @@ public class DamageAssessmentController {
 			model.addAttribute("JudgeResult", "사고정보가 변경되었습니다.");
 			return "menu//showResult";
 		}else {
-			return "error";
+			return "menu//error";
 		}
 	}
 	/////(공통)DB접근 실패///////////

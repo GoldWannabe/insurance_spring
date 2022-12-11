@@ -23,7 +23,7 @@
 		요율1: <input type="text" name="rate1"  onkeyup="noSpaceForm(this);" required><br>
 		요율2: <input type="text" name="rate2"  onkeyup="noSpaceForm(this);" required><br>
 		요율3: <input type="text" name="rate3"  onkeyup="noSpaceForm(this);" required><br>
-		<button type="submit" name = "join" value="join">가입 신청하기</button>
+		<button type="submit" name = "join" value="join">가입 신청</button>
 	</form>
 </body>
 </html>

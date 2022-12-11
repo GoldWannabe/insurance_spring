@@ -14,6 +14,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.JEditorPane;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -31,10 +32,15 @@ import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PolicyholderDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
 import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
-import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Payment;
+import com.mju.spring.exception.ChangeDateException;
+import com.mju.spring.exception.FailPaymentExcaption;
 import com.mju.spring.exception.FileAcceptException;
+import com.mju.spring.exception.LackMoneyException;
+import com.mju.spring.exception.NotFindBank;
+import com.mju.spring.exception.NotFindPolicyholderException;
+import com.mju.spring.exception.UnderMinimunMoneyException;
 
 @Service
 public class FeePaymentServiceImpl implements FeePaymentService {
@@ -61,6 +67,12 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
 	@Override
 	public List<DuePaymentDto> getDuePaymentList(HttpServletRequest request) {
+		LocalDate today = LocalDate.parse(request.getParameter("today"));
+		LocalDate nowDate = LocalDate.now();
+		if((today.getMonthValue()-nowDate.getMonthValue()) != 0) {
+			throw new ChangeDateException();
+		}
+		
 		policyholderDto = new PolicyholderDto();
 		policyholderDto.setCustomerName(request.getParameter("customerName"));
 		policyholderDto.setCustomerPhoneNum(request.getParameter("customerPhoneNum"));
@@ -72,6 +84,10 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 
 	private void checkFullPayment() {
 		// 일시불 여부
+		if(this.duePaymentList == null) {
+			throw new NotFindPolicyholderException();
+		}
+		
 		for (DuePaymentDto duePaymentDto : this.duePaymentList) {
 			if (duePaymentDto.getInsuranceFee() <= duePaymentDto.getUnpaidFee()) {
 				duePaymentDto.setFullPayment(true);
@@ -135,12 +151,10 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			String amount = scanner.next();
 			money = Integer.parseInt(amount);
 		} catch (IOException | InputMismatchException e) {
-			// 파일 접근에 대한 실패로 에러를 내야함
-			e.printStackTrace();
+			throw new NotFindBank();
 		}
 		if (money <= 1000) {
-			// 여기로 에러 발생시켜야 한다
-			return false;
+			throw new UnderMinimunMoneyException();
 		} else {
 			return true;
 		}
@@ -168,8 +182,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			String tempMoney = scanner.next();
 			customerMoney = Integer.parseInt(tempMoney);
 			if (totalFee > customerMoney) {
-				return false;
-				// 에러 내야함
+				throw new LackMoneyException();
 			}
 			customerMoney = customerMoney - totalFee;
 			FileWriter fileWriter = new FileWriter(file);
@@ -178,9 +191,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			fileWriter.close();
 
 		} catch (IOException | InputMismatchException e) {
-			// 파일 접근에 대한 실패로 에러를 내야함
-			e.printStackTrace();
-			throw new FileAcceptException();
+			throw new FailPaymentExcaption();
 		}
 
 		try {
@@ -196,8 +207,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (IOException | InputMismatchException e) {
-			// 파일 접근에 대한 실패로 에러를 내야함
-			e.printStackTrace();
+			throw new FailPaymentExcaption();
 		}
 		this.tempPaymentList = new ArrayList<Payment>();
 		for (DuePaymentDto duePaymentDto : this.duePaymentList) {
@@ -217,7 +227,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			if (this.paymentDao.insertPayment(payment) == 1) {
 				this.paymentDao.commit();
 			} else {
-				return false;
+				throw new PersistenceException();
 			}
 
 			ContractAccountDto contractAccountDto = new ContractAccountDto();
@@ -226,7 +236,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			if (this.contractDao.updateUnpaidFee(contractAccountDto) == 1) {
 				this.contractDao.commit();
 			} else {
-				return false;
+				throw new PersistenceException();
 			}
 
 		}
@@ -254,8 +264,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			String tempMoney = scanner.next();
 			customerMoney = Integer.parseInt(tempMoney);
 			if (paidMoney > customerMoney) {
-				return false;
-				// 에러 내야함
+				throw new LackMoneyException();
 			}
 			customerMoney = customerMoney - paidMoney;
 			FileWriter fileWriter = new FileWriter(file);
@@ -264,9 +273,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			fileWriter.close();
 
 		} catch (IOException | InputMismatchException e) {
-			// 파일 접근에 대한 실패로 에러를 내야함
-			e.printStackTrace();
-			throw new FileAcceptException();
+			throw new FailPaymentExcaption();
 		}
 
 		try {
@@ -282,10 +289,9 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			fileWriter.flush();
 			fileWriter.close();
 		} catch (IOException | InputMismatchException e) {
-			// 파일 접근에 대한 실패로 에러를 내야함
-			e.printStackTrace();
+			throw new FailPaymentExcaption();
 		}
-
+		this.tempPaymentList = new ArrayList<Payment>();
 		Payment payment = new Payment();
 		payment.setPaymentID(UUID.randomUUID().toString());
 		payment.setCustomerID(this.customer.getCustomerID());
@@ -298,11 +304,11 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 		payment.setPaidDate(LocalDate.now());
 		payment.setContractID(duePaymentDto.getContractID());
 		payment.setInsuranceType(this.insuranceDao.retriveInsuranceType(duePaymentDto.getInsuranceID()));
-
+		this.tempPaymentList.add(payment);
 		if (this.paymentDao.insertPayment(payment) == 1) {
 			this.paymentDao.commit();
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 
 		ContractAccountDto contractAccountDto = new ContractAccountDto();
@@ -311,7 +317,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 		if (this.contractDao.updateUnpaidFee(contractAccountDto) == 1) {
 			this.contractDao.commit();
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 
 		this.unpaidFeeDto = new UnpaideFeeDto();
@@ -334,7 +340,6 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			for(Payment payment: this.tempPaymentList) {
 			String tempPrint = "보험이름: "+ payment.getInsuranceName()+"보험종류: "+ payment.getInsuranceType() +"카드사/은행명: " + payment.getCardOrBankName() + "카드/계좌번호: " +payment.getAccountNum() + "납부금액: "+ payment.getInsuranceFee() + "납부일: "+payment.getPaidDate();
 			
-			
 			fileWriter.write(tempPrint);
 			fileWriter.flush();
 			}
@@ -344,8 +349,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			JEditorPane text = new JEditorPane("file:///" + customerBankPath);
 			text.print(null, null, true, null, null, false);
 		} catch (IOException | PrinterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new FailPaymentExcaption();
 		}
 		return true;
 	}

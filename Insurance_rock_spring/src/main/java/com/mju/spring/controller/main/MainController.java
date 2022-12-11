@@ -1,6 +1,7 @@
 package com.mju.spring.controller.main;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Locale;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.entity.Insurance;
+import com.mju.spring.exception.TextFileAcceptException;
 import com.mju.spring.service.contractTeam.InsuranceDesignService;
 
 @Controller
@@ -80,8 +82,9 @@ public class MainController {
 				model.addAttribute("CompensateCondition", insurance.getCompensateCondition());
 				model.addAttribute("Explanation", insurance.getExplanation());
 				model.addAttribute("PremiumRate", insurance.getPremiumRate());
-				return "contractTeam//insuranceDesign//register";
-			} else {
+				return "contractTeam//measureStandardFee//register";
+			}
+			else {
 				return "contractTeam//insuranceDesign//inputTypeAndTerm";
 			}
 		} else if (request.getParameter("menu").equals("underwrite")) {
@@ -138,9 +141,11 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "policyholderMenu", method = RequestMethod.GET)
-	public String policyholderControl(HttpServletRequest request) {
+	public String policyholderControl(HttpServletRequest request, Model model) {
 
 		if (request.getParameter("menu").equals("payInsuranceFee")) {
+			
+			model.addAttribute("Today", LocalDate.now());
 			return "policyholder//checkInsuranceFee//inputPolicyholderInfo";
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";

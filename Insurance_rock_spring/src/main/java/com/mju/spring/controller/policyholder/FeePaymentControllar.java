@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,13 @@ import com.mju.spring.dto.policyholder.feePayment.DuePaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
 import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
-import com.mju.spring.exception.FileAcceptException;
+import com.mju.spring.exception.ChangeDateException;
+import com.mju.spring.exception.FailPaymentExcaption;
+import com.mju.spring.exception.LackMoneyException;
+import com.mju.spring.exception.NotFindBank;
+import com.mju.spring.exception.NotFindPolicyholderException;
+import com.mju.spring.exception.NotFindRecordException;
+import com.mju.spring.exception.UnderMinimunMoneyException;
 import com.mju.spring.service.policyholder.FeePaymentService;
 
 @Controller
@@ -43,8 +50,7 @@ public class FeePaymentControllar {
 			model.addAttribute("DuePaymentList", duePaymentList);
 			return "policyholder//checkInsuranceFee//selectDuePayment";
 		} else {
-			// 유즈케이스 E1 return이 아닌 throw를 해야함
-			return "error";
+			throw new NotFindPolicyholderException();
 		}
 	}
 
@@ -78,8 +84,8 @@ public class FeePaymentControllar {
 		if (paymentList.size() > 0) {
 			model.addAttribute("PaymentList", paymentList);
 			return "policyholder//checkInsuranceFee//showPaymentRecord";
-		} else { // 기록이 없는 에러 던지기
-			return "error";
+		} else { 
+			throw new NotFindRecordException();
 		}
 	}
 
@@ -88,8 +94,8 @@ public class FeePaymentControllar {
 		if (provisionList.size() > 0) {
 			model.addAttribute("ProvisionList", provisionList);
 			return "policyholder//checkInsuranceFee//showProvisionRecord";
-		} else {// 기록이 없는 에러 던지기
-			return "error";
+		} else {			
+			throw new NotFindRecordException();
 		}
 	}
 
@@ -223,14 +229,69 @@ public class FeePaymentControllar {
 		return "error";
 	}
 
-	@ExceptionHandler(FileAcceptException.class)
+	@ExceptionHandler(NotFindPolicyholderException.class)
 	private ModelAndView handleFileAcceptException(Exception e) {
-		System.out.println("12458790-85432");
+		System.err.println(e.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("menu//showResult");
-		modelAndView.addObject("JudgeResult", "지급 내역 확인이 완료되었습니다.");
+		modelAndView.addObject("JudgeResult", e.getMessage());
 		return modelAndView;
-		// throw new ExceptionControllar();
+
+	}
+	@ExceptionHandler(PersistenceException.class)
+	private ModelAndView handlerPersistenceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult",
+				"DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
+		return modelAndView;
+
+	}
+	@ExceptionHandler(ChangeDateException.class)
+	private ModelAndView handleChangeDateException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(NotFindBank.class)
+	private ModelAndView handleNotFindBank(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(UnderMinimunMoneyException.class)
+	private ModelAndView handleUnderMinimunMoneyException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(LackMoneyException.class)
+	private ModelAndView handleLackMoneyException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("policyholder//feePayment//selectPaymentAmount");
+		modelAndView.addObject("Popup", true);
+		modelAndView.addObject("Message", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(FailPaymentExcaption.class)
+	private ModelAndView handleFailPaymentExcaption(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
 
 	}
 }
