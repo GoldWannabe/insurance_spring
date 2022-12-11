@@ -18,6 +18,8 @@ public interface CustomerDao {
 	public void updateInsuranceNum(CustomerIDAndInsuranceNumDto customerIDAndInsuranceNumDto);
 
 	public int create(Customer customer);
+
+	public void deleteInsuranceNum(String customerID);
 	
 	
 }

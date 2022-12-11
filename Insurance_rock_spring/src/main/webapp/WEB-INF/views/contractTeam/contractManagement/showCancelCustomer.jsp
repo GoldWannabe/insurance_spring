@@ -3,7 +3,7 @@
 <head>
 <title>showResult</title>
 	<script>
-		alert('${CustomerName}님이 가입한 보험 [ ${InsuranceName} ]를 삭제했습니다.');	
+		alert('보험 [ ${InsuranceName} ] 삭제 후 ( 이름: ${CustomerName} , 연락처:${CustomerPhoneNum} ) 고객님이 계약 중인 보험이 없어 고객 데이터를 정상적으로 삭제했습니다.');	
 	</script>
 </head>
 <body>

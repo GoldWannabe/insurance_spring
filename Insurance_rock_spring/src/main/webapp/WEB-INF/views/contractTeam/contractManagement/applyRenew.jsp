@@ -24,10 +24,10 @@
 <body>
 	<form action="applyRenew">
 	<p>-----------계약 갱신 등급-----------</p>
-		소화시설(Float) <input type="number" name="fireFacilities" value="${FireFacilities}" placeholder="실수" onkeyup="noSpaceForm(this);" required/> <br>
-		스케일(Int) <input type="number" name="scale" value="${Scale}" placeholder="정수" onkeyup="noSpaceForm(this);" required/> <br>
-		주변시설(Float) <input type="number" value="${SurroundingFacilities}" name="surroundingFacilities" placeholder="실수" onkeyup="noSpaceForm(this);"required/> <br>
-		높이가 15층 이상입니까? 기존 값 : ${Height}<br>
+		소화시설(Float) <input type="number" name="fireFacilities" value="${FireFacilities}" placeholder="실수" onkeyup="noSpaceForm(this);" required oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"/> <br>
+		건물규모(Int) <input type="number" name="scale" value="${Scale}" placeholder="정수" onkeyup="noSpaceForm(this);" required oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"/> <br>
+		주변시설(Float) <input type="number" value="${SurroundingFacilities}" name="surroundingFacilities" placeholder="실수" onkeyup="noSpaceForm(this);"required oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"/> <br>
+		건물 높이가 15층 이상입니까? 기존 값 : ${Height}<br>
 		<input type="radio" name="height" value="true" required/>예
 		<input type="radio" name="height" value="false" />아니오 <br> <br> 
 		건물 재질(rock, wood etc.) 기존 값 : ${Material}<br>
@@ -45,10 +45,10 @@
 		<input type="radio" name="purpose" value="corPark" />6.corPark
 		<input type="radio" name="purpose" value="warehouse" />7.warehouse<br> <br> 
 	<p>------------계약 갱신 기타---------------</p>
-		담보액 : <input type="number" name="securityFee"  value="${SecurityFee}" onkeyup="noSpaceForm(this);" required/> <br>
-		보험료 : <input type="number" name="insuranceFee" value="${InsuranceFee}" onkeyup="noSpaceForm(this);" required/> <br>
+		담보액 : <input type="number" name="securityFee"  value="${SecurityFee}" onkeyup="noSpaceForm(this);" required oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"/> <br>
+		보험료 : <input type="number" name="insuranceFee" value="${InsuranceFee}" onkeyup="noSpaceForm(this);" required oninvalid="this.setCustomValidity('입력되지 않은 입력란이 존재합니다.\n모든 입력란에는 반드시 정보를 입력해야 합니다.')"/> <br>
 		납부방식 : <input type="number" name="paymentCycle"  value="${PaymentCycle}" placeholder="1~12개월이내" min="1" max="12" onkeyup="noSpaceForm(this);"required/> <br>
-		연장 기간 :  <input type="number" name="period" placeholder="6개월이상" min="6" onkeyup="noSpaceForm(this);"required/> <br>
+		연장 기간 :  <input type="number" name="period" placeholder="6개월이상" min="6" onkeyup="noSpaceForm(this);"required oninvalid="this.setCustomValidity('갱신 기간은 6개월 이상으로 입력하여 주십시오.')" /> <br>
 		
 		<div>
 			<button type="submit">갱신 신청</button>

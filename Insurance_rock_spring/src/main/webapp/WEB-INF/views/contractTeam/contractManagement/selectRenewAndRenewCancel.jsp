@@ -16,7 +16,7 @@
 		<table border="1">
 			<thead>
 				<tr>
-					<th>계약ID</th>
+					<th>계약번호</th>
 					<th>보험이름</th>
 					<th>가입자명</th>
 					<th>연락처</th>
@@ -59,15 +59,15 @@
 		<table border="1">
 			<thead>
 				<tr>
-					<th>계약ID</th>
-					<th>사고ID</th>
+					<th>계약번호</th>
+					<th>사고번호</th>
 					<th>사고날짜</th>
 					<th>사고내용</th>
 					<th>총 비용</th>
 					<th>손해정도</th>
-					<th>종류</th>
+					<th>비용종류</th>
 					<th>지급여부</th>
-					<th>책이비율</th>
+					<th>책임비율</th>
 					<th>책임비용</th>
 				</tr>
 			</thead>

@@ -1,9 +1,16 @@
 package com.mju.spring.dto.contractTeam.contractManagement;
 
-public class CustomerNameAndInsuranceNameDto {
+public class RenewCustomerPopupDto {
 	private String customerName;
 	private String insuranceName;
+	private String customerPhoneNum;
 	
+	public String getCustomerPhoneNum() {
+		return customerPhoneNum;
+	}
+	public void setCustomerPhoneNum(String customerPhoneNum) {
+		this.customerPhoneNum = customerPhoneNum;
+	}
 	public String getCustomerName() {
 		return customerName;
 	}
