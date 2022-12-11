@@ -1,7 +1,6 @@
 package com.mju.spring.dto.damageAssessment.compansate;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class ContractProvisionDto {
 	//계약 id, 보험id, 보험이름, 담보액, 지급액, 시작일, 만기일

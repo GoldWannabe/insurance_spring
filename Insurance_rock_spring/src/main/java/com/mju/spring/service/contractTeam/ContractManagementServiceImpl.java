@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.annotation.ResponseStatusExceptionResolver;
 
 import com.mju.spring.dao.AccidentDao;
 import com.mju.spring.dao.ContractAccidentDao;
@@ -16,16 +15,14 @@ import com.mju.spring.dao.CustomerDao;
 import com.mju.spring.dao.CustomerRankDao;
 import com.mju.spring.dao.RankDao;
 import com.mju.spring.dao.RenewContractDao;
-import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
 import com.mju.spring.dto.contractTeam.contractManagement.CustomerIDAndInsuranceNumDto;
-import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewContractManagementDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.SelectContractManagementDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
-import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Rank;
 
 @Service

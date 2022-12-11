@@ -1,7 +1,5 @@
 package com.mju.spring.dto.salesTeam.InsuranceSales;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mju.spring.entity.Rank;
@@ -143,27 +141,6 @@ public class CustomerDto {
 	public boolean addCustomerIDRankID(String contractID, String rankID) {
 		return (this.contractID.add(contractID) && this.rankID.add(rankID));
 
-	}
-
-
-	private boolean setRank(ResultSet resultSet) {
-
-		try {
-			resultSet.next();
-			this.rank.setRankID(resultSet.getString("RankID"));
-			this.rank.setMaterial(resultSet.getString("material"));
-			this.rank.setFireFacilities(resultSet.getDouble("fireFacilities"));
-			this.rank.setHeight(resultSet.getBoolean("height"));
-			this.rank.setScale(resultSet.getInt("scale"));
-			this.rank.setSurroundingFacilities(resultSet.getFloat("surroundingFacilities"));
-			this.rank.setPurpose(resultSet.getString("purpose"));
-
-			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return false;
 	}
 
 
