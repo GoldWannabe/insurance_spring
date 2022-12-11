@@ -116,7 +116,7 @@ public class MainController {
 		if (request.getParameter("menu").equals("insuranceSales")) {
 			return "salesTeam//insuranceSales//selectInsuranceType";
 		} else if (request.getParameter("menu").equals("customerManagement")) {
-			return "";
+			return "salesTeam//customerManagement//inputNameAndPhoneNum";
 		} else if (request.getParameter("menu").equals("channelManagement")) {
 			return "";
 		} else if (request.getParameter("menu").equals("cancellation")) {
