@@ -34,14 +34,13 @@ public class InsuranceJudgeController {
 			model.addAttribute("RegisterInsuranceList", registerInsuranceDaoList);
 			return "financialDirector//insuranceJudge//selectJudgeInsurance";
 			} else {
-
 				throw new NotFindJudgedInsuranceException();
 			}
 			
 		} else if (request.getParameter("menu").equals("cancel")) {
 			return "menu//menu";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 	}
 
@@ -64,16 +63,16 @@ public class InsuranceJudgeController {
 
 			return defer(model);
 		} else {
-			return "error";
+			return "menu//error";
 		}
 	}
 
 	private String permit(Model model) {
 		if (this.insuranceJudgeService.permit()) {
-			model.addAttribute("JudgeResult", "해당 보험이 승인되었습니다.");
+			model.addAttribute("JudgeResult", "보험이 승인되었습니다.");
 			return "menu//showResult";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 	}
 
@@ -82,7 +81,7 @@ public class InsuranceJudgeController {
 			model.addAttribute("JudgeResult", "해당 보험이 비승인되었습니다.");
 			return "menu//showResult";
 		} else {
-			return "error";
+			return "menu//error";
 		}
 	}
 

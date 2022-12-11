@@ -7,6 +7,11 @@
 <script type="text/javascript">
 	function setReason() {
 		 var reason = prompt("반려 이유를 입력해 주세요.");
+		 while(!reason){
+			 alert("사유를 적어주세요");
+			 var reason = prompt("반려 이유를 입력해 주세요.");
+			};
+		 
 		 var reasonInput = document.getElementById("reason");
 		 reasonInput.value = reason;
 		 return true;

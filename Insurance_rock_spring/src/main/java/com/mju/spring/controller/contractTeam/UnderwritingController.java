@@ -4,16 +4,21 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mju.spring.dto.contractTeam.Underwriting.ApplyContractDto;
 import com.mju.spring.dto.contractTeam.Underwriting.RenewContractDto;
 import com.mju.spring.dto.contractTeam.Underwriting.VerifyApplyContractDto;
 import com.mju.spring.dto.contractTeam.Underwriting.VerifyRenewContractDto;
+import com.mju.spring.exception.NotFindJoinedCustomerException;
+import com.mju.spring.exception.NotFindJudgeContractException;
 import com.mju.spring.dto.contractTeam.Underwriting.ReasonDto;
 import com.mju.spring.service.contractTeam.UnderwritingService;
 
@@ -42,9 +47,7 @@ public class UnderwritingController {
 			model.addAttribute("ApplyContractList", applyContractList);
 			return "contractTeam//underwriting//selectApply";
 		} else {
-			model.addAttribute("JudgeResult", "심사할 계약이 없습니다");
-			return "menu//showResult";
-
+			throw new NotFindJudgeContractException();
 		}
 	}
 
@@ -73,7 +76,7 @@ public class UnderwritingController {
 			this.underwritingService.setReason(request);
 			return notPermitApply(model);
 		} else if (request.getParameter("selectPerit").equals("cancel")) {
-			model.addAttribute("JudgeResult", "취소되었습니다.");
+			model.addAttribute("JudgeResult", "진행중인 검증을 취소하셨습니다");
 			return "menu//showResult";
 		} else {
 			return "error";
@@ -92,7 +95,7 @@ public class UnderwritingController {
 	private String notPermitApply(Model model) {
 		if (this.underwritingService.notPermitApply()) {
 			ReasonDto reasonDto = this.underwritingService.getReason();
-			String reason ="계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
+			String reason = "계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
 			model.addAttribute("JudgeResult", reason);
 			return "menu//showResult";
 		} else {
@@ -119,9 +122,7 @@ public class UnderwritingController {
 			model.addAttribute("RenewContractList", renewContractList);
 			return "contractTeam//underwriting//selectRenew";
 		} else {
-			model.addAttribute("JudgeResult", "심사할 계약이 없습니다");
-			return "menu//showResult";
-
+			throw new NotFindJudgeContractException();
 		}
 	}
 
@@ -149,7 +150,7 @@ public class UnderwritingController {
 			this.underwritingService.setReason(request);
 			return notPermitRenew(model);
 		} else if (request.getParameter("selectPerit").equals("cancel")) {
-			model.addAttribute("JudgeResult", "취소되었습니다.");
+			model.addAttribute("JudgeResult", "진행중인 검증을 취소하셨습니다");
 			return "menu//showResult";
 		} else {
 			return "error";
@@ -168,8 +169,9 @@ public class UnderwritingController {
 	private String notPermitRenew(Model model) {
 		if (this.underwritingService.notPermitRenew()) {
 			ReasonDto reasonDto = this.underwritingService.getReason();
-			//System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " + reasonDto.getReason());
-			String reason ="계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
+			// System.out.println("계약이 반려되었습니다." + System.lineSeparator() + "반려사유: " +
+			// reasonDto.getReason());
+			String reason = "계약이 반려되었습니다. 반려사유: " + reasonDto.getReason();
 			model.addAttribute("JudgeResult", reason);
 			return "menu//showResult";
 		} else {
@@ -180,6 +182,37 @@ public class UnderwritingController {
 	@RequestMapping(value = "underwriteCancel", method = RequestMethod.GET)
 	public String cancelUnderwrite() {
 		return "menu//menu";
+
+	}
+
+	@ExceptionHandler(PersistenceException.class)
+	private ModelAndView handlerPersistenceException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult",
+				"DB 접근 오류: 정보 접근에 실패하였습니다. 해당 문제가 계속 발생할 시에는 사내 시스템 관리팀(1234-5678)에게 문의 주시기 바랍니다.");
+		return modelAndView;
+
+	}
+
+	@ExceptionHandler(NotFindJudgeContractException.class)
+	private ModelAndView handlerNotFindJudgeContractException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	
+	@ExceptionHandler(NotFindJoinedCustomerException.class)
+	private ModelAndView handlerNotFindJoinedCustomerException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
 
 	}
 }

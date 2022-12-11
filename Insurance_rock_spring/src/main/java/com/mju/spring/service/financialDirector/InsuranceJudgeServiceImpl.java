@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 			return this.insurance;
 
 		} else {
-			return null;
+			throw new PersistenceException();
 		}
 
 	}
@@ -73,7 +74,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 		if (createInsurance()) {
 			return deleteRegister();
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 
 	}
@@ -96,11 +97,11 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 				return createHouseRate();
 
 			} else {
-				return false;
+				throw new PersistenceException();
 
 			}
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -110,7 +111,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 			return true;
 
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -120,7 +121,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 			return true;
 
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -130,7 +131,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 		} else if (this.insurance.getInsuranceType() == EInsurance.house) {
 			return deleteRegisterHouseRate();
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -139,7 +140,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 			this.registerGeneralRateDao.commit();
 			return deleteRegisterInsurance();
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -150,7 +151,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 			this.registerHouseRateDao.commit();
 			return deleteRegisterInsurance();
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -159,7 +160,7 @@ public class InsuranceJudgeServiceImpl implements InsuranceJudgeService {
 			this.registerInsuranceDao.commit();
 			return true;
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 }

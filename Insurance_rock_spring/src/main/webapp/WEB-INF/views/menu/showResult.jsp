@@ -8,7 +8,7 @@
 	<script>
 		alert('${JudgeResult}');	
 	</script>
-	<button type="submit">메인화면으로</button>
+	<button type="submit">홈화면으로</button>
 	</form>
 </body>
 </html>

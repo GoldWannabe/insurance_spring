@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mju.spring.dao.ApplyContractDao;
@@ -27,6 +28,7 @@ import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Insurance;
 import com.mju.spring.entity.Rank;
+import com.mju.spring.exception.NotFindJoinedCustomerException;
 
 @Service
 public class UnderwritingServiceImpl implements UnderwritingService {
@@ -81,7 +83,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 		
 		setApplyToContract(Integer.parseInt(request.getParameter("num")));
 		if (!getInsurance() || !getCustomer()) {
-			return null; //오류 던져야함
+			throw new PersistenceException();
 		}
 
 		if (!verifyPeriod() || !verifyPremium()) {
@@ -134,12 +136,15 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.insurance.setPremiumRate(rate);
 			return true;
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 	}
 
 	private boolean getCustomer() {
 		this.customer = this.customerDao.retriveCustomerById(this.contract.getCustomerID());
+		if(this.customer == null) {
+			throw new NotFindJoinedCustomerException();
+		}
 		ArrayList<String> rankIDList = new ArrayList<String>();
 		rankIDList.add(this.customerRankDao.retriveRankID(this.contract.getContractID()));
 		this.customer.setRankID(rankIDList);
@@ -385,7 +390,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	public VerifyRenewContractDto verifyRenew(HttpServletRequest request) {
 		setRenewToContract(Integer.parseInt(request.getParameter("num")));
 		if (!getInsurance() || !getRenewCustomer()) {
-			return null; //오류 던져야함
+			throw new PersistenceException();
 		}
 		if (!verifyPeriod() || !verifyPremium() || !checkRiseFee()) {
 			return null;
@@ -423,6 +428,10 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 	
 	private boolean getRenewCustomer() {
 		this.customer = this.customerDao.retriveCustomerById(this.contract.getCustomerID());
+		if(this.customer == null) {
+			throw new NotFindJoinedCustomerException();
+		}
+		
 		
 		ArrayList<String> rankIDList = new ArrayList<String>(this.customerRankDao.retriveRankIDList(this.contract.getContractID()));
 		this.customer.setRankID(rankIDList);
@@ -433,7 +442,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.customer.setRank(this.rankDao.retriveRankById(this.customer.getRankID().get(0)));
 			this.rank = this.rankDao.retriveRankById(this.customer.getRankID().get(1));
 		} else {
-			return false;
+			throw new PersistenceException();
 		}
 		return true;		
 	}
@@ -475,7 +484,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			return deleteApply();
 		}
 		
-		return false;
+		throw new PersistenceException();
 	}
 
 	private boolean deleteApply() {
@@ -483,7 +492,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.applyContractDao.commit();
 			return updateCustomer();
 		} else {
-		return false;
+			throw new PersistenceException();
 		}
 	}
 
@@ -493,7 +502,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.customerDao.commit();
 			return true;
 		}
-		return false;
+		throw new NotFindJoinedCustomerException();
 	}
 
 	@Override
@@ -508,14 +517,12 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			return deleteApply();
 		}
 		
-		return false;		
+		throw new PersistenceException();
 	}
 
 	@Override
 	public boolean permitRenew() {
-		//contractRank도 삭제해야함 + rank 기존꺼 삭제 및 업데이트
-		//renew 삭제 및 업데이트
-		
+	
 		return updateRenew();
 	}
 
@@ -525,7 +532,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.contractDao.commit();
 			return updateRank();
 		}
-		return false;
+		throw new PersistenceException();
 	}
 
 	private boolean updateRank() {
@@ -535,15 +542,12 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.rank.setRankID("*"+this.rank.getRankID());
 			return deleteRenew();
 		}
-		
-		
-		return false;
+
+		throw new PersistenceException();
 	}
 
 	@Override
 	public boolean notPermitRenew() {
-		//contractRank 삭제+ rank 삭제
-		//renew 삭제
 		return deleteRenew();
 	}
 
@@ -553,7 +557,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			return deleteContractRank();
 		}
 		
-		return false;
+		throw new PersistenceException();
 	}
 
 	private boolean deleteContractRank() {
@@ -561,7 +565,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.customerRankDao.commit();
 			return deleteRank();
 		}
-		return false;
+		throw new PersistenceException();
 	}
 
 	private boolean deleteRank() {
@@ -569,7 +573,7 @@ public class UnderwritingServiceImpl implements UnderwritingService {
 			this.rankDao.commit();
 			return true;
 		}
-		return false;
+		throw new PersistenceException();
 	}
 
 
