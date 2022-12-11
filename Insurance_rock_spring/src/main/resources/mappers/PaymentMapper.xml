@@ -5,4 +5,8 @@
 	<select id="selectPayment" resultType="com.mju.spring.dto.policyholder.feePayment.PaymentDto">
 		SELECT customerName, customerPhoneNum, insuranceName, insuranceType, cardOrBankName, accountNum, insuranceFee, paidDate FROM Payment WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum}
 	</select>
+	
+	<insert id="create">
+		insert into Payment(paymentID, customerID, customerName, customerPhoneNum, accountNum, cardOrBankName, insuranceFee, insuranceName, paidDate, contractID, insuranceType) values (#{paymentID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{accountNum}, #{cardOrBankName}, #{insuranceFee}, #{insuranceName}, #{paidDate}, #{contractID}, #{insuranceType})
+	</insert>
 </mapper>

@@ -11,11 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mju.spring.dto.policyholder.feePayment.AccountDto;
 import com.mju.spring.dto.policyholder.feePayment.DuePaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
+import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
 import com.mju.spring.exception.FileAcceptException;
 import com.mju.spring.service.policyholder.FeePaymentService;
 
@@ -160,7 +163,7 @@ public class FeePaymentControllar {
 	@RequestMapping(value = "selectPaymentAmount", method = RequestMethod.GET)
 	public String selectPaymentAmount(HttpServletRequest request, Model model) {
 		if (request.getParameter("selectAmount").equals("full")) {
-			return feeFullPayment();
+			return feeFullPayment(model);
 		} else if (request.getParameter("selectAmount").equals("part")) {
 			return feePartPayment(model);
 		} else if (request.getParameter("selectAmount").equals("cancel")) {
@@ -170,8 +173,10 @@ public class FeePaymentControllar {
 		}
 	}
 
-	private String feeFullPayment() {
+	private String feeFullPayment(Model model) {
 		if (this.feePaymentService.feeFullPayment()) {
+			
+			model.addAttribute("CheckPrint", "납부가 완료 되었습니다. 납부확인서를 출력하시겠습니까?");
 			return "policyholder//feePayment//selectPrint";
 		} else {
 
@@ -190,7 +195,10 @@ public class FeePaymentControllar {
 	}
 	@RequestMapping(value = "selectPayment", method = RequestMethod.GET)
 	public String selectPayment(HttpServletRequest request, Model model) {
-		if (this.feePaymentService.feePartPayment()) {
+		
+		if (this.feePaymentService.feePartPayment(request)) {
+			UnpaideFeeDto unpaideFeeDto = this.feePaymentService.getUnpaideFeeDto();
+			model.addAttribute("CheckPrint", "납부가 완료 되었습니다. 납부확인서를 출력하시겠습니까? 미납금: "+ unpaideFeeDto.getUnpaidFee());
 			return "policyholder//feePayment//selectPrint";
 		} else {
 
@@ -199,9 +207,9 @@ public class FeePaymentControllar {
 	}
 	@RequestMapping(value = "selectPrint", method = RequestMethod.GET)
 	public String selectPrint(HttpServletRequest request, Model model) {
-		if (request.getParameter("").equals("print")) {
+		if (request.getParameter("printPayment").equals("print")) {
 			return printPayment();
-		} else if (request.getParameter("").equals("cancel")) {
+		} else if (request.getParameter("printPayment").equals("cancel")) {
 			return "menu//menu";
 		} else {
 			return "error";
@@ -216,9 +224,12 @@ public class FeePaymentControllar {
 	}
 	
 	@ExceptionHandler(FileAcceptException.class)
-	private String aa(Exception e, Model model) {
-		model.addAttribute("");
-		return "menu//showResult";
+	private ModelAndView handleFileAcceptException(Exception e) {
+		System.out.println("12458790-85432");
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", "지급 내역 확인이 완료되었습니다.");
+		return modelAndView;
 		//throw new ExceptionControllar();
 
 	}

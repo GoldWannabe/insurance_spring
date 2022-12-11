@@ -1,15 +1,18 @@
 package com.mju.spring.service.policyholder;
 
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.JEditorPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -22,10 +25,12 @@ import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.PaymentDao;
 import com.mju.spring.dao.ProvisionDao;
 import com.mju.spring.dto.policyholder.feePayment.AccountDto;
+import com.mju.spring.dto.policyholder.feePayment.ContractAccountDto;
 import com.mju.spring.dto.policyholder.feePayment.DuePaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PolicyholderDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
+import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
 import com.mju.spring.entity.Contract;
 import com.mju.spring.entity.Customer;
 import com.mju.spring.entity.Payment;
@@ -51,6 +56,8 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 	private PolicyholderDto policyholderDto;
 	private Customer customer;
 	private AccountDto accountDto;
+	private UnpaideFeeDto unpaidFeeDto;
+	private List<Payment> tempPaymentList;
 
 	@Override
 	public List<DuePaymentDto> getDuePaymentList(HttpServletRequest request) {
@@ -125,7 +132,8 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			String customerBankPath = resourceCustomer.getURI().getPath();
 			File file = new File(customerBankPath);
 			Scanner scanner = new Scanner(file);
-			money = scanner.nextInt();
+			String amount = scanner.next();
+			money = Integer.parseInt(amount);
 		} catch (IOException | InputMismatchException e) {
 			// 파일 접근에 대한 실패로 에러를 내야함
 			e.printStackTrace();
@@ -151,37 +159,38 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 		for (DuePaymentDto duePaymentDto : this.duePaymentList) {
 			totalFee = duePaymentDto.getUnpaidFee() + totalFee;
 		}
-		
+
 		try {
 			Resource resourceCustomer = resourceLoader.getResource("classpath:File//CustomerBank.txt");
 			String customerBankPath = resourceCustomer.getURI().getPath();
 			File file = new File(customerBankPath);
 			Scanner scanner = new Scanner(file);
-			customerMoney = scanner.nextInt();
-			customerMoney = customerMoney - totalFee;		
+			String tempMoney = scanner.next();
+			customerMoney = Integer.parseInt(tempMoney);
+			if (totalFee > customerMoney) {
+				return false;
+				// 에러 내야함
+			}
+			customerMoney = customerMoney - totalFee;
 			FileWriter fileWriter = new FileWriter(file);
 			fileWriter.write(customerMoney);
 			fileWriter.flush();
 			fileWriter.close();
-		if(totalFee > customerMoney) {
-			return false;
-			//에러 내야함
-		}			
-					
+
 		} catch (IOException | InputMismatchException e) {
 			// 파일 접근에 대한 실패로 에러를 내야함
 			e.printStackTrace();
 			throw new FileAcceptException();
 		}
-	
-		
+
 		try {
 			Resource resourceCustomer = resourceLoader.getResource("classpath:File//InsuranceBank.txt");
 			String customerBankPath = resourceCustomer.getURI().getPath();
 			File file = new File(customerBankPath);
 			Scanner scanner = new Scanner(file);
-			int insuranceMoney = scanner.nextInt();
-			insuranceMoney = customerMoney+insuranceMoney;
+			String tempMoney = scanner.next();
+			int insuranceMoney = Integer.parseInt(tempMoney);
+			insuranceMoney = customerMoney + insuranceMoney;
 			FileWriter fileWriter = new FileWriter(file);
 			fileWriter.write(insuranceMoney);
 			fileWriter.flush();
@@ -190,7 +199,7 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			// 파일 접근에 대한 실패로 에러를 내야함
 			e.printStackTrace();
 		}
-		
+		this.tempPaymentList = new ArrayList<Payment>();
 		for (DuePaymentDto duePaymentDto : this.duePaymentList) {
 			Payment payment = new Payment();
 			payment.setPaymentID(UUID.randomUUID().toString());
@@ -204,11 +213,25 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 			payment.setPaidDate(LocalDate.now());
 			payment.setContractID(duePaymentDto.getContractID());
 			payment.setInsuranceType(this.insuranceDao.retriveInsuranceType(duePaymentDto.getInsuranceID()));
-			
-			//this.paymentDao.insertPayment(payment);
+			this.tempPaymentList.add(payment);
+			if (this.paymentDao.insertPayment(payment) == 1) {
+				this.paymentDao.commit();
+			} else {
+				return false;
+			}
+
+			ContractAccountDto contractAccountDto = new ContractAccountDto();
+			contractAccountDto.setContractID(duePaymentDto.getContractID());
+			contractAccountDto.setUnpaidFee(0);
+			if (this.contractDao.updateUnpaidFee(contractAccountDto) == 1) {
+				this.contractDao.commit();
+			} else {
+				return false;
+			}
+
 		}
-		
-		return false;
+
+		return true;
 	}
 
 	@Override
@@ -216,14 +239,115 @@ public class FeePaymentServiceImpl implements FeePaymentService {
 		return this.duePaymentList;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
-	public boolean feePartPayment() {
-		return false;
+	public boolean feePartPayment(HttpServletRequest request) {
+		DuePaymentDto duePaymentDto = this.duePaymentList.get(Integer.parseInt(request.getParameter("num")));
+		int paidMoney = Integer.parseInt(request.getParameter("money"));
+		int customerMoney = 0;
+
+		try {
+			Resource resourceCustomer = resourceLoader.getResource("classpath:File//CustomerBank.txt");
+			String customerBankPath = resourceCustomer.getURI().getPath();
+			File file = new File(customerBankPath);
+			Scanner scanner = new Scanner(file);
+			String tempMoney = scanner.next();
+			customerMoney = Integer.parseInt(tempMoney);
+			if (paidMoney > customerMoney) {
+				return false;
+				// 에러 내야함
+			}
+			customerMoney = customerMoney - paidMoney;
+			FileWriter fileWriter = new FileWriter(file);
+			fileWriter.write(customerMoney);
+			fileWriter.flush();
+			fileWriter.close();
+
+		} catch (IOException | InputMismatchException e) {
+			// 파일 접근에 대한 실패로 에러를 내야함
+			e.printStackTrace();
+			throw new FileAcceptException();
+		}
+
+		try {
+			Resource resourceCustomer = resourceLoader.getResource("classpath:File//InsuranceBank.txt");
+			String customerBankPath = resourceCustomer.getURI().getPath();
+			File file = new File(customerBankPath);
+			Scanner scanner = new Scanner(file);
+			String tempMoney = scanner.next();
+			int insuranceMoney = Integer.parseInt(tempMoney);
+			insuranceMoney = customerMoney + paidMoney;
+			FileWriter fileWriter = new FileWriter(file);
+			fileWriter.write(insuranceMoney);
+			fileWriter.flush();
+			fileWriter.close();
+		} catch (IOException | InputMismatchException e) {
+			// 파일 접근에 대한 실패로 에러를 내야함
+			e.printStackTrace();
+		}
+
+		Payment payment = new Payment();
+		payment.setPaymentID(UUID.randomUUID().toString());
+		payment.setCustomerID(this.customer.getCustomerID());
+		payment.setCustomerName(this.customer.getName());
+		payment.setCustomerPhoneNum(this.customer.getPhoneNum());
+		payment.setAccountNum(this.accountDto.getAccountNum());
+		payment.setCardOrBankName(this.accountDto.getBankName());
+		payment.setInsuranceFee(paidMoney);
+		payment.setInsuranceName(duePaymentDto.getInsuranceName());
+		payment.setPaidDate(LocalDate.now());
+		payment.setContractID(duePaymentDto.getContractID());
+		payment.setInsuranceType(this.insuranceDao.retriveInsuranceType(duePaymentDto.getInsuranceID()));
+
+		if (this.paymentDao.insertPayment(payment) == 1) {
+			this.paymentDao.commit();
+		} else {
+			return false;
+		}
+
+		ContractAccountDto contractAccountDto = new ContractAccountDto();
+		contractAccountDto.setContractID(duePaymentDto.getContractID());
+		contractAccountDto.setUnpaidFee(duePaymentDto.getUnpaidFee() - paidMoney);
+		if (this.contractDao.updateUnpaidFee(contractAccountDto) == 1) {
+			this.contractDao.commit();
+		} else {
+			return false;
+		}
+
+		this.unpaidFeeDto = new UnpaideFeeDto();
+		this.unpaidFeeDto.setUnpaidFee(contractAccountDto.getUnpaidFee());
+		return true;
+	}
+
+	@Override
+	public UnpaideFeeDto getUnpaideFeeDto() {
+		return this.unpaidFeeDto;
 	}
 
 	@Override
 	public boolean printPayment() {
-		return false;
+		try {
+			Resource resourceCustomer = resourceLoader.getResource("classpath:File//InsuranceBank.txt");
+			String customerBankPath = resourceCustomer.getURI().getPath();
+			File file = new File(customerBankPath);
+			FileWriter fileWriter = new FileWriter(file);
+			for(Payment payment: this.tempPaymentList) {
+			String tempPrint = "보험이름: "+ payment.getInsuranceName()+"보험종류: "+ payment.getInsuranceType() +"카드사/은행명: " + payment.getCardOrBankName() + "카드/계좌번호: " +payment.getAccountNum() + "납부금액: "+ payment.getInsuranceFee() + "납부일: "+payment.getPaidDate();
+			
+			
+			fileWriter.write(tempPrint);
+			fileWriter.flush();
+			}
+			
+			fileWriter.close();
+			
+			JEditorPane text = new JEditorPane("file:///" + customerBankPath);
+			text.print(null, null, true, null, null, false);
+		} catch (IOException | PrinterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
 	}
 
 }

@@ -8,6 +8,7 @@ import com.mju.spring.dto.policyholder.feePayment.AccountDto;
 import com.mju.spring.dto.policyholder.feePayment.DuePaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
+import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
 
 public interface FeePaymentService {
 
@@ -29,8 +30,10 @@ public interface FeePaymentService {
 
 	List<DuePaymentDto> getDuePaymentList();
 
-	boolean feePartPayment();
+	boolean feePartPayment(HttpServletRequest request);
 
 	boolean printPayment();
+
+	UnpaideFeeDto getUnpaideFeeDto();
 
 }

@@ -39,4 +39,8 @@
 		SELECT contractID, insuranceID, insuranceName, insuranceFee, unpaidFee, customerID from
 		Contract WHERE customerName = #{customerName} and customerPhoneNum = #{customerPhoneNum} and unpaidFee != 0
 	</select>
+	
+	<update id="updateUnpaidFee">
+		UPDATE Contract SET unpaidFee = #{unpaidFee} WHERE contractID = #{contractID}
+	</update>
 </mapper>
