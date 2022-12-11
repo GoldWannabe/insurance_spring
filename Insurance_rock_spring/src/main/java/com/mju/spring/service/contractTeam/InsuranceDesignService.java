@@ -2,7 +2,6 @@ package com.mju.spring.service.contractTeam;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mju.spring.dto.InsuranceDto;
 import com.mju.spring.dto.contractTeam.insuranceDesign.InsuranceTypeAndTermDto;
 import com.mju.spring.entity.Insurance;
 

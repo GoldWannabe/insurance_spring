@@ -1,6 +1,5 @@
 package com.mju.spring.controller.policyholder;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +19,12 @@ import com.mju.spring.dto.policyholder.feePayment.PaymentDto;
 import com.mju.spring.dto.policyholder.feePayment.ProvisionDto;
 import com.mju.spring.dto.policyholder.feePayment.UnpaideFeeDto;
 import com.mju.spring.exception.ChangeDateException;
-import com.mju.spring.exception.FileAcceptException;
+import com.mju.spring.exception.FailPaymentExcaption;
+import com.mju.spring.exception.LackMoneyException;
+import com.mju.spring.exception.NotFindBank;
 import com.mju.spring.exception.NotFindPolicyholderException;
 import com.mju.spring.exception.NotFindRecordException;
+import com.mju.spring.exception.UnderMinimunMoneyException;
 import com.mju.spring.service.policyholder.FeePaymentService;
 
 @Controller
@@ -248,6 +250,43 @@ public class FeePaymentControllar {
 	}
 	@ExceptionHandler(ChangeDateException.class)
 	private ModelAndView handleChangeDateException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(NotFindBank.class)
+	private ModelAndView handleNotFindBank(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(UnderMinimunMoneyException.class)
+	private ModelAndView handleUnderMinimunMoneyException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("menu//showResult");
+		modelAndView.addObject("JudgeResult", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(LackMoneyException.class)
+	private ModelAndView handleLackMoneyException(Exception e) {
+		System.err.println(e.getMessage());
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("policyholder//feePayment//selectPaymentAmount");
+		modelAndView.addObject("Popup", true);
+		modelAndView.addObject("Message", e.getMessage());
+		return modelAndView;
+
+	}
+	@ExceptionHandler(FailPaymentExcaption.class)
+	private ModelAndView handleFailPaymentExcaption(Exception e) {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("menu//showResult");

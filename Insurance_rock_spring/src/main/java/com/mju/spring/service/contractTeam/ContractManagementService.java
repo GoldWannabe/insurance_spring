@@ -4,9 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.mju.spring.dto.contractTeam.contractManagement.ContractManagementAccidentDto;
-import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
+import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerPopupDto;
 import com.mju.spring.entity.Accident;
 import com.mju.spring.entity.Contract;
 

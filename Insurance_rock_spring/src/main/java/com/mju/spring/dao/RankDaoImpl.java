@@ -3,7 +3,6 @@ package com.mju.spring.dao;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.mju.spring.dto.contractTeam.contractManagement.InsuranceDetailsDto;
 import com.mju.spring.entity.Rank;
 
 
@@ -16,7 +15,6 @@ public class RankDaoImpl implements RankDao {
 	private static final String SelectRankById = "RankMapper.selectRankById";
 	private static final String UpdateRank = "RankMapper.updateRank";
 	private static final String DeleteRank = "RankMapper.deleteRank";
-	private static final String SelectRankAll = "RankMapper.selectRankAll";
 
 	@Override
 	public int create(Rank rank) {

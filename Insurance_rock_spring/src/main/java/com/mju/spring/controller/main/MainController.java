@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mju.spring.entity.Insurance;
-import com.mju.spring.exception.TextFileAcceptException;
 import com.mju.spring.service.contractTeam.InsuranceDesignService;
 
 @Controller

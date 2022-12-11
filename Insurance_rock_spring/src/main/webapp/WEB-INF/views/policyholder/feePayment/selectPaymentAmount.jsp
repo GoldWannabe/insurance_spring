@@ -11,6 +11,10 @@
 			<button type="submit" name="selectAmount" value="part">일부 납부</button>
 			<button type="submit" name="selectAmount" value="cancel">취소</button>
 		</form>
-		
+		<script type="text/javascript">
+			if(${Popup}){
+				alert('${Message}');
+			}
+		</script>
 	</body>
 </html>
