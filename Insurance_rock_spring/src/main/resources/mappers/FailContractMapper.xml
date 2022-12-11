@@ -5,5 +5,12 @@
 	<select id="create">
 			INSERT INTO FailContract(contractID, customerID, customerName, customerPhoneNum, insuranceID, insuranceName, paymentCycle, insuranceFee, securityFee, period, reason) VALUES (#{contractID}, #{customerID}, #{customerName}, #{customerPhoneNum}, #{insuranceID}, #{insuranceName}, #{paymentCycle}, #{insuranceFee}, #{securityFee}, #{period}, #{reason})
 	</select>
+	<select id="search" resultType="com.mju.spring.entity.Contract">
+			SELECT * FROM FailContract WHERE customerName = #{customerName} AND customerPhoneNum = #{customerPhoneNum} AND insuranceID = #{insuranceID}
+	</select>
+	
+	<delete id="delete">
+		DELETE FROM FailContract WHERE contractID = #{contractID}
+	</delete>
 </mapper>
 

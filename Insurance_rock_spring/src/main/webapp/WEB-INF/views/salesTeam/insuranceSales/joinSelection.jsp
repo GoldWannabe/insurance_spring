@@ -20,6 +20,7 @@
 		요율 : [1등급, 2등급, 3등급] [ ${PremiumRate[0]}, ${PremiumRate[1]}, ${PremiumRate[2]} ]<br>
 		${InsuranceName} 보험에 가입하시겠습니까?
 		<button type="submit" name = "join" value="join">가입</button>
+		<button type="submit" name = "join" value="rejoin">재가입</button>
 		<button type="submit" name = "join" value="cancel">취소</button>
 	</form>
 	
