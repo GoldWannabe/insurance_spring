@@ -2,7 +2,7 @@ package com.mju.spring.dao;
 
 import java.util.List;
 
-import com.mju.spring.dto.FailContractDto;
+import com.mju.spring.dto.salesTeam.InsuranceSales.FailContractDto;
 import com.mju.spring.entity.Contract;
 
 public interface FailContractDao {

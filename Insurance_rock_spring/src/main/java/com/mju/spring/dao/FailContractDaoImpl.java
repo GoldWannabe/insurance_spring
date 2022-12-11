@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.mju.spring.dto.FailContractDto;
+import com.mju.spring.dto.salesTeam.InsuranceSales.FailContractDto;
 import com.mju.spring.entity.Contract;
 
 @Repository

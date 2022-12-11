@@ -1,4 +1,4 @@
-package com.mju.spring.dto;
+package com.mju.spring.dto.salesTeam.InsuranceSales;
 
 public class CustomerRankDto {
 	

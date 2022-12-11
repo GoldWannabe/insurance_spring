@@ -5,8 +5,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.mju.spring.dto.CustomerRankDto;
 import com.mju.spring.dto.contractTeam.contractManagement.RenewCustomerRankDto;
+import com.mju.spring.dto.salesTeam.InsuranceSales.CustomerRankDto;
 
 @Repository
 public class CustomerRankDaoImpl implements CustomerRankDao {
