@@ -127,6 +127,9 @@ public class InsuranceDesignController {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("contractTeam//insuranceDesign//inputInsuranceInfo");
+		modelAndView.addObject("LongTerm", this.insuranceTypeAndTermDto.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+		modelAndView.addObject("InsuranceType", this.insuranceTypeAndTermDto.getInsuranceType());
+		modelAndView.addObject("PremiumRate", this.insuranceTypeAndTermDto.getPremiumRate());
 		modelAndView.addObject("OverlapError", e.getMessage());
 		return modelAndView;
 	}
