@@ -43,7 +43,6 @@ public class InsuranceDesignController {
 
 		this.insurance = insuranceDesignService.checkName(request); // 중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘. 요율도 다 보내줌
 		this.insurance = insuranceDesignService.getStandardFee();
-		// error
 		// null이면 중복
 		if (this.insurance == null) {
 			throw new OverlapInsuranceNameException();
@@ -131,7 +130,7 @@ public class InsuranceDesignController {
 		modelAndView.addObject("OverlapError", e.getMessage());
 		return modelAndView;
 	}
-//	E3. DB 접근에 실패한 경우
+//	E3. DB 접근에 실패한 경우 
 	@ExceptionHandler(PersistenceException.class)
 	private ModelAndView persistenceException(Exception e) {
 		System.err.println(e.getMessage());
