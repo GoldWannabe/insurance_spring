@@ -36,7 +36,7 @@
 		<button type="submit" name = "manage" value="update">수정</button>
 	</form>
 	<script type="text/javascript">
-			if(${Popup}){
+			if('${Popup}'){
 				alert('${Message}');
 			}
 	</script>
