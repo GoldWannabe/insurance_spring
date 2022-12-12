@@ -42,13 +42,14 @@ public class InsuranceDesignController {
 	public String inputInsuranceInfo(HttpServletRequest request, Model model) {
 
 		this.insurance = insuranceDesignService.checkName(request); // 중복확인 이때 체크하면서 보험 정볻 다 DTO에 셋해줘. 요율도 다 보내줌
-		this.insurance = insuranceDesignService.getStandardFee();
+		
 		// null이면 중복
 		if (this.insurance == null) {
 			throw new OverlapInsuranceNameException();
 		}else
 			if (request.getParameter("check").equals("confirm")) {
 //			보험이름,보험 타입, 기준보험료, 장기여부, 특약,가입조건,보상조건,설명, 요율
+				this.insurance = insuranceDesignService.getStandardFee();
 				model.addAttribute("InsuranceName", this.insurance.getInsuranceName());
 				model.addAttribute("InsuranceType", this.insurance.getInsuranceType());
 				model.addAttribute("StandardFee", this.insurance.getStandardFee());
@@ -127,6 +128,9 @@ public class InsuranceDesignController {
 		System.err.println(e.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("contractTeam//insuranceDesign//inputInsuranceInfo");
+		modelAndView.addObject("LongTerm", this.insuranceTypeAndTermDto.isLongTerm()); // 마지막에 보여주는 화면에 대한 내용 보내주기.
+		modelAndView.addObject("InsuranceType", this.insuranceTypeAndTermDto.getInsuranceType());
+		modelAndView.addObject("PremiumRate", this.insuranceTypeAndTermDto.getPremiumRate());
 		modelAndView.addObject("OverlapError", e.getMessage());
 		return modelAndView;
 	}
