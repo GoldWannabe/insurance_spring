@@ -48,6 +48,7 @@ public class CustomerManagementController {
 			model.addAttribute("AccountNum", this.customer.getAccountNum());
 			return "salesTeam//customerManagement//updateCustomer";
 		}else if(request.getParameter("manage").equals("add")) {
+			return "salesTeam//customerManagement//addCustomer";
 			
 		}else if(request.getParameter("manage").equals("delete")) {
 			
@@ -63,6 +64,21 @@ public class CustomerManagementController {
 		model.addAttribute("JudgeResult", "고객정보 수정이 완료되었습니다");
 		
 		return "menu//showResult";
+	}
+	@RequestMapping(value = "addCustomer", method = RequestMethod.GET)
+	public String addCustomer(HttpServletRequest request, Model model) {
+		Customer customer = this.customerManagementService.addCustomer(request);
+		if(customer != null) {
+			model.addAttribute("JudgeResult", "고객정보가 추가되었습니다");
+			return "menu//showResult";
+			
+		}else {
+			//E2.고객과 전화번호가 같은 고객이 있을 경우
+			model.addAttribute("Popup", true);
+			model.addAttribute("Message", "수정한 고객의 이름과 연락처가 같은 고객이 고객DB에 존재합니다. 고객 정보 수정 또는 추가가 되지 않았습니다.");
+			return "salesTeam//customerManagement//addCustomer";
+		}
+		
 	}
 	
 	

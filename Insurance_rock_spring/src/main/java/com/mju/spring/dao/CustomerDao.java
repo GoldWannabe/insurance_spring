@@ -24,6 +24,7 @@ public interface CustomerDao {
 	public Customer retriveCustomerInfo(Customer customer);
 
 	public void updateCustomerInfo(Customer customer);
+
 	
 	
 }

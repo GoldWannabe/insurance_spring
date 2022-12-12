@@ -1,5 +1,8 @@
 package com.mju.spring.service.salesTeam;
 
+import java.util.Random;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,27 @@ public class CustomerManagementServiceImpl implements CustomerManagementService 
 		customer.setAccountNum(request.getParameter("accountNum"));
 		this.customerDao.updateCustomerInfo(this.customer);
 		
+	}
+
+
+	@Override
+	public Customer addCustomer(HttpServletRequest request) {
+		if(!(this.customer.getName().equals(request.getParameter("customerName"))) && !(this.customer.getPhoneNum().equals(request.getParameter("phoneNum")))){
+			
+			customer.setCustomerID(UUID.randomUUID().toString().substring(0, 5));
+			customer.setName(request.getParameter("customerName"));
+			customer.setSSN(request.getParameter("ssn"));
+			customer.setPhoneNum(request.getParameter("phoneNum"));
+			customer.setAddress(request.getParameter("address"));
+			customer.setSex(request.getParameter("gender"));
+			customer.setInsuranceNum(Double.valueOf(request.getParameter("insuranceNum")));
+			customer.setBankName(request.getParameter("bankName"));
+			customer.setAccountNum(request.getParameter("accountNum"));
+			this.customerDao.create(this.customer);
+			return this.customer;
+		}else {
+			return null;
+		}
 	}
 
 }
