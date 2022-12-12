@@ -12,8 +12,12 @@ public interface InsuranceSalesService {
 	public List<Insurance> getInsuranceList(HttpServletRequest request);
 
 	public Insurance getInsurance(HttpServletRequest request);
+	
+	public boolean searchCustomer(HttpServletRequest request);
 
 	public boolean createCustomer(HttpServletRequest request);
+	
+	public boolean joinApplyContractAndUpdateCustomer();
 	
 	public boolean joinApplyContractAndCustomer();
 
@@ -25,6 +29,6 @@ public interface InsuranceSalesService {
 
 	public boolean rejoin(HttpServletRequest request);
 
-	
+
 
 }

@@ -19,6 +19,7 @@ import com.mju.spring.dao.GeneralRateDao;
 import com.mju.spring.dao.HouseRateDao;
 import com.mju.spring.dao.InsuranceDao;
 import com.mju.spring.dao.RankDao;
+import com.mju.spring.dto.salesTeam.InsuranceSales.CustomerDto;
 import com.mju.spring.dto.salesTeam.InsuranceSales.CustomerRankDto;
 import com.mju.spring.dto.salesTeam.InsuranceSales.FailContractDto;
 import com.mju.spring.entity.Contract;
@@ -35,6 +36,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	private Insurance insurance;
 	private CustomerRankDto customerRankDTO;
 	private FailContractDto failContractDTO;
+	private CustomerDto customerDTO;
 
 	private Contract applyContract;
 	private Customer customer;
@@ -86,22 +88,43 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	@Override
 	public Insurance getInsurance(HttpServletRequest request) {
 		if (this.insurance.getInsuranceType().equals(EInsurance.general)) {
-			this.insurance = this.insuranceDAO.retriveGeneralName(request.getParameter("insuranceName"));
-
-			List<Double> rateList = this.generalRateDAO.retriveGeneralRate(this.insurance.getInsuranceID());
-			double[] generalRate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
-			this.insurance.setPremiumRate(generalRate);
+			if (this.insuranceDAO.retriveGeneralName(request.getParameter("insuranceName")) != null) {
+				this.insurance = this.insuranceDAO.retriveGeneralName(request.getParameter("insuranceName"));
+				List<Double> rateList = this.generalRateDAO.retriveGeneralRate(this.insurance.getInsuranceID());
+				double[] generalRate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
+				this.insurance.setPremiumRate(generalRate);
+			} else {
+				// null 일때
+				return null;
+			}
 
 		} else if (this.insurance.getInsuranceType().equals(EInsurance.house)) {
-			this.insurance = this.insuranceDAO.retriveHouseName(request.getParameter("insuranceName"));
+			if (this.insuranceDAO.retriveHouseName(request.getParameter("insuranceName")) != null) {
+				this.insurance = this.insuranceDAO.retriveHouseName(request.getParameter("insuranceName"));
+				List<Double> rateList = this.houseRateDAO.retriveHouseName(this.insurance.getInsuranceID());
+				double[] generalRate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
+				this.insurance.setPremiumRate(generalRate);
+			} else {
+				return null;
+			}
+		}
+		return this.insurance;
+	}
 
-			List<Double> rateList = this.houseRateDAO.retriveHouseName(this.insurance.getInsuranceID());
-			double[] generalRate = new double[] { rateList.get(0), rateList.get(1), rateList.get(2) };
-			this.insurance.setPremiumRate(generalRate);
-
+	@Override
+	public boolean searchCustomer(HttpServletRequest request) {
+		this.customerDTO = new CustomerDto();
+		this.customerDTO.setName(request.getParameter("customerName"));
+		this.customerDTO.setPhoneNum(request.getParameter("phoneNum"));
+		this.customer = this.customerDAO.retriveCustomerByNameAndPhoneNum(this.customerDTO);
+		if (this.customer != null) {
+			// 기존고객
+			this.customer.setInsuranceNum(this.customer.getInsuranceNum() + (0.1));
+			return true;
+		} else {
+			return false;
 		}
 
-		return this.insurance;
 	}
 
 	@Override
@@ -162,6 +185,30 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 	}
 
 	@Override
+	public boolean joinApplyContractAndUpdateCustomer() {
+		this.applyContractDAO = new ApplyContractDaoImpl();
+		this.customerDAO = new CustomerDaoImpl();
+
+		this.customerRankDTO = new CustomerRankDto();
+		this.customerRankDTO.setCustomerID(this.customer.getCustomerID());
+		this.customerRankDTO.setContractID(this.applyContract.getContractID());
+		this.customerRankDTO.setRankID(this.rank.getRankID());
+
+		if (this.rankDAO.create(this.rank) == 1 && this.applyContractDAO.create(this.applyContract) == 1
+				&& this.customerDAO.updateInsuranceNum(this.customer) == 1) {
+			this.rankDAO.commit();
+			this.applyContractDAO.commit();
+			this.customerDAO.commit();
+			
+			if (this.customerRankDAO.create(this.customerRankDTO) == 1) {
+				this.customerRankDAO.commit();
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
 	public boolean joinApplyContractAndCustomer() {
 		this.applyContractDAO = new ApplyContractDaoImpl();
 		this.customerDAO = new CustomerDaoImpl();
@@ -179,7 +226,6 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 
 			if (this.customerRankDAO.create(this.customerRankDTO) == 1) {
 				this.customerRankDAO.commit();
-				System.out.println("insert complete.");
 				return true;
 			}
 		}
@@ -194,6 +240,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		this.failContractDTO.setCustomerName(request.getParameter("customerName"));
 		this.failContractDTO.setCustomerPhoneNum(request.getParameter("phoneNum"));
 		this.failContractDTO.setInsuranceID(this.insurance.getInsuranceID());
+
 		this.failContractList = this.failContractDAO.retriveFailContract(this.failContractDTO);
 		return this.failContractList;
 	}
@@ -213,7 +260,7 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 				&& this.selectedFailContract.getInsuranceFee() == Integer.parseInt(request.getParameter("insuranceFee"))
 				&& this.selectedFailContract.getSecurityFee() == Integer.parseInt(request.getParameter("securityFee"))
 				&& this.selectedFailContract.getPeriod() == Integer.parseInt(request.getParameter("period"))) {
-			// 변경된 사항이 없으면
+			// E3. 수정 사항이 없는 경우
 			return false;
 		}
 		Contract rejoinContract = new Contract();
@@ -227,14 +274,15 @@ public class InsuranceSalesServiceImpl implements InsuranceSalesService {
 		rejoinContract.setInsuranceFee(Integer.parseInt(request.getParameter("securityFee")));
 		rejoinContract.setSecurityFee(Integer.parseInt(request.getParameter("securityFee")));
 		rejoinContract.setPeriod(Integer.parseInt(request.getParameter("period")));
-		
-		if(this.applyContractDAO.create(rejoinContract) == 1 && this.failContractDAO.delete(this.selectedFailContract) == 1) {
+
+		if (this.applyContractDAO.create(rejoinContract) == 1
+				&& this.failContractDAO.delete(this.selectedFailContract) == 1) {
 			this.applyContractDAO.commit();
 			this.failContractDAO.commit();
 			return true;
 		}
-		
-		
+
 		return true;
 	}
+
 }

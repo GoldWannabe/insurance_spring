@@ -8,14 +8,14 @@
 <meta charset="EUC-KR">
 <title>rejoinEdit</title>
 <script>
-function noSpaceForm(obj) {      
-    var str_space = /\s/;             
-    if(str_space.exec(obj.value)) {    
-        alert("해당 항목에는 공백을 사용할 수 없습니다.\n\n공백이 제거됩니다.");
-        obj.focus();
-        obj.value = obj.value.replace(' ',''); 
-    }
-}
+	function noSpaceForm(obj) {
+		var str_space = /\s/;
+		if (str_space.exec(obj.value)) {
+			alert("해당 항목에는 공백을 사용할 수 없습니다.\n\n공백이 제거됩니다.");
+			obj.focus();
+			obj.value = obj.value.replace(' ', '');
+		}
+	}
 </script>
 </head>
 <body>
@@ -31,16 +31,23 @@ function noSpaceForm(obj) {
 	<br> 반려 이유: ${reason}
 	<br> -----
 	<form action="rejoinEdit">
-		가입자명: <input type="text" name="customerName"  onkeyup="noSpaceForm(this);" required/> <br>
-		전화번호: <input type="text" name="customerPhoneNum"  onkeyup="noSpaceForm(this);" required/> <br>
-		납부주기: <input type="text" name="paymentCycle"  onkeyup="noSpaceForm(this);" required/> <br>
-		보험료: <input type="text" name="insuranceFee"  onkeyup="noSpaceForm(this);" required/> <br>
-		담보액: <input type="text" name="securityFee"  onkeyup="noSpaceForm(this);" required/> <br>
-		가입기간: <input type="text" name="period"  onkeyup="noSpaceForm(this);" required/> <br>
-		
-		<button type="submit" name = "rejoin" value="rejoin">재가입 신청</button>
-		<button type="submit" name = "rejoin" value="cancel">취소</button>
-	</form>
+		가입자명: <input type="text" name="customerName"
+			onkeyup="noSpaceForm(this);" required /> <br> 전화번호: <input
+			type="text" name="customerPhoneNum" onkeyup="noSpaceForm(this);"
+			required /> <br> 납부주기: <input type="text" name="paymentCycle"
+			onkeyup="noSpaceForm(this);" required /> <br> 보험료: <input
+			type="text" name="insuranceFee" onkeyup="noSpaceForm(this);" required />
+		<br> 담보액: <input type="text" name="securityFee"
+			onkeyup="noSpaceForm(this);" required /> <br> 가입기간: <input
+			type="text" name="period" onkeyup="noSpaceForm(this);" required /> <br>
 
+		<button type="submit" name="rejoin" value="rejoin">재가입 신청</button>
+		<button type="submit" name="rejoin" value="cancel">취소</button>
+	</form>
+	<script type="text/javascript">
+		if ('${Popup}') {
+			alert('${Message}');
+		}
+	</script>
 </body>
 </html>

@@ -47,5 +47,11 @@
 		보험 이름: <input type="text" name="insuranceName" onkeyup="noSpaceForm(this);" required >
 		<button type="submit" name="search" value="search">검색</button>
 	</form>
+	
+	<script type="text/javascript">
+			if('${Popup}'){
+				alert('${Message}');
+			}
+		</script>
 </body>
 </html>
