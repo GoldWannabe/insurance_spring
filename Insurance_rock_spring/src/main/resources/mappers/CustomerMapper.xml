@@ -13,6 +13,11 @@
 	<select id="selectCustomerById" resultType="com.mju.spring.entity.Customer">
 		SELECT * FROM customer WHERE customerID = #{customerID}
 	</select>
+	
+	<select id="selectCustomerByNameAndPhoneNum" resultType="com.mju.spring.entity.Customer">
+		SELECT * FROM customer WHERE Name = #{name} AND phoneNum = #{phoneNum}
+	</select>
+	
 	<update id="updateInsuranceNum">
 		UPDATE customer SET insuranceNum = #{insuranceNum} WHERE customerID = #{customerID}
 	</update>

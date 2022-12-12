@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>insuranceType</title>
+<title>selectInsuranceType</title>
 
 </head>
 <body>
@@ -14,7 +14,7 @@
 		<input type="radio" name="insuranceType" value="house" />주택보험 <br> 
 		
 		<button type="submit" name ="next" value="next" >다음</button>
-		<button type="submit" name="next" value="cancellation">취소 </button>
+		<button type="submit" name="next" value="cancel">취소 </button>
 	</form>
 	
 </body>	

@@ -16,6 +16,10 @@
 		<button type="submit" name="search" value="search">검색</button>
 		<button type="submit" name="search" value="cancel">취소</button>
 	</form>
-
+		<script type="text/javascript">
+			if('${Popup}'){
+				alert('${Message}');
+			}
+		</script>
 </body>
 </html>

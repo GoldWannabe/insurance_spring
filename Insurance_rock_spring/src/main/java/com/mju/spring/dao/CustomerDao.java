@@ -2,12 +2,15 @@ package com.mju.spring.dao;
 
 import com.mju.spring.dto.contractTeam.contractManagement.CustomerIDAndInsuranceNumDto;
 import com.mju.spring.dto.damageAssessment.compansate.CustomerBankDto;
+import com.mju.spring.dto.salesTeam.InsuranceSales.CustomerDto;
 import com.mju.spring.entity.Customer;
 
 public interface CustomerDao {
 	public CustomerBankDto retrivecustomerBank(String customerID);
 
 	public Customer retriveCustomerById(String customerID);
+	
+	public Customer retriveCustomerByNameAndPhoneNum(CustomerDto customerDTO);
 
 	public Double selectInsuranceNum(String customerID);
 	
@@ -19,7 +22,5 @@ public interface CustomerDao {
 
 	public int create(Customer customer);
 
-	public void deleteInsuranceNum(String customerID);
-	
-	
+	public void deleteInsuranceNum(String customerID);	
 }

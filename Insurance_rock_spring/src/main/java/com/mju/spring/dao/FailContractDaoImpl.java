@@ -25,6 +25,7 @@ public class FailContractDaoImpl implements FailContractDao {
 	@Override
 	public List<Contract> retriveFailContract(FailContractDto failContractDTO) {
 		return sqlSession.selectList(Search, failContractDTO);
+			
 	}
 	
 	@Override
