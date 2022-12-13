@@ -36,7 +36,7 @@
 		가입조건: <input type="text" name="applyCondition"  onkeyup="noSpaceForm(this);" required/> <br>
 		보상 조건: <input type="text" name="compensateCondition"  onkeyup="noSpaceForm(this);" required/> <br>
 		설명: <input type="text" name="explanation"  onkeyup="noSpaceForm(this);" required/> <br>
-		<input name = "check" type="submit" value="확인" onclick="UseStandardRate(this);"/>
+		<input name = "check" type="submit" value="다음" onclick="UseStandardRate(this);"/>
 	</form>
 </body>
 </html>
