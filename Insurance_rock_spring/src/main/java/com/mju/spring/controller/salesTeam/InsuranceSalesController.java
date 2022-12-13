@@ -98,7 +98,7 @@ public class InsuranceSalesController {
 	private String joinApplyContract(Model model) {
 		// A2. continue - 기존 고객일 경우
 		if (this.insuranceSalesService.joinApplyContractAndUpdateCustomer()) {
-			model.addAttribute("JudgeResult", "회원가입이 완료되었습니다.");
+			model.addAttribute("JudgeResult", "보험 가입 신청이 완료되었습니다.");
 			return "menu//showResult";
 		} else {
 			// E3.DB 접근 오류
@@ -108,7 +108,7 @@ public class InsuranceSalesController {
 
 	public String joinApplyContractAndCustomer(Model model) {
 		if (this.insuranceSalesService.joinApplyContractAndCustomer()) {
-			model.addAttribute("JudgeResult", "회원가입이 완료되었습니다.");
+			model.addAttribute("JudgeResult", "보험 가입 신청이 완료되었습니다.");
 			return "menu//showResult";
 		} else {
 			// E3.DB 접근 오류
